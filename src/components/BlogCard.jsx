@@ -1,6 +1,4 @@
-// components/BlogCard.js
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function BlogCard({
     title,
@@ -10,7 +8,7 @@ export default function BlogCard({
 }) {
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow p-5">
-            {/* Date Badge */}
+
 
 
             {/* Blog Image */}
@@ -21,8 +19,9 @@ export default function BlogCard({
                     fill
                     className="object-cover"
                 />
+                {/* Date Badge */}
                 <div className="absolute -bottom-7 bg-green-600 text-white w-12 h-12 flex flex-col items-center justify-center text-sm m-2 rounded-full z-10">
-                <span className='font-bold'>{date}</span><span className='text-xs'>{month}</span>
+                    <span className='font-bold'>{date}</span><span className='text-xs'>{month}</span>
                 </div>
             </div>
 

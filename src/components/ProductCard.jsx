@@ -8,7 +8,7 @@ export default function ProductCard({
   discountedPrice, 
   actionText = "ADD TO CART →",
   actionLink = "#",
-  imageUrl = "/mango-placeholder.jpg" // Default image if none provided
+  imageUrl
 }) {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
