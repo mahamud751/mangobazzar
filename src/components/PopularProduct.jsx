@@ -5,8 +5,8 @@ export default function PopularProduct() {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-          Most Popular Mangoes in Bangladesh
+          <h1 className="text-3xl md:text-4xl font-bold text-[#491D0B] mb-4">
+          Taste Our <span className='text-[#C09A44]'>Best</span> Seller
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           Discover the true nature of the most popular mango variations in Bangladesh! Take a tasty tour highlighting the great variety of mangoes that are loved by mango lovers all around the world.
@@ -19,7 +19,7 @@ export default function PopularProduct() {
             variety="Shamir on"
             originalPrice="1,500.00৳"
             discountedPrice="1,350.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/amrapali-mango.png"
           />
           <ProductCard
@@ -27,7 +27,7 @@ export default function PopularProduct() {
             variety="Shamir on"
             originalPrice="1,500.00৳"
             discountedPrice="1,350.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/katimon-mango.png"
           />
           
@@ -35,7 +35,7 @@ export default function PopularProduct() {
             name="Gopalbhog Mango"
             variety="Chmieon on"
             originalPrice="1,500.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/banana-mango.png"
           />
           
@@ -43,7 +43,7 @@ export default function PopularProduct() {
             name="Langra Mango"
             variety="Tikki on"
             originalPrice="1,500.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/gauromoti-mango.png"
           />
         </div>

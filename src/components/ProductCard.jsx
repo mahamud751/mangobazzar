@@ -1,20 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ProductCard({ 
-  name, 
-  variety, 
-  originalPrice, 
-  discountedPrice, 
-  actionText = "ADD TO CART →",
+export default function ProductCard({
+  name,
+  variety,
+  originalPrice,
+  discountedPrice,
+  actionText = "BUY NOW",
   actionLink = "#",
   imageUrl
 }) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+    <div className="bg-[#fff9eb] rounded-lg shadow-md overflow-hidden border border-gray-100 hover:border-[#C09A44BF] duration-200 hover:shadow-lg transition-shadow">
       {/* Product Image */}
       <div className="relative h-48 w-full">
-        <Image 
+        <Image
           src={imageUrl}
           alt={name}
           fill
@@ -27,27 +27,37 @@ export default function ProductCard({
       <div className="p-5">
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="text-lg font-semibold text-gray-800">{name}</h3>
-            <p className="text-sm text-gray-500">{variety}</p>
+            <h3 className="text-lg font-semibold text-[#491D0B]">{name}</h3>
+            <p className="text-sm text-[#491D0B]">{variety}</p>
           </div>
         </div>
 
         <div className="mt-4">
           {discountedPrice ? (
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold text-green-600">{discountedPrice}</span>
-              <span className="text-sm line-through text-gray-400">{originalPrice}</span>
+              <span className="text-xl font-bold text-[#C09A44]">{discountedPrice}</span>
+              <span className="text-sm line-through text-[#C09A44BF]">{originalPrice}</span>
             </div>
           ) : (
-            <span className="text-xl font-bold text-gray-800">{originalPrice}</span>
+            <span className="text-xl font-bold text-[#491D0B]">{originalPrice}</span>
           )}
         </div>
-
-        <Link href={actionLink} className="mt-4 inline-block w-full">
-          <button className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md transition-colors text-center">
-            {actionText}
-          </button>
-        </Link>
+        <div className="flex items-center gap-4 mt-4">
+          <div className="border border-[#b2aca7] px-4 py-2 flex items-center justify-center cursor-pointer">
+            <Image
+              src='/cart-icon.png'
+              alt='cart icon'
+              width={20}
+              height={20}
+              className="object-cover"
+            />
+          </div>
+          <Link href={actionLink} className="flex-1">
+            <button className="w-full py-2 px-4 bg-[#C09A44] text-white font-medium cursor-pointer">
+              {actionText}
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
