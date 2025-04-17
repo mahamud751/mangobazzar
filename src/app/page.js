@@ -6,18 +6,20 @@ import PopularProduct from "@/components/PopularProduct";
 import MangoNutrition from "@/components/MangoNutrition";
 import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
+import ServiceFeatures from "@/components/ServiceFeatures";
 
 export default function Home() {
   return (
     <>
       <Header />
       <Banner />
-      <ProductSection/>
-      <MangoPromo/>
-      <PopularProduct/>
-      <MangoNutrition/>
-      <BlogSection/>
-      <Footer/>
+      <ServiceFeatures />
+      <ProductSection />
+      <MangoPromo />
+      <PopularProduct />
+      <MangoNutrition />
+      <BlogSection />
+      <Footer />
     </>
   );
 }

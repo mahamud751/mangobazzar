@@ -18,19 +18,19 @@ export default function Header() {
 
         {/* Navigation */}
         <nav className="flex space-x-6">
-          <Link href="/" className="text-gray-700 hover:text-gray-900 transition-colors">
+          <Link href="/" className="text-[#491D0B] hover:text-[#C09A44] font-medium duration-200 transition-colors">
             Home
           </Link>
-          <Link href="/about" className="text-gray-700 hover:text-gray-900 transition-colors">
+          <Link href="/about" className="text-[#491D0B] hover:text-[#C09A44] font-medium duration-200 transition-colors">
             About
           </Link>
-          <Link href="/shop" className="text-gray-700 hover:text-gray-900 transition-colors">
+          <Link href="/shop" className="text-[#491D0B] hover:text-[#C09A44] font-medium duration-200 transition-colors">
             Shop
           </Link>
-          <Link href="/blog" className="text-gray-700 hover:text-gray-900 transition-colors">
+          <Link href="/blog" className="text-[#491D0B] hover:text-[#C09A44] font-medium duration-200 transition-colors">
             Blog
           </Link>
-          <Link href="/contact" className="text-gray-700 hover:text-gray-900 transition-colors">
+          <Link href="/contact" className="text-[#491D0B] hover:text-[#C09A44] font-medium duration-200 transition-colors">
             Contact
           </Link>
         </nav>
