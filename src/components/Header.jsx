@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Header() {
@@ -6,14 +5,10 @@ export default function Header() {
     <header className="bg-white shadow-sm py-4">
       <div className="container mx-auto px-4 flex flex-col items-center md:flex-row md:justify-between">
         {/* Logo section */}
-        <div className="flex items-center">
-          <Image 
-            src="/logo.png" 
-            alt="MangoBazzar Logo"
-            width={180} 
-            height={50}
-            className="object-contain"
-          />
+        <div className="">
+          <h2 className="text-3xl font-bold">
+            <span className="text-[#491D0B]">Mango Bazzar</span>
+          </h2>
         </div>
 
         {/* Navigation */}

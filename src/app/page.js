@@ -7,6 +7,7 @@ import MangoNutrition from "@/components/MangoNutrition";
 import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
 import ServiceFeatures from "@/components/ServiceFeatures";
+import OrganicMangoSection from "@/components/OrganicMangoSection";
 
 export default function Home() {
   return (
@@ -15,9 +16,10 @@ export default function Home() {
       <Banner />
       <ServiceFeatures />
       <ProductSection />
-      <MangoPromo />
+      {/* <MangoPromo /> */}
+      <OrganicMangoSection/>
       <PopularProduct />
-      <MangoNutrition />
+      {/* <MangoNutrition /> */}
       <BlogSection />
       <Footer />
     </>

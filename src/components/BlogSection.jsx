@@ -6,11 +6,9 @@ export default function BlogSection() {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Latest Blog</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Stay up-to-date with the latest mango-related news and trends from Bangladesh. 
-            Explore our blog to learn about the most recent information, insightful articles, 
-            and fascinating stories related to Bangladesh's mango industry.
+          <h2 className="text-3xl font-bold text-[#491D0B] mb-4">Our Latest Blog</h2>
+          <p className="text-lg text-[#491D0B] max-w-2xl mx-auto">
+            Stay up-to-date with the latest mango-related news and trends from Bangladesh.
           </p>
         </div>
 

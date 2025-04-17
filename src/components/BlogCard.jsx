@@ -20,14 +20,14 @@ export default function BlogCard({
                     className="object-cover"
                 />
                 {/* Date Badge */}
-                <div className="absolute -bottom-7 bg-green-600 text-white w-12 h-12 flex flex-col items-center justify-center text-sm m-2 rounded-full z-10">
+                <div className="absolute -bottom-7 bg-[#C09A44] text-white w-12 h-12 flex flex-col items-center justify-center text-sm m-2 rounded-full z-10">
                     <span className='font-bold'>{date}</span><span className='text-xs'>{month}</span>
                 </div>
             </div>
 
             {/* Blog Content */}
             <div className="p-4 mt-5">
-                <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">{title}</h3>
+                <h3 className="text-lg font-semibold text-[#491D0B] line-clamp-2">{title}</h3>
             </div>
         </div>
     );

@@ -9,7 +9,7 @@ export default function PopularProduct() {
           Taste Our <span className='text-[#C09A44]'>Best</span> Seller
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Discover the true nature of the most popular mango variations in Bangladesh! Take a tasty tour highlighting the great variety of mangoes that are loved by mango lovers all around the world.
+          Discover the true nature of the most popular mango variations in Bangladesh!
           </p>
         </div>
 
