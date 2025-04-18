@@ -7,7 +7,7 @@ export default function Header() {
         {/* Logo section */}
         <div className="">
           <h2 className="text-3xl font-bold">
-            <span className="text-[#491D0B]">Mango Bazzar</span>
+            <span className="text-[#491D0B]">Mango Bazar</span>
           </h2>
         </div>
 

@@ -8,9 +8,6 @@ export default function BlogCard({
 }) {
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow p-5">
-
-
-
             {/* Blog Image */}
             <div className="relative h-48 w-full">
                 <Image

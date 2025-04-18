@@ -19,7 +19,7 @@ export default function ProductSection() {
             variety="Rashmo on"
             originalPrice="1,700.00৳"
             discountedPrice="1,650.00৳"
-            actionText="ADD TO CART →"
+            actionText="BUY NOW"
             imageUrl="/khirsapat-mango.png"
           />
           
@@ -28,7 +28,7 @@ export default function ProductSection() {
             variety="Shamir on"
             originalPrice="1,500.00৳"
             discountedPrice="1,350.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/amrapali-mango.png"
           />
           
@@ -36,7 +36,7 @@ export default function ProductSection() {
             name="Gopalbhog Mango"
             variety="Chmieon on"
             originalPrice="1,500.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/gopalbhog-mango.png"
           />
           
@@ -44,7 +44,7 @@ export default function ProductSection() {
             name="Langra Mango"
             variety="Tikki on"
             originalPrice="1,500.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/langra-mango.png"
           />
           <ProductCard
@@ -52,7 +52,7 @@ export default function ProductSection() {
             variety="Rashmo on"
             originalPrice="1,700.00৳"
             discountedPrice="1,650.00৳"
-            actionText="ADD TO CART →"
+            actionText="BUY NOW"
             imageUrl="/fazli-mango.png"
           />
           
@@ -61,7 +61,7 @@ export default function ProductSection() {
             variety="Shamir on"
             originalPrice="1,500.00৳"
             discountedPrice="1,350.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/katimon-mango.png"
           />
           
@@ -69,7 +69,7 @@ export default function ProductSection() {
             name="Gopalbhog Mango"
             variety="Chmieon on"
             originalPrice="1,500.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/banana-mango.png"
           />
           
@@ -77,7 +77,7 @@ export default function ProductSection() {
             name="Langra Mango"
             variety="Tikki on"
             originalPrice="1,500.00৳"
-            actionText="READ MORE →"
+            actionText="BUY NOW"
             imageUrl="/gauromoti-mango.png"
           />
         </div>
