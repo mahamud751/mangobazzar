@@ -3,7 +3,10 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-[#491D0B] pt-16 pb-8">
+    <footer className="bg-white text-[#491D0B] pt-16 pb-8 relative">
+      {/* Top shadow effect */}
+      <div className="absolute top-0 left-0 right-0 h-4 bg-gradient-to-b from-[#491D0B10] to-transparent"></div>
+      
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand Column */}
