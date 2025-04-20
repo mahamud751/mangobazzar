@@ -23,15 +23,15 @@ export default function OrganicMangoSection() {
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
-            <div className="relative col-span-1 row-span-2 rounded-lg overflow-hidden">
+            <div className="relative col-span-1 row-span-3 rounded-lg overflow-hidden">
               <Image
-                src="/gauromoti-mango.png"
+                src="/banana-mango.png"
                 alt="Gauromoti Mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
-            <div className="relative col-span-1 row-span-3 rounded-lg overflow-hidden">
+            <div className="relative col-span-1 row-span-2 rounded-lg overflow-hidden">
               <Image
                 src="/gopalbhog-mango.png"
                 alt="Gopalbhog Mango"

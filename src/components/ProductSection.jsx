@@ -52,7 +52,7 @@ const homepageProducts = [
     variety: "Organic",
     originalPrice: "1,800.00৳",
     discountedPrice: "1,750.00৳",
-    imageUrl: "/himsagar-mango.png",
+    imageUrl: "/katimon-mango.png",
     slug: "himsagar-mango"
   },
   {
@@ -61,7 +61,7 @@ const homepageProducts = [
     variety: "Hybrid",
     originalPrice: "1,400.00৳",
     discountedPrice: "1,350.00৳",
-    imageUrl: "/raspuri-mango.png",
+    imageUrl: "/banana-mango.png",
     slug: "raspuri-mango"
   },
   {
@@ -70,7 +70,7 @@ const homepageProducts = [
     variety: "Premium",
     originalPrice: "2,000.00৳",
     discountedPrice: "1,900.00৳",
-    imageUrl: "/kesar-mango.png",
+    imageUrl: "/alphonso-mango.webp",
     slug: "kesar-mango"
   }
 ];

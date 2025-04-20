@@ -45,7 +45,7 @@ export default function PopularProduct() {
             variety="Tikki on"
             originalPrice="1,500.00৳"
             actionText="BUY NOW"
-            imageUrl="/gauromoti-mango.png"
+            imageUrl="/gopalbhog-mango.png"
           />
         </div>
       </div>
