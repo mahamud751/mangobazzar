@@ -1,5 +1,5 @@
-"use client"
-import { useState, useMemo } from 'react';
+"use client";
+import { useState, useMemo, useRef, useEffect } from 'react';
 import ProductCard from '@/components/ProductCard';
 
 const rawProducts = [
@@ -47,7 +47,94 @@ const rawProducts = [
     isNew: false,
     slug: "fazli-mango"
   },
-
+  {
+    id: 5,
+    name: "Organic Himsagar Mango",
+    price: 450,
+    originalPrice: 550,
+    imageUrl: "/images/products/amrapali-mango.png",
+    rating: 4.8,
+    discount: "18% OFF",
+    isNew: true,
+    slug: "organic-himsagar-mango"
+  },
+  {
+    id: 6,
+    name: "Premium Langra Mango",
+    price: 500,
+    originalPrice: 600,
+    imageUrl: "/images/products/banana-mango.png",
+    rating: 4.7,
+    discount: "17% OFF",
+    isNew: false,
+    slug: "premium-langra-mango"
+  },
+  {
+    id: 7,
+    name: "Gopalbhog Mango",
+    price: 400,
+    originalPrice: 480,
+    imageUrl: "/images/products/fazli-mango.png",
+    rating: 4.5,
+    discount: "17% OFF",
+    isNew: true,
+    slug: "gopalbhog-mango"
+  },
+  {
+    id: 8,
+    name: "Fazli Mango (Seasonal)",
+    price: 550,
+    originalPrice: 650,
+    imageUrl: "/images/products/langra-mango.png",
+    rating: 4.9,
+    discount: "15% OFF",
+    isNew: false,
+    slug: "fazli-mango"
+  },
+  {
+    id: 9,
+    name: "Organic Himsagar Mango",
+    price: 450,
+    originalPrice: 550,
+    imageUrl: "/images/products/amrapali-mango.png",
+    rating: 4.8,
+    discount: "18% OFF",
+    isNew: true,
+    slug: "organic-himsagar-mango"
+  },
+  {
+    id: 10,
+    name: "Premium Langra Mango",
+    price: 500,
+    originalPrice: 600,
+    imageUrl: "/images/products/banana-mango.png",
+    rating: 4.7,
+    discount: "17% OFF",
+    isNew: false,
+    slug: "premium-langra-mango"
+  },
+  {
+    id: 11,
+    name: "Gopalbhog Mango",
+    price: 400,
+    originalPrice: 480,
+    imageUrl: "/images/products/fazli-mango.png",
+    rating: 4.5,
+    discount: "17% OFF",
+    isNew: true,
+    slug: "gopalbhog-mango"
+  },
+  {
+    id: 12,
+    name: "Fazli Mango (Seasonal)",
+    price: 550,
+    originalPrice: 650,
+    imageUrl: "/images/products/langra-mango.png",
+    rating: 4.9,
+    discount: "15% OFF",
+    isNew: false,
+    slug: "fazli-mango"
+  },
 ];
 
 const formatPrice = (price) => `৳${price}`;
@@ -55,7 +142,8 @@ const formatPrice = (price) => `৳${price}`;
 const ShopPageSection = () => {
   const [sortOption, setSortOption] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 8;
+  const productGridRef = useRef(null);
 
   const sortedProducts = useMemo(() => {
     let sorted = [...rawProducts];
@@ -79,23 +167,34 @@ const ShopPageSection = () => {
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
-    setCurrentPage(1); // Reset to page 1 on sort change
+    setCurrentPage(1);
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    if (productGridRef.current) {
+      productGridRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
   return (
-    <div className="bg-[#FFF9F0] py-12">
+    <div className="bg-[#FFF9F0] py-14">
       <div className="container mx-auto px-4">
-        {/* Page Header */}
+        {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-[#491D0B] mb-4">Mango Bazar Shop</h1>
-          <p className="text-xl text-[#491D0B] max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#491D0B] mb-3">Mango Bazar Shop</h1>
+          <p className="text-lg md:text-xl text-[#491D0B] max-w-3xl mx-auto">
             Premium organic mangoes from Chapai Nawabganj, delivered fresh to your doorstep
           </p>
         </div>
 
-        {/* Filter/Sort Controls */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-          <div className="text-[#491D0B]">
+        {/* Sort & Count */}
+        <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+          <div className="text-[#491D0B] font-medium">
             Showing {paginatedProducts.length} of {sortedProducts.length} products
           </div>
 
@@ -105,7 +204,7 @@ const ShopPageSection = () => {
               id="sort"
               value={sortOption}
               onChange={handleSortChange}
-              className="border border-[#C09A44] rounded px-4 py-2 text-[#491D0B] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C09A44]"
+              className="border border-[#C09A44] bg-white rounded px-4 py-2 text-[#491D0B] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C09A44]"
             >
               <option value="">Sort by: Featured</option>
               <option>Price: Low to High</option>
@@ -116,8 +215,8 @@ const ShopPageSection = () => {
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {/* Product Grid */}
+        <div ref={productGridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {paginatedProducts.map(product => (
             <ProductCard
               key={product.id}
@@ -137,11 +236,15 @@ const ShopPageSection = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center mt-12">
-          <nav className="flex items-center space-x-2">
+        <div className="flex justify-center mt-14">
+          <nav className="flex flex-wrap gap-2">
             <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              className="px-4 py-2 border border-[#C09A44] text-[#C09A44] rounded cursor-pointer hover:bg-[#C09A44] hover:text-white transition"
+              onClick={() => handlePageChange(currentPage - 1)}
+              className={`px-4 py-2 border rounded transition ${
+                currentPage === 1
+                  ? 'text-gray-400 border-gray-300 cursor-not-allowed'
+                  : 'border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
+              }`}
               disabled={currentPage === 1}
             >
               Previous
@@ -150,19 +253,24 @@ const ShopPageSection = () => {
             {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`px-4 py-2 rounded ${currentPage === i + 1
-                  ? 'bg-[#C09A44] text-white'
-                  : 'border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white transition'
-                  }`}
+                onClick={() => handlePageChange(i + 1)}
+                className={`px-4 py-2 rounded transition ${
+                  currentPage === i + 1
+                    ? 'bg-[#C09A44] text-white'
+                    : 'border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
+                }`}
               >
                 {i + 1}
               </button>
             ))}
 
             <button
-              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-              className="px-4 py-2 border border-[#C09A44] text-[#C09A44] rounded cursor-pointer hover:bg-[#C09A44] hover:text-white transition"
+              onClick={() => handlePageChange(currentPage + 1)}
+              className={`px-4 py-2 border rounded transition ${
+                currentPage === totalPages
+                  ? 'text-gray-400 border-gray-300 cursor-not-allowed'
+                  : 'border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
+              }`}
               disabled={currentPage === totalPages}
             >
               Next

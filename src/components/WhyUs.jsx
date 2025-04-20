@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function WhyUs() {
   const features = [
@@ -37,18 +38,18 @@ export default function WhyUs() {
     <section className="py-16 bg-[#faf8f3]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#491D0B]">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#491D0B]">
             Why Mango Bazar?
-          </h1>
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div 
-              key={index} 
-              className="bg-white p-6 rounded-lg shadow-md border border-[#f0e6d2] hover:border-[#C09A44BF] hover:shadow-lg transition-all flex flex-col h-full"
+            <div
+              key={index}
+              className="bg-white p-6 rounded-2xl shadow-md border border-[#f0e6d2] hover:border-[#C09A44BF] hover:shadow-lg transition-all flex flex-col justify-between h-full"
             >
-              <div className={`flex flex-col items-center text-center flex-grow ${feature.hasButton ? 'justify-center' : ''}`}>
+              <div className="flex flex-col items-center text-center flex-grow">
                 {feature.icon && (
                   <div className="mb-4 w-16 h-16 relative">
                     <Image
@@ -63,12 +64,14 @@ export default function WhyUs() {
                   {feature.title}
                 </h3>
               </div>
-              
+
               {feature.hasButton && (
-                <div className="text-center">
-                  <button className="bg-[#C09A44] hover:bg-[#a8843a] text-white font-medium py-2 px-6 rounded-full cursor-pointer transition-colors">
-                    Buy Mangoes
-                  </button>
+                <div className="mt-6 text-center">
+                  <Link href="/shop">
+                    <button className="bg-[#C09A44] hover:bg-[#a8843a] text-white font-medium py-2 px-6 rounded-full transition-colors">
+                      Buy Mangoes
+                    </button>
+                  </Link>
                 </div>
               )}
             </div>
