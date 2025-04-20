@@ -6,10 +6,11 @@ export default function PopularProduct() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-[#491D0B] mb-4">
-          Taste Our <span className='text-[#C09A44]'>Best</span> Seller
+            Explore Our <span className='text-[#C09A44]'>Most Loved</span> Mangoes!
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Discover the true nature of the most popular mango variations in Bangladesh!
+            Taste the flavors that make our mangoes the best-selling in Bangladesh.
+            Handpicked, fresh, and full of sweetness!
           </p>
         </div>
 
@@ -23,14 +24,14 @@ export default function PopularProduct() {
             imageUrl="/amrapali-mango.png"
           />
           <ProductCard
-            name="Amrapali Mango"
+            name="Katimon Mango"
             variety="Shamir on"
             originalPrice="1,500.00৳"
             discountedPrice="1,350.00৳"
             actionText="BUY NOW"
             imageUrl="/katimon-mango.png"
           />
-          
+
           <ProductCard
             name="Gopalbhog Mango"
             variety="Chmieon on"
@@ -38,7 +39,7 @@ export default function PopularProduct() {
             actionText="BUY NOW"
             imageUrl="/banana-mango.png"
           />
-          
+
           <ProductCard
             name="Langra Mango"
             variety="Tikki on"

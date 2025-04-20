@@ -11,9 +11,9 @@ export default function Breadcrumbs() {
   if (!paths.length) return null;
 
   return (
-    <div className="w-full bg-gradient-to-r from-green-500 to-yellow-500 py-14">
-      <div className="container mx-auto">
-        <nav className="flex items-center justify-center text-3xl md:text-5xl font-medium text-white">
+    <div className="w-full bg-gradient-to-r from-green-500 to-yellow-500 py-6 md:py-8">
+      <div className="container mx-auto px-4">
+        <nav className="flex items-center space-x-3 text-lg md:text-xl font-medium text-white">
           <Link href="/" className="hover:text-gray-100 transition-colors">
             Home
           </Link>
@@ -25,12 +25,12 @@ export default function Breadcrumbs() {
               .replace(/\b\w/g, l => l.toUpperCase());
 
             return (
-              <div key={href} className="flex items-center">
-                <span className="mx-2">/</span>
+              <div key={href} className="flex items-center space-x-2">
+                <span className="text-white">/</span>
                 {index === paths.length - 1 ? (
-                  <span className="font-semibold">{label}</span>
+                  <span className="font-semibold text-gray-100">{label}</span>
                 ) : (
-                  <Link href={href} className="hover:text-gray-100 transition-colors">
+                  <Link href={href} className="hover:text-gray-200 transition-colors">
                     {label}
                   </Link>
                 )}

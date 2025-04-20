@@ -1,85 +1,106 @@
 import ProductCard from './ProductCard';
 
+const homepageProducts = [
+  {
+    id: 1,
+    name: "Khirsapat Mango",
+    variety: "Rashmo on",
+    originalPrice: "1,700.00৳",
+    discountedPrice: "1,650.00৳",
+    imageUrl: "/khirsapat-mango.png",
+    slug: "khirsapat-mango"
+  },
+  {
+    id: 2,
+    name: "Amrapali Mango",
+    variety: "Shamir on",
+    originalPrice: "1,500.00৳",
+    discountedPrice: "1,350.00৳",
+    imageUrl: "/amrapali-mango.png",
+    slug: "amrapali-mango"
+  },
+  {
+    id: 3,
+    name: "Gopalbhog Mango",
+    variety: "Chmieon on",
+    originalPrice: "1,500.00৳",
+    discountedPrice: "1,400.00৳",
+    imageUrl: "/gopalbhog-mango.png",
+    slug: "gopalbhog-mango"
+  },
+  {
+    id: 4,
+    name: "Langra Mango",
+    variety: "Tikki on",
+    originalPrice: "1,500.00৳",
+    discountedPrice: "1,450.00৳",
+    imageUrl: "/langra-mango.png",
+    slug: "langra-mango"
+  },
+  {
+    id: 5,
+    name: "Fazli Mango",
+    variety: "Seasonal",
+    originalPrice: "1,600.00৳",
+    discountedPrice: "1,550.00৳",
+    imageUrl: "/fazli-mango.png",
+    slug: "fazli-mango"
+  },
+  {
+    id: 6,
+    name: "Himsagar Mango",
+    variety: "Organic",
+    originalPrice: "1,800.00৳",
+    discountedPrice: "1,750.00৳",
+    imageUrl: "/himsagar-mango.png",
+    slug: "himsagar-mango"
+  },
+  {
+    id: 7,
+    name: "Raspuri Mango",
+    variety: "Hybrid",
+    originalPrice: "1,400.00৳",
+    discountedPrice: "1,350.00৳",
+    imageUrl: "/raspuri-mango.png",
+    slug: "raspuri-mango"
+  },
+  {
+    id: 8,
+    name: "Kesar Mango",
+    variety: "Premium",
+    originalPrice: "2,000.00৳",
+    discountedPrice: "1,900.00৳",
+    imageUrl: "/kesar-mango.png",
+    slug: "kesar-mango"
+  }
+];
+
 export default function ProductSection() {
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-20 bg-[#FAF5E9]">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#491D0B] mb-4">
-            Best Quality Mango Price in 2025
-          </h1>
-          <p className="text-lg text-[#491D0B] max-w-2xl mx-auto">
-            Get the best quality mangoes from this <strong>Best Online Mango Shop</strong>
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#C09A44] mb-4">
+            Taste the Best of Summer 🍋
+          </h2>
+          <p className="text-lg text-[#491D0B] max-w-2xl mx-auto leading-relaxed">
+            Discover our handpicked, <strong>farm-fresh mangoes</strong> – harvested with love and delivered with care. Book yours before the season ends!
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <ProductCard
-            name="Khirsapat Mango"
-            variety="Rashmo on"
-            originalPrice="1,700.00৳"
-            discountedPrice="1,650.00৳"
-            actionText="BUY NOW"
-            imageUrl="/khirsapat-mango.png"
-          />
-          
-          <ProductCard
-            name="Amrapali Mango"
-            variety="Shamir on"
-            originalPrice="1,500.00৳"
-            discountedPrice="1,350.00৳"
-            actionText="BUY NOW"
-            imageUrl="/amrapali-mango.png"
-          />
-          
-          <ProductCard
-            name="Gopalbhog Mango"
-            variety="Chmieon on"
-            originalPrice="1,500.00৳"
-            actionText="BUY NOW"
-            imageUrl="/gopalbhog-mango.png"
-          />
-          
-          <ProductCard
-            name="Langra Mango"
-            variety="Tikki on"
-            originalPrice="1,500.00৳"
-            actionText="BUY NOW"
-            imageUrl="/langra-mango.png"
-          />
-          <ProductCard
-            name="Khirsapat Mango"
-            variety="Rashmo on"
-            originalPrice="1,700.00৳"
-            discountedPrice="1,650.00৳"
-            actionText="BUY NOW"
-            imageUrl="/fazli-mango.png"
-          />
-          
-          <ProductCard
-            name="Amrapali Mango"
-            variety="Shamir on"
-            originalPrice="1,500.00৳"
-            discountedPrice="1,350.00৳"
-            actionText="BUY NOW"
-            imageUrl="/katimon-mango.png"
-          />
-          
-          <ProductCard
-            name="Gopalbhog Mango"
-            variety="Chmieon on"
-            originalPrice="1,500.00৳"
-            actionText="BUY NOW"
-            imageUrl="/banana-mango.png"
-          />
-          
-          <ProductCard
-            name="Langra Mango"
-            variety="Tikki on"
-            originalPrice="1,500.00৳"
-            actionText="BUY NOW"
-            imageUrl="/gauromoti-mango.png"
-          />
+          {homepageProducts.map(product => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              variety={product.variety}
+              originalPrice={product.originalPrice}
+              discountedPrice={product.discountedPrice}
+              imageUrl={product.imageUrl}
+              slug={product.slug}
+            />
+          ))}
         </div>
       </div>
     </section>

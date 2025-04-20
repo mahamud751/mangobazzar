@@ -13,10 +13,8 @@ export default function Home() {
       <Banner />
       <ServiceFeatures />
       <ProductSection />
-      {/* <MangoPromo /> */}
       <OrganicMangoSection/>
       <PopularProduct />
-      {/* <MangoNutrition /> */}
       <BlogSection />
     </>
   );

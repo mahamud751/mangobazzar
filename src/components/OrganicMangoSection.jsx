@@ -6,63 +6,61 @@ export default function OrganicMangoSection() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center lg:flex-row gap-12">
           {/* Image Grid - Left Side */}
-          <div className="lg:w-1/2">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="/banana-mango.png"
-                  alt="Banana Mango"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="/fazli-mango.png"
-                  alt="Fazli Mango"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="/gauromoti-mango.png"
-                  alt="Gauromoti Mango"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="/gopalbhog-mango.png"
-                  alt="Gopalbhog Mango"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+          <div className="lg:w-1/2 grid grid-cols-2 grid-rows-6 gap-4 h-[600px]">
+            <div className="relative col-span-1 row-span-3 rounded-lg overflow-hidden">
+              <Image
+                src="/banana-mango.png"
+                alt="Banana Mango"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative col-span-1 row-span-2 rounded-lg overflow-hidden">
+              <Image
+                src="/fazli-mango.png"
+                alt="Fazli Mango"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative col-span-1 row-span-2 rounded-lg overflow-hidden">
+              <Image
+                src="/gauromoti-mango.png"
+                alt="Gauromoti Mango"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative col-span-1 row-span-3 rounded-lg overflow-hidden">
+              <Image
+                src="/gopalbhog-mango.png"
+                alt="Gopalbhog Mango"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
             </div>
           </div>
 
           {/* Text Content - Right Side */}
           <div className="lg:w-1/2">
             <h2 className="text-3xl md:text-4xl font-bold text-[#491D0B] mb-6">
-              Welcome to the World of <span className='text-[#C09A44BF]'>Mango Bazzar</span>
+              Welcome to the World of <span className="text-[#C09A44BF]">Mango Bazzar</span>
             </h2>
-            
+
             <div className="space-y-6 text-[#491D0B] text-justify">
               <p>
-                Every five enrichances of your childhood days by eating fresh juicy, and delightful mangoes sought from the trees. 
-                Our unrivalled orchards from Chapai-Nawabganj produce the finest organic mangoes.
+                Every bite rekindles childhood memories of juicy, tree-fresh mangoes.
+                Our unrivaled orchards in Chapai Nawabganj grow the finest organic mangoes under the sun.
               </p>
-              
+
               <p>
-                The terrain in mountainside and the ground is an antigravitation of soil and rock, which helps cultivate the best harvests. 
-                The rich fields with high mineral content and humidity create unique growing conditions.
+                The unique terrain, enriched with minerals and kissed by ideal humidity,
+                creates the perfect conditions for exceptional mango harvests.
               </p>
-              
+
               <p>
-                Our organic orchards are famous all over the globe for their magnificent aroma, extraordinary sweetness, and timeless texture. 
-                We bring you premium organic mangoes to indulge your senses.
+                Globally renowned for their fragrance, sweetness, and luscious texture —
+                our mangoes are a true indulgence for the senses.
               </p>
             </div>
           </div>

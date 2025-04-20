@@ -123,13 +123,15 @@ const ShopPageSection = () => {
               key={product.id}
               id={product.id}
               name={product.name}
+              variety={product.variety}
               price={formatPrice(product.price)}
               originalPrice={formatPrice(product.originalPrice)}
+              discountedPrice={product.discountedPrice}
               imageUrl={product.imageUrl}
+              slug={product.slug}
               rating={product.rating}
               discount={product.discount}
               isNew={product.isNew}
-              slug={product.slug}
             />
           ))}
         </div>

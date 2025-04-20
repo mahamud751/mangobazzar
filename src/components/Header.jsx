@@ -2,15 +2,17 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Menu, X, ShoppingCart } from 'lucide-react';
+import { Menu, X, ShoppingCart, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCart } from '@/context/CartContext';
+import Image from 'next/image';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartHover, setCartHover] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const router = useRouter();
-  const cartCount = 2;
+  const { cartItems, removeFromCart } = useCart();
 
   const mobileMenuVariants = {
     hidden: { opacity: 0, x: '100%' },
@@ -24,22 +26,23 @@ export default function Header() {
     exit: { opacity: 0, y: -10 },
   };
 
-  const dummyItems = [
-    { id: 1, name: 'Alphonso Mango', qty: 1, price: '$15' },
-    { id: 2, name: 'Langra Mango', qty: 2, price: '$25' },
-  ];
-
-  const handleNavigate = async (href) => {
-    setMenuVisible(false);
-    // wait for animation to finish before navigating
-    setTimeout(() => {
-      setMobileMenuOpen(false);
-      router.push(href);
-    }, 300); // should match animation duration
+  const parsePrice = (priceString) => {
+    if (typeof priceString === 'number') return priceString;
+    if (!priceString) return 0;
+    
+    const numericString = priceString.toString()
+      .replace(/[^\d.]/g, '');
+    
+    return parseFloat(numericString) || 0;
   };
 
+  const total = cartItems.reduce(
+    (acc, item) => acc + parsePrice(item.discountedPrice || item.originalPrice) * (item.qty || 1),
+    0
+  );
+
   return (
-    <header className="bg-white shadow-md py-4 fixed top-0 left-0 w-full z-50 border-b border-gray-100">
+    <header className="bg-white shadow-md py-4 fixed top-0 left-0 w-full z-50 border-b border-gray-100 h-[80px]">
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-3xl font-bold text-[#491D0B]">
@@ -64,20 +67,21 @@ export default function Header() {
             </Link>
           ))}
 
-          {/* Cart Icon with Dropdown */}
+          {/* Enhanced Cart Dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setCartHover(true)}
             onMouseLeave={() => setCartHover(false)}
           >
-            <ShoppingCart className="text-[#491D0B]" size={24} />
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#C09A44] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
+            <div className="relative cursor-pointer">
+              <ShoppingCart className="text-[#491D0B]" size={24} />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#C09A44] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                  {cartItems.length}
+                </span>
+              )}
+            </div>
 
-            {/* Dropdown */}
             <AnimatePresence>
               {cartHover && (
                 <motion.div
@@ -86,24 +90,86 @@ export default function Header() {
                   exit="exit"
                   variants={dropdownVariants}
                   transition={{ duration: 0.2 }}
-                  className="absolute right-0 mt-4 w-72 bg-white rounded-lg shadow-lg p-4 z-50"
+                  className="absolute right-0 mt-3 w-80 bg-white rounded-xl shadow-lg border border-gray-100 z-50"
                 >
-                  <h4 className="text-[#491D0B] font-semibold text-lg mb-2">Cart Preview</h4>
-                  <div className="space-y-2 max-h-48 overflow-auto">
-                    {dummyItems.map((item) => (
-                      <div key={item.id} className="flex justify-between text-sm text-gray-700">
-                        <span>{item.name} (x{item.qty})</span>
-                        <span>{item.price}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 flex justify-between space-x-2">
-                    <Link href="/cart" className="w-1/2 text-center text-sm py-2 bg-[#491D0B] text-white rounded hover:bg-[#391509] transition">
-                      Go to Cart
-                    </Link>
-                    <Link href="/checkout" className="w-1/2 text-center text-sm py-2 bg-[#C09A44] text-white rounded hover:bg-[#ab883c] transition">
-                      Checkout
-                    </Link>
+                  <div className="p-4">
+                    <h4 className="text-lg font-bold text-[#491D0B] mb-3">Your Cart</h4>
+                    
+                    {cartItems.length === 0 ? (
+                      <p className="text-gray-500 text-center py-4">Your cart is empty</p>
+                    ) : (
+                      <>
+                        <div className="max-h-64 overflow-y-auto space-y-4 pr-2">
+                          {cartItems.map((item) => {
+                            const price = parsePrice(item.discountedPrice || item.originalPrice);
+                            const originalPrice = parsePrice(item.originalPrice);
+                            const hasDiscount = item.discountedPrice && originalPrice > price;
+
+                            return (
+                              <div key={item.id} className="flex gap-3 py-2 border-b border-gray-100 last:border-0">
+                                <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden">
+                                  <Image
+                                    src={item.imageUrl}
+                                    alt={item.name}
+                                    fill
+                                    className="object-cover"
+                                  />
+                                </div>
+                                <div className="flex-1">
+                                  <div className="flex justify-between">
+                                    <h5 className="text-sm font-medium text-[#491D0B] line-clamp-1">{item.name}</h5>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        removeFromCart(item.id);
+                                      }}
+                                      className="text-gray-400 hover:text-red-500 transition-colors"
+                                    >
+                                      <Trash2 size={16} />
+                                    </button>
+                                  </div>
+                                  <p className="text-xs text-gray-500 mb-1">{item.variety}</p>
+                                  <div className="flex items-center justify-between">
+                                    <div className="text-sm">
+                                      {hasDiscount && (
+                                        <span className="text-xs text-gray-400 line-through mr-1">
+                                          ৳{originalPrice.toFixed(2)}
+                                        </span>
+                                      )}
+                                      <span className={`font-medium ${hasDiscount ? 'text-[#C09A44]' : 'text-[#491D0B]'}`}>
+                                        ৳{price.toFixed(2)}
+                                      </span>
+                                    </div>
+                                    <span className="text-sm text-gray-600">x{item.qty || 1}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        <div className="mt-4 pt-4 border-t border-gray-200">
+                          <div className="flex justify-between mb-4">
+                            <span className="font-medium">Total</span>
+                            <span className="font-bold text-[#491D0B]">৳{total.toFixed(2)}</span>
+                          </div>
+                          <div className="flex flex-col space-y-2">
+                            <Link
+                              href="/cart"
+                              className="py-2 px-4 bg-[#491D0B] text-white text-center rounded-lg hover:bg-[#391509] transition text-sm font-medium"
+                            >
+                              View Cart
+                            </Link>
+                            <Link
+                              href="/checkout"
+                              className="py-2 px-4 bg-[#C09A44] text-white text-center rounded-lg hover:bg-[#ab883c] transition text-sm font-medium"
+                            >
+                              Checkout
+                            </Link>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -162,9 +228,9 @@ export default function Header() {
                 className="relative text-[#491D0B] hover:text-[#C09A44] transition-colors"
               >
                 <ShoppingCart size={28} />
-                {cartCount > 0 && (
+                {cartItems.length > 0 && (
                   <span className="absolute -top-2 -right-3 bg-[#C09A44] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                    {cartCount}
+                    {cartItems.length}
                   </span>
                 )}
               </button>
