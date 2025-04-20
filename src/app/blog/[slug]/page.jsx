@@ -1,7 +1,6 @@
-// src/app/blog/[slug]/page.jsx
 import { notFound } from 'next/navigation';
 
-// Mock data - replace with real API calls
+// Mock data
 const blogPosts = {
   "health-benefits-organic-mangoes": {
     title: "The Health Benefits of Organic Mangoes",
@@ -18,7 +17,7 @@ const blogPosts = {
     author: "Dr. Ayesha Rahman",
     imageUrl: "/images/blog/alphonso-mango.webp"
   },
-  // Add other posts
+  // ...other posts
 };
 
 export default function BlogPost({ params }) {

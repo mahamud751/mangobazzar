@@ -49,11 +49,11 @@ const GetInTouch = () => {
                                             width={20}
                                             height={20}
                                             alt="Location icon"
-                                            className="mt-1" // Adjusts icon vertical alignment
+                                            className="mt-1"
                                         />
                                         <h2 className="text-xl font-medium text-[#491D0B]">Address</h2>
                                     </div>
-                                    <p className="text-[#491D0B] leading-relaxed ml-8"> {/* Added ml-8 for proper indentation */}
+                                    <p className="text-[#491D0B] leading-relaxed ml-8">
                                         Mango Bazar<br />
                                         Chapai-nawabganj<br />
                                         Rajshahi
