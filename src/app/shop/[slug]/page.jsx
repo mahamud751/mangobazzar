@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { toast } from 'react-hot-toast';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Star, ChevronLeft } from 'lucide-react';
 
 const product = {
     id: 1,
@@ -127,7 +127,7 @@ const tabContent = {
 
 export default function ProductDetails() {
     const [selectedImage, setSelectedImage] = useState(product.images[0]);
-    const [amountKg, setAmountKg] = useState(1);
+    const [amountKg, setAmountKg] = useState(1); // Start with minimum 1kg
     const [activeTab, setActiveTab] = useState('description');
     const { addToCart } = useCart();
 
@@ -138,6 +138,12 @@ export default function ProductDetails() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    const handleAmountChange = (newAmount) => {
+        // Round to nearest 0.5kg increment and ensure minimum 1kg
+        const roundedAmount = Math.max(1, Math.round(newAmount * 2) / 2);
+        setAmountKg(roundedAmount);
+    };
 
     const handleAddToCart = () => {
         const cartItem = {
@@ -169,8 +175,10 @@ export default function ProductDetails() {
         <div className="bg-[#FFF9F0] py-12">
             <div className="container mx-auto px-4 max-w-screen-xl">
                 {/* Breadcrumb */}
-                <div className="text-sm text-[#491D0B] mb-10 space-x-1">
-                    <Link href="/" className="hover:text-[#C09A44]">Home</Link>
+                <div className="flex items-center text-sm text-[#491D0B] mb-10 space-x-1">
+                    <Link href="/" className="hover:text-[#C09A44] flex items-center">
+                        <ChevronLeft size={16} className="mr-1" /> Home
+                    </Link>
                     <span>&gt;</span>
                     <Link href="/shop" className="hover:text-[#C09A44]">Shop</Link>
                     <span>&gt;</span>
@@ -245,21 +253,25 @@ export default function ProductDetails() {
                             ))}
                         </ul>
 
-                        {/* Quantity and Add to Cart Section */}
+                        {/* Amount Controls - 500g increments with 1kg minimum */}
                         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
                             <div className="w-full sm:w-auto">
+                                <label className="text-sm font-medium text-[#491D0B] mb-1 block">Amount (kg)</label>
                                 <div className="flex items-center border border-[#C09A44] rounded-lg overflow-hidden bg-white">
                                     <button
-                                        onClick={() => setAmountKg(Math.max(0.1, amountKg - 0.1))}
-                                        className="px-4 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors"
+                                        onClick={() => handleAmountChange(amountKg - 0.5)}
+                                        disabled={amountKg <= 1}
+                                        className={`px-4 py-2 text-[#C09A44] transition-colors ${
+                                            amountKg <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
+                                        }`}
                                     >
                                         −
                                     </button>
-                                    <span className="px-6 py-2 text-center font-medium text-[#491D0B]">
-                                        {amountKg.toFixed(1)} kg
+                                    <span className="px-6 py-2 text-center w-16 font-medium text-[#491D0B]">
+                                        {amountKg % 1 === 0 ? amountKg.toFixed(0) : amountKg.toFixed(1)}
                                     </span>
                                     <button
-                                        onClick={() => setAmountKg(amountKg + 0.1)}
+                                        onClick={() => handleAmountChange(amountKg + 0.5)}
                                         className="px-4 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors"
                                     >
                                         +
@@ -267,7 +279,7 @@ export default function ProductDetails() {
                                 </div>
                             </div>
 
-                            <div className="w-full sm:w-auto">
+                            <div className="w-full sm:w-auto mt-2 sm:mt-7">
                                 <button 
                                     onClick={handleAddToCart}
                                     disabled={product.stock <= 0}

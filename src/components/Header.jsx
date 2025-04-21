@@ -37,7 +37,7 @@ export default function Header() {
   };
 
   const total = cartItems.reduce(
-    (acc, item) => acc + parsePrice(item.discountedPrice || item.originalPrice) * (item.qty || 1),
+    (acc, item) => acc + parsePrice(item.discountedPrice || item.originalPrice) * (item.quantity || 1),
     0
   );
 
@@ -140,7 +140,7 @@ export default function Header() {
                                         ৳{price.toFixed(2)}
                                       </span>
                                     </div>
-                                    <span className="text-sm text-gray-600">x{item.qty || 1}</span>
+                                    <span className="text-sm text-gray-600">{item.quantity || 1} kg</span>
                                   </div>
                                 </div>
                               </div>

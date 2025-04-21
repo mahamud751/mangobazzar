@@ -2,7 +2,7 @@
 import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Trash2, Minus, Plus } from 'lucide-react';
+import { Trash2, Minus, Plus, ShoppingCart } from 'lucide-react';
 
 export default function CartPage() {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
@@ -17,16 +17,16 @@ export default function CartPage() {
     return parseFloat(numericString) || 0;
   };
 
-  const handleQuantityChange = (itemId, newQty) => {
-    if (newQty > 0) {
-      updateQuantity(itemId, newQty);
-    }
+  const handleAmountChange = (itemId, newAmount) => {
+    // Round to nearest 0.5kg (500g increments) with minimum 1kg
+    const roundedAmount = Math.max(1, Math.round(newAmount * 2) / 2);
+    updateQuantity(itemId, roundedAmount);
   };
 
   const total = cartItems.reduce((acc, item) => {
     const price = parsePrice(item.discountedPrice || item.originalPrice);
-    const qty = parseInt(item.qty) || 0;
-    return acc + price * qty;
+    const amount = parseFloat(item.qty) || 1; // Default to minimum 1kg
+    return acc + price * amount;
   }, 0);
 
   return (
@@ -55,15 +55,15 @@ export default function CartPage() {
           <div className="lg:col-span-2 space-y-4">
             {cartItems.map((item) => {
               const price = parsePrice(item.discountedPrice || item.originalPrice);
-              const qty = parseInt(item.qty) || 0;
-              const subtotal = price * qty;
+              const amount = parseFloat(item.qty) || 1; // Default to minimum 1kg
+              const subtotal = price * amount;
               const originalPrice = parsePrice(item.originalPrice);
               const hasDiscount = item.discountedPrice && originalPrice > price;
 
               return (
                 <div
                   key={item.id}
-                  className="flex flex-col sm:flex-row bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
+                  className="flex flex-col items-center sm:flex-row bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
                 >
                   {/* Image */}
                   <div className="w-full sm:w-40 h-40 flex-shrink-0 relative">
@@ -72,6 +72,7 @@ export default function CartPage() {
                       alt={item.name}
                       fill
                       className="object-cover"
+                      sizes="(max-width: 640px) 100vw, 160px"
                     />
                   </div>
 
@@ -103,24 +104,30 @@ export default function CartPage() {
                       </span>
                     </div>
 
-                    {/* Quantity Controls */}
+                    {/* Amount Controls - 500g increments with 1kg minimum */}
                     <div className="mt-auto flex items-center justify-between">
-                      <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-                        <button
-                          onClick={() => handleQuantityChange(item.id, qty - 1)}
-                          className="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
-                        >
-                          <Minus size={16} />
-                        </button>
-                        <span className="px-4 py-1 text-center w-12 font-medium">
-                          {qty}
-                        </span>
-                        <button
-                          onClick={() => handleQuantityChange(item.id, qty + 1)}
-                          className="px-3 py-1 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
-                        >
-                          <Plus size={16} />
-                        </button>
+                      <div className="flex flex-col w-full sm:w-auto">
+                        <label className="text-sm font-medium text-[#491D0B] mb-1">Amount (kg)</label>
+                        <div className="flex items-center border border-[#C09A44] rounded-lg overflow-hidden bg-white">
+                          <button
+                            onClick={() => handleAmountChange(item.id, amount - 0.5)}
+                            disabled={amount <= 1}
+                            className={`px-3 py-2 text-[#C09A44] transition-colors ${
+                              amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
+                            }`}
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span className="px-4 py-2 text-center w-16 font-medium text-[#491D0B]">
+                            {amount % 1 === 0 ? amount.toFixed(0) : amount.toFixed(1)}
+                          </span>
+                          <button
+                            onClick={() => handleAmountChange(item.id, amount + 0.5)}
+                            className="px-3 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors"
+                          >
+                            <Plus size={16} />
+                          </button>
+                        </div>
                       </div>
                       <div className="text-right">
                         <span className="text-sm text-gray-500">Subtotal</span>
