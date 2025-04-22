@@ -1,81 +1,76 @@
+'use client';
+import { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
 
-const homepageProducts = [
-  {
-    id: 1,
-    name: "Khirsapat Mango",
-    variety: "Rashmo on",
-    originalPrice: "1,700.00৳",
-    discountedPrice: "1,650.00৳",
-    imageUrl: "/khirsapat-mango.png",
-    slug: "khirsapat-mango"
-  },
-  {
-    id: 2,
-    name: "Amrapali Mango",
-    variety: "Shamir on",
-    originalPrice: "1,500.00৳",
-    discountedPrice: "1,350.00৳",
-    imageUrl: "/amrapali-mango.png",
-    slug: "amrapali-mango"
-  },
-  {
-    id: 3,
-    name: "Gopalbhog Mango",
-    variety: "Chmieon on",
-    originalPrice: "1,500.00৳",
-    discountedPrice: "1,400.00৳",
-    imageUrl: "/gopalbhog-mango.png",
-    slug: "gopalbhog-mango"
-  },
-  {
-    id: 4,
-    name: "Langra Mango",
-    variety: "Tikki on",
-    originalPrice: "1,500.00৳",
-    discountedPrice: "1,450.00৳",
-    imageUrl: "/langra-mango.png",
-    slug: "langra-mango"
-  },
-  {
-    id: 5,
-    name: "Fazli Mango",
-    variety: "Seasonal",
-    originalPrice: "1,600.00৳",
-    discountedPrice: "1,550.00৳",
-    imageUrl: "/fazli-mango.png",
-    slug: "fazli-mango"
-  },
-  {
-    id: 6,
-    name: "Himsagar Mango",
-    variety: "Organic",
-    originalPrice: "1,800.00৳",
-    discountedPrice: "1,750.00৳",
-    imageUrl: "/katimon-mango.png",
-    slug: "himsagar-mango"
-  },
-  {
-    id: 7,
-    name: "Raspuri Mango",
-    variety: "Hybrid",
-    originalPrice: "1,400.00৳",
-    discountedPrice: "1,350.00৳",
-    imageUrl: "/banana-mango.png",
-    slug: "raspuri-mango"
-  },
-  {
-    id: 8,
-    name: "Kesar Mango",
-    variety: "Premium",
-    originalPrice: "2,000.00৳",
-    discountedPrice: "1,900.00৳",
-    imageUrl: "/alphonso-mango.webp",
-    slug: "kesar-mango"
-  }
-];
-
 export default function ProductSection() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/products');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+
+        const data = await response.json();
+        setProducts(data.slice(0, 4)); // Get first 4 products for homepage
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-20 bg-[#FAF5E9]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-5xl font-bold text-[#C09A44] mb-4">
+              Taste the Best of Summer 🍋
+            </h2>
+            <p className="text-lg text-[#491D0B] max-w-2xl mx-auto leading-relaxed">
+              Loading our farm-fresh mangoes...
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-md p-4 h-96 animate-pulse"></div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-20 bg-[#FAF5E9]">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#C09A44] mb-4">
+            Taste the Best of Summer 🍋
+          </h2>
+          <p className="text-red-500 mb-6">Error loading products: {error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-[#C09A44] text-white py-2 px-6 rounded-lg"
+          >
+            Try Again
+          </button>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-20 bg-[#FAF5E9]">
       <div className="container mx-auto px-4">
@@ -89,16 +84,19 @@ export default function ProductSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {homepageProducts.map(product => (
+          {products.map(product => (
             <ProductCard
               key={product.id}
               id={product.id}
               name={product.name}
               variety={product.variety}
-              originalPrice={product.originalPrice}
-              discountedPrice={product.discountedPrice}
-              imageUrl={product.imageUrl}
+              originalPrice={`৳${product.originalPrice}`}
+              discountedPrice={`৳${product.price}`}
+              imageUrl={product.images?.[0] || '/default-mango.png'}
               slug={product.slug}
+              rating={product.rating}
+              discount={product.discount}
+              isNew={product.isNew}
             />
           ))}
         </div>

@@ -1,48 +1,67 @@
+'use client';
+import { useState, useEffect } from 'react';
 import BlogCardItem from './BlogCardItem';
 
-const getBlogPosts = async () => {
-  return [
-    {
-      id: 1,
-      title: "The Health Benefits of Organic Mangoes",
-      excerpt: "Discover why organic mangoes from Chapai Nawabganj are packed with more nutrients and flavor than conventional varieties. Our mangoes are grown without harmful pesticides.",
-      date: "May 15, 2023",
-      author: "Dr. Ayesha Rahman",
-      imageUrl: "/alphonso-mango.webp",
-      slug: "health-benefits-organic-mangoes"
-    },
-    {
-      id: 2,
-      title: "Mango Festival 2023: A Sweet Success",
-      excerpt: "Our annual mango festival attracted thousands of visitors this year. Highlights included rare mango varieties and cooking demonstrations by celebrity chefs.",
-      date: "June 2, 2023",
-      author: "Mango Bazar Team",
-      imageUrl: "/mango-festival.webp",
-      slug: "mango-festival-2023"
-    },
-    {
-      id: 3,
-      title: "Growing Mangoes Sustainably in Bangladesh",
-      excerpt: "Learn about our eco-friendly farming practices that produce premium mangoes while protecting the environment and supporting local communities.",
-      date: "April 28, 2023",
-      author: "Farid Ahmed",
-      imageUrl: "/sustainable-farming.webp",
-      slug: "sustainable-mango-farming"
-    },
-    {
-      id: 4,
-      title: "How to Select the Perfect Mango",
-      excerpt: "Expert tips for choosing ripe, flavorful mangoes every time. Learn how to identify the best mangoes by their color, fragrance, and texture.",
-      date: "May 5, 2023",
-      author: "Mango Bazar Team",
-      imageUrl: "/selecting-mangoes.webp",
-      slug: "select-perfect-mango"
-    }
-  ];
-};
+const BlogPageSection = () => {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 4;
 
-const BlogPageSection = async () => {
-  const blogPosts = await getBlogPosts();
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/blog');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch blog posts');
+        }
+
+        const data = await response.json();
+        setBlogPosts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogPosts();
+  }, []);
+
+  // Pagination logic
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(blogPosts.length / postsPerPage);
+
+  if (loading) {
+    return (
+      <div className="bg-[#FFF9F0] py-12">
+        <div className="container mx-auto px-4 text-center">
+          <p>Loading blog posts...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-[#FFF9F0] py-12">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-red-500">Error: {error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-4 bg-[#C09A44] text-white px-4 py-2 rounded"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#FFF9F0] py-12">
@@ -57,7 +76,7 @@ const BlogPageSection = async () => {
 
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {blogPosts.map(post => (
+          {currentPosts.map(post => (
             <BlogCardItem
               key={post.id}
               title={post.title}
@@ -71,17 +90,37 @@ const BlogPageSection = async () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center mt-12">
-          <nav className="flex items-center space-x-2">
-            <button className="px-4 py-2 border border-[#C09A44] text-[#C09A44] rounded hover:bg-[#C09A44] hover:text-white transition">
-              Previous
-            </button>
-            <button className="px-4 py-2 bg-[#C09A44] text-white rounded">1</button>
-            <button className="px-4 py-2 border border-[#C09A44] text-[#C09A44] rounded hover:bg-[#C09A44] hover:text-white transition">
-              Next
-            </button>
-          </nav>
-        </div>
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-12">
+            <nav className="flex items-center space-x-2">
+              <button 
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border border-[#C09A44] text-[#C09A44] rounded hover:bg-[#C09A44] hover:text-white transition disabled:opacity-50"
+              >
+                Previous
+              </button>
+              
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`px-4 py-2 rounded ${currentPage === i + 1 ? 'bg-[#C09A44] text-white' : 'border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'}`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              
+              <button 
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border border-[#C09A44] text-[#C09A44] rounded hover:bg-[#C09A44] hover:text-white transition disabled:opacity-50"
+              >
+                Next
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
     </div>
   );

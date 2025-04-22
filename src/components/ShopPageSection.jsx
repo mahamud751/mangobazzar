@@ -1,152 +1,49 @@
 "use client";
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import ProductCard from '@/components/ProductCard';
-
-const rawProducts = [
-  {
-    id: 1,
-    name: "Organic Himsagar Mango",
-    price: 450,
-    originalPrice: 550,
-    imageUrl: "/images/products/amrapali-mango.png",
-    rating: 4.8,
-    discount: "18% OFF",
-    isNew: true,
-    slug: "organic-himsagar-mango"
-  },
-  {
-    id: 2,
-    name: "Premium Langra Mango",
-    price: 500,
-    originalPrice: 600,
-    imageUrl: "/images/products/banana-mango.png",
-    rating: 4.7,
-    discount: "17% OFF",
-    isNew: false,
-    slug: "premium-langra-mango"
-  },
-  {
-    id: 3,
-    name: "Gopalbhog Mango",
-    price: 400,
-    originalPrice: 480,
-    imageUrl: "/images/products/fazli-mango.png",
-    rating: 4.5,
-    discount: "17% OFF",
-    isNew: true,
-    slug: "gopalbhog-mango"
-  },
-  {
-    id: 4,
-    name: "Fazli Mango (Seasonal)",
-    price: 550,
-    originalPrice: 650,
-    imageUrl: "/images/products/langra-mango.png",
-    rating: 4.9,
-    discount: "15% OFF",
-    isNew: false,
-    slug: "fazli-mango"
-  },
-  {
-    id: 5,
-    name: "Organic Himsagar Mango",
-    price: 450,
-    originalPrice: 550,
-    imageUrl: "/images/products/amrapali-mango.png",
-    rating: 4.8,
-    discount: "18% OFF",
-    isNew: true,
-    slug: "organic-himsagar-mango"
-  },
-  {
-    id: 6,
-    name: "Premium Langra Mango",
-    price: 500,
-    originalPrice: 600,
-    imageUrl: "/images/products/banana-mango.png",
-    rating: 4.7,
-    discount: "17% OFF",
-    isNew: false,
-    slug: "premium-langra-mango"
-  },
-  {
-    id: 7,
-    name: "Gopalbhog Mango",
-    price: 400,
-    originalPrice: 480,
-    imageUrl: "/images/products/fazli-mango.png",
-    rating: 4.5,
-    discount: "17% OFF",
-    isNew: true,
-    slug: "gopalbhog-mango"
-  },
-  {
-    id: 8,
-    name: "Fazli Mango (Seasonal)",
-    price: 550,
-    originalPrice: 650,
-    imageUrl: "/images/products/langra-mango.png",
-    rating: 4.9,
-    discount: "15% OFF",
-    isNew: false,
-    slug: "fazli-mango"
-  },
-  {
-    id: 9,
-    name: "Organic Himsagar Mango",
-    price: 450,
-    originalPrice: 550,
-    imageUrl: "/images/products/amrapali-mango.png",
-    rating: 4.8,
-    discount: "18% OFF",
-    isNew: true,
-    slug: "organic-himsagar-mango"
-  },
-  {
-    id: 10,
-    name: "Premium Langra Mango",
-    price: 500,
-    originalPrice: 600,
-    imageUrl: "/images/products/banana-mango.png",
-    rating: 4.7,
-    discount: "17% OFF",
-    isNew: false,
-    slug: "premium-langra-mango"
-  },
-  {
-    id: 11,
-    name: "Gopalbhog Mango",
-    price: 400,
-    originalPrice: 480,
-    imageUrl: "/images/products/fazli-mango.png",
-    rating: 4.5,
-    discount: "17% OFF",
-    isNew: true,
-    slug: "gopalbhog-mango"
-  },
-  {
-    id: 12,
-    name: "Fazli Mango (Seasonal)",
-    price: 550,
-    originalPrice: 650,
-    imageUrl: "/images/products/langra-mango.png",
-    rating: 4.9,
-    discount: "15% OFF",
-    isNew: false,
-    slug: "fazli-mango"
-  },
-];
 
 const formatPrice = (price) => `৳${price}`;
 
 const ShopPageSection = () => {
   const [sortOption, setSortOption] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const itemsPerPage = 8;
   const productGridRef = useRef(null);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch('/api/products', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setProducts(data);
+      } catch (err) {
+        console.error('Failed to fetch products:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const sortedProducts = useMemo(() => {
-    let sorted = [...rawProducts];
+    let sorted = [...products];
     if (sortOption === 'Price: Low to High') {
       sorted.sort((a, b) => a.price - b.price);
     } else if (sortOption === 'Price: High to Low') {
@@ -154,10 +51,10 @@ const ShopPageSection = () => {
     } else if (sortOption === 'Customer Rating') {
       sorted.sort((a, b) => b.rating - a.rating);
     } else if (sortOption === 'Newest Arrivals') {
-      sorted.sort((a, b) => b.id - a.id);
+      sorted.sort((a, b) => (b.isNew - a.isNew) || (b.id - a.id));
     }
     return sorted;
-  }, [sortOption]);
+  }, [sortOption, products]);
 
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
   const paginatedProducts = sortedProducts.slice(
@@ -173,13 +70,31 @@ const ShopPageSection = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
     if (productGridRef.current) {
-      productGridRef.current.scrollIntoView({ behavior: 'smooth' });
+      productGridRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentPage]);
+  if (loading) {
+    return (
+      <div className="container mx-auto p-4 flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C09A44]"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto p-4 text-center">
+        <p className="text-red-500 mb-4">Error loading products: {error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-[#C09A44] text-white py-2 px-4 rounded"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#FFF9F0] py-14">
@@ -225,58 +140,57 @@ const ShopPageSection = () => {
               variety={product.variety}
               price={formatPrice(product.price)}
               originalPrice={formatPrice(product.originalPrice)}
-              discountedPrice={product.discountedPrice}
-              imageUrl={product.imageUrl}
+              imageUrl={product.images[0]}
               slug={product.slug}
               rating={product.rating}
               discount={product.discount}
               isNew={product.isNew}
+              stock={product.stock}
             />
           ))}
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-center mt-14">
-          <nav className="flex flex-wrap gap-2">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className={`px-4 py-2 border rounded transition ${
-                currentPage === 1
-                  ? 'text-gray-400 border-gray-300 cursor-not-allowed'
-                  : 'border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
-              }`}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-
-            {Array.from({ length: totalPages }, (_, i) => (
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-14">
+            <nav className="flex flex-wrap gap-2">
               <button
-                key={i + 1}
-                onClick={() => handlePageChange(i + 1)}
-                className={`px-4 py-2 rounded transition ${
-                  currentPage === i + 1
-                    ? 'bg-[#C09A44] text-white'
-                    : 'border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
-                }`}
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 border rounded transition ${currentPage === 1
+                    ? 'text-gray-400 border-gray-300 cursor-not-allowed'
+                    : 'border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
+                  }`}
               >
-                {i + 1}
+                Previous
               </button>
-            ))}
 
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              className={`px-4 py-2 border rounded transition ${
-                currentPage === totalPages
-                  ? 'text-gray-400 border-gray-300 cursor-not-allowed'
-                  : 'border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
-              }`}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </nav>
-        </div>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => handlePageChange(i + 1)}
+                  className={`px-4 py-2 rounded transition ${currentPage === i + 1
+                      ? 'bg-[#C09A44] text-white'
+                      : 'border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
+                    }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`px-4 py-2 border rounded transition ${currentPage === totalPages
+                    ? 'text-gray-400 border-gray-300 cursor-not-allowed'
+                    : 'border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
+                  }`}
+              >
+                Next
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -13,12 +13,12 @@ export default function ProductCard({
   originalPrice,
   discountedPrice,
   actionText = "ADD",
-  actionLink = "#",
   imageUrl,
   slug,
   rating,
   discount,
-  isNew
+  isNew,
+  stock
 }) {
   const { addToCart } = useCart();
   const [amount, setAmount] = useState(1);
@@ -39,80 +39,95 @@ export default function ProductCard({
   };
 
   return (
-    <div className="bg-[#fff9eb] rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-[#C09A44BF] hover:shadow-xl transition-shadow duration-200 ease-in-out h-full flex flex-col">
-      {/* Product Image - wrapped in Link */}
-      <Link href={`/shop/${slug}`} className="block">
-        <div className="relative h-60 w-full">
-          <Image
-            src={imageUrl}
-            alt={name}
-            fill
-            className="object-cover rounded-t-lg"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        </div>
+    <div className="bg-[#fff9eb] rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-[#C09A44] hover:shadow-xl transition-all duration-200 flex flex-col h-full">
+      {/* Product Image */}
+      <Link href={`/product/${slug}`} className="block relative aspect-square">
+        <Image
+          src={imageUrl}
+          alt={name}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+        {isNew && (
+          <span className="absolute top-2 left-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full">
+            NEW
+          </span>
+        )}
+        {discount && (
+          <span className="absolute top-2 right-2 bg-[#C09A44] text-white text-xs px-2 py-1 rounded-full">
+            {discount}
+          </span>
+        )}
       </Link>
 
       {/* Product Details */}
-      <div className="p-5 flex flex-col flex-grow">
-        {/* Product Name & Variety - wrapped in Link */}
-        <Link href={`/shop/${slug}`} className="block">
-          <div className="flex flex-col space-y-2">
-            <h3 className="text-xl font-semibold text-[#491D0B]">{name}</h3>
-            <p className="text-sm text-[#491D0B] opacity-70">{variety}</p>
-          </div>
+      <div className="p-4 flex flex-col flex-grow">
+        {/* Product Info */}
+        <Link href={`/product/${slug}`} className="block mb-3">
+          <h3 className="font-semibold text-lg text-[#491D0B] line-clamp-2">{name}</h3>
+          {variety && (
+            <p className="text-sm text-[#491D0B] opacity-75 mt-1">{variety}</p>
+          )}
         </Link>
 
         {/* Price Section */}
-        <div className="mt-4">
-          {discountedPrice ? (
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-bold text-[#C09A44]">{discountedPrice}</span>
-              <span className="text-sm line-through text-[#C09A44BF]">{originalPrice}</span>
-            </div>
-          ) : (
-            <span className="text-xl font-bold text-[#491D0B]">{originalPrice}</span>
+        <div className="mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold text-[#C09A44]">
+              {discountedPrice || `৳${price}`}
+            </span>
+            {originalPrice && (
+              <span className="text-sm line-through text-gray-500">
+                {typeof originalPrice === 'number' ? `৳${originalPrice}` : originalPrice}
+              </span>
+            )}
+          </div>
+          {stock !== undefined && (
+            <p className="text-xs text-gray-500 mt-1">
+              {stock > 0 ? `${stock} kg available` : 'Out of stock'}
+            </p>
           )}
         </div>
 
-        {/* Combined Amount Selector and Add to Cart */}
-        <div className="mt-auto pt-4">
-          <div className="flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
-            {/* Amount Selector */}
-            <div className="flex flex-col w-full sm:w-auto">
-              {/* <label className="text-sm font-medium text-[#491D0B] mb-1">Amount (kg)</label> */}
-              <div className="flex items-center border border-[#C09A44] rounded-lg overflow-hidden bg-white">
-                <button
-                  onClick={() => setAmount(prev => Math.max(1, prev - 0.5))}
-                  disabled={amount <= 1}
-                  className={`px-3 py-2 text-[#C09A44] transition-colors ${amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
-                    }`}
-                >
-                  <Minus size={16} />
-                </button>
-                <span className="px-4 py-2 text-center w-[60px] font-medium text-[#491D0B]">
-                  {amount % 1 === 0 ? amount.toFixed(0) : amount.toFixed(1)}
-                </span>
-                <button
-                  onClick={() => setAmount(prev => prev + 0.5)}
-                  className="px-3 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors"
-                >
-                  <Plus size={16} />
-                </button>
-              </div>
+        {/* Quantity and Add to Cart - FIXED LAYOUT */}
+        <div className="mt-auto">
+          <div className="flex items-center gap-2 w-full">
+            {/* Quantity Selector */}
+            <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden bg-white flex-shrink-0">
+              <button
+                onClick={() => setAmount(prev => Math.max(1, prev - 0.5))}
+                disabled={amount <= 1}
+                className={`px-2 py-2 text-[#C09A44] transition-colors ${
+                  amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
+                }`}
+              >
+                <Minus size={16} />
+              </button>
+              <span className="px-2 py-2 text-center w-12 font-medium text-[#491D0B] text-sm">
+                {amount % 1 === 0 ? amount : amount.toFixed(1)}
+              </span>
+              <button
+                onClick={() => setAmount(prev => prev + 0.5)}
+                className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors"
+              >
+                <Plus size={16} />
+              </button>
             </div>
 
             {/* Add to Cart Button */}
             <button
-              className="flex-shrink-0 w-full sm:w-auto sm:px-6 py-3 bg-[#C09A44] text-white font-medium rounded-lg hover:bg-[#ab883c] transition duration-200 flex items-center justify-center gap-2"
               onClick={handleAddToCart}
+              disabled={stock === 0}
+              className={`flex-1 py-2 bg-[#C09A44] text-white rounded-md hover:bg-[#B08C3E] transition flex items-center justify-center gap-1 text-sm whitespace-nowrap ${
+                stock === 0 ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
-              <ShoppingCart className="text-white" size={18} />
-              <span className="text-sm">{actionText}</span>
+              <ShoppingCart size={16} />
+              <span>{actionText}</span>
             </button>
           </div>
         </div>
-
       </div>
     </div>
   );

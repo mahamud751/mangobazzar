@@ -9,15 +9,15 @@ export default function OrganicMangoSection() {
           <div className="lg:w-1/2 grid grid-cols-2 grid-rows-6 gap-4 h-[600px]">
             <div className="relative col-span-1 row-span-3 rounded-lg overflow-hidden">
               <Image
-                src="/banana-mango.png"
-                alt="Banana Mango"
+                src="/organic-mango-section-01.jpg"
+                alt="organic mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
             <div className="relative col-span-1 row-span-2 rounded-lg overflow-hidden">
               <Image
-                src="/fazli-mango.png"
+                src="/organic-mango-section-02.webp"
                 alt="Fazli Mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -25,7 +25,7 @@ export default function OrganicMangoSection() {
             </div>
             <div className="relative col-span-1 row-span-3 rounded-lg overflow-hidden">
               <Image
-                src="/banana-mango.png"
+                src="/organic-mango-section-03.jpg"
                 alt="Gauromoti Mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -33,7 +33,7 @@ export default function OrganicMangoSection() {
             </div>
             <div className="relative col-span-1 row-span-2 rounded-lg overflow-hidden">
               <Image
-                src="/gopalbhog-mango.png"
+                src="/organic-mango-section-04.webp"
                 alt="Gopalbhog Mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
