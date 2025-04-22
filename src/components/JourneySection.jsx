@@ -5,7 +5,6 @@ import Image from 'next/image';
 
 export default function JourneySection() {
   const [activeAccordion, setActiveAccordion] = useState(0);
-  const [imageHeight, setImageHeight] = useState('auto');
   const contentRef = useRef(null);
   const imageContainerRef = useRef(null);
 
@@ -18,45 +17,51 @@ export default function JourneySection() {
       const contentHeight = contentRef.current.scrollHeight;
       const minHeight = 400;
       const newHeight = Math.max(contentHeight, minHeight);
-      
+
       imageContainerRef.current.style.transition = 'height 0.3s ease';
       imageContainerRef.current.style.height = `${newHeight}px`;
-      
+
       const timer = setTimeout(() => {
         if (imageContainerRef.current) {
           imageContainerRef.current.style.transition = 'none';
         }
       }, 300);
-      
+
       return () => clearTimeout(timer);
     }
   }, [activeAccordion]);
 
   const sections = [
     {
-      title: 'Farming',
-      content: 'A rare blend of traditional farming experience of more than three generations and modern technology paired with the unique geography of Chapai-nawabganj, have enabled us to administer organic treatments for nutrient, pest and disease control to create a forest like environment in our orchards. Our natural and sustainable methods help us deliver organic mangoes to your plates across the globe.'
+      title: 'Nurturing the Orchard',
+      content:
+        'With three generations of mango-growing wisdom and the rich soil of Chapai Nawabganj, we blend tradition with technology. Our orchards mimic forest ecosystems using organic treatments that nourish the trees and protect the fruit without a single drop of harmful chemicals.',
     },
     {
-      title: 'Harvesting',
-      content: 'Our mangolatiers have years of experience and a trained eye in picking mangoes at just the right time to ensure optimum sugar formation and maturity. These are ripened naturally in layers of penda (rice hay) in the old tradition completely untouched by chemicals and middlemen.'
+      title: 'Harvested at the Perfect Moment',
+      content:
+        'Our experienced mangolatiers know precisely when a mango is ready. Harvested with care, our mangoes are never rushed. They’re gently ripened the traditional way — in soft rice hay (penda) — untouched by artificial chemicals.',
     },
     {
-      title: 'Selecting',
-      content: 'A rigorous 3 stage sorting by size, shape and visual defects is done to exclude any fruits with spots, damages and skin flaws. From the farms to our distribution centres, our mangolitiers ensure that you get the finest product both inside and out!'
+      title: 'Curated with Precision',
+      content:
+        'Every mango is hand-sorted in three meticulous stages — for size, shape, and skin quality. Only the finest fruits make it past this stage, ensuring what reaches you is as perfect outside as it is inside.',
     },
     {
-      title: 'Packaging',
-      content: 'The best fruits are packed in our customized, export quality, 6 ply top bottom boxes. They are enclosed in sleeves to prevent bruising or damage during transportation and adequate ventilation is provided in both primary and secondary packaging.'
+      title: 'Packed with Purpose',
+      content:
+        'Each mango is nestled into a protective sleeve and housed in custom export-grade 6-ply boxes. Our packaging is designed to guard against bruises and keep your mangoes fresh and safe in transit.',
     },
     {
-      title: 'Shipping',
-      content: 'When an order is placed online, we work with our premium delivery partners to ship the mangoes to you and your loved ones at the earliest. Special care is taken for gifting orders since the mangoes are a token of your love and affection.'
+      title: 'Swift & Secure Delivery',
+      content:
+        'Once you place an order, our logistics team and trusted delivery partners jump into action. Whether it’s for yourself or a heartfelt gift, we ensure every box arrives on time — and in perfect condition.',
     },
     {
-      title: 'Enjoy!',
-      content: 'Relish pure Chapai Mangoes. Get ready to cut open golden yellow fruits that fill your homes with sweet aroma and nostalgia. Our Organic Chapai Mango takes you back to the good old days of summer fun!'
-    }
+      title: 'Experience the Magic',
+      content:
+        'Peel back the skin and let the aroma transport you. Our mangoes are more than fruit — they’re a nostalgic return to childhood summers, filled with joy, flavor, and the taste of tradition.',
+    },
   ];
 
   return (
@@ -67,7 +72,7 @@ export default function JourneySection() {
             The Mango Bazar Journey
           </h1>
           <p className="text-3xl md:text-4xl font-bold text-[#491D0B]">
-            From The Orchard To Your Hand
+            From Our Orchard to Your Hands, Naturally
           </p>
         </div>
 
@@ -76,7 +81,7 @@ export default function JourneySection() {
           <div 
             className="lg:w-1/2"
             ref={imageContainerRef}
-            style={{ height: imageHeight }}
+            style={{ height: 'auto' }}
           >
             <div className="relative h-full w-full rounded-lg overflow-hidden">
               <Image

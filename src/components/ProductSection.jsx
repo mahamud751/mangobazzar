@@ -18,7 +18,7 @@ export default function ProductSection() {
         }
 
         const data = await response.json();
-        setProducts(data.slice(0, 4)); // Get first 4 products for homepage
+        setProducts(data.slice(0, 4));
       } catch (err) {
         setError(err.message);
         console.error('Error fetching products:', err);

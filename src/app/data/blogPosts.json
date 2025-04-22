@@ -5,7 +5,7 @@
     "content": "Organic mangoes are grown without synthetic pesticides or fertilizers, making them a healthier choice. Studies show that organic fruits often have higher antioxidant levels, and mangoes are no exception. Their high vitamin C and A content makes them great for immunity and skin health...",
     "date": "2023-05-15",
     "author": "Dr. Ayesha Rahman",
-    "imageUrl": "/images/blog/organic-mango.png",
+    "imageUrl": "/images/blog/organic-mango.webp",
     "slug": "health-benefits-organic-mangoes"
   },
   "chapai-nawabganj-mangoes-uniqueness": {
@@ -23,7 +23,7 @@
     "content": "From mango smoothies to salads and chutneys, there are endless ways to enjoy this tropical fruit. Try a mango lassi with yogurt and honey, or a tangy mango salsa to pair with grilled fish. These recipes are not only tasty but also packed with nutrition...",
     "date": "2023-06-05",
     "author": "Rafiq Ahmed",
-    "imageUrl": "/images/blog/mango-recipes.jpg",
+    "imageUrl": "/images/blog/mango-recipes.webp",
     "slug": "mango-recipes-summer"
   },
   "organic-vs-conventional-mangoes": {
@@ -41,7 +41,7 @@
     "content": "To keep your mangoes fresh, store unripe ones at room temperature until they soften. Once ripe, transfer them to the fridge to preserve their freshness for up to a week. Avoid storing them in plastic bags, as it can trap moisture and lead to spoilage...",
     "date": "2023-06-18",
     "author": "Farzana Chowdhury",
-    "imageUrl": "/images/blog/store-mangoes.jpg",
+    "imageUrl": "/images/blog/store-mangoes.webp",
     "slug": "how-to-store-mangoes"
   },
   "mangoes-and-skin-health": {
@@ -68,7 +68,7 @@
     "content": "Mango harvesting is a delicate process. Farmers pick mangoes at the right stage of ripeness to ensure flavor and shelf life. They’re then sorted, cleaned, and packed before heading to local markets and homes across the country...",
     "date": "2023-07-08",
     "author": "Mahbub Alam",
-    "imageUrl": "/images/blog/mango-picking.png",
+    "imageUrl": "/images/blog/mango-picking.webp",
     "slug": "mango-picking-process"
   },
   "mango-season-guide": {
@@ -77,7 +77,7 @@
     "content": "Each variety of mango has a unique season. Himsagar arrives in May, Langra in June, and Amrapali later in July. Understanding the seasons helps you get the freshest mangoes at the peak of their flavor...",
     "date": "2023-07-15",
     "author": "Nurul Amin",
-    "imageUrl": "/images/blog/seasonal-guide.jpg",
+    "imageUrl": "/images/blog/seasonal-guide.webp",
     "slug": "mango-season-guide"
   },
   "nutritional-facts-about-mangoes": {
@@ -86,7 +86,7 @@
     "content": "Mangoes are rich in fiber, vitamins A and C, and potassium. They help digestion, support immune health, and can even contribute to heart health. Eating mangoes in moderation can be a smart choice for healthy living...",
     "date": "2023-07-22",
     "author": "Dr. Selina Haque",
-    "imageUrl": "/images/blog/nutritional-facts.jpg",
+    "imageUrl": "/images/blog/nutritional-facts.webp",
     "slug": "nutritional-facts-about-mangoes"
   }
 }

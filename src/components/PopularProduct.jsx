@@ -11,7 +11,7 @@ export default function PopularProduct() {
     const fetchPopularProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/products/popular'); // New endpoint needed
+        const response = await fetch('/api/products/popular');
         
         if (!response.ok) {
           throw new Error('Failed to fetch popular products');

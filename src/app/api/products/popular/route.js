@@ -8,9 +8,9 @@ export async function GET() {
           price: 450,
           originalPrice: 550,
           images: [
-            "/images/products/himsagar-1.jpg",
-            "/images/products/himsagar-2.jpg",
-            "/images/products/himsagar-3.jpg",
+            "/images/products/himsagar-1.webp",
+            "/images/products/himsagar-2.webp",
+            "/images/products/himsagar-3.webp",
           ],
           rating: 4.8,
           reviews: 124,
@@ -33,9 +33,9 @@ export async function GET() {
           price: 400,
           originalPrice: 500,
           images: [
-            "/images/products/langra-1.jpg",
-            "/images/products/langra-2.jpg",
-            "/images/products/langra-3.jpg",
+            "/images/products/langra-1.webp",
+            "/images/products/langra-2.webp",
+            "/images/products/langra-3.webp",
           ],
           rating: 4.7,
           reviews: 110,
@@ -83,8 +83,8 @@ export async function GET() {
           price: 420,
           originalPrice: 520,
           images: [
-            "/images/products/fazli-1.jpeg",
-            "/images/products/fazli-2.jpeg",
+            "/images/products/fazli-1.webp",
+            "/images/products/fazli-2.webp",
             "/images/products/fazli-3.webp",
           ],
           rating: 4.5,
@@ -108,9 +108,9 @@ export async function GET() {
           price: 460,
           originalPrice: 540,
           images: [
-            "/images/products/khirshapat-1.jpg",
-            "/images/products/khirshapat-2.jpg",
-            "/images/products/khirshapat-3.jpg",
+            "/images/products/khirshapat-1.webp",
+            "/images/products/khirshapat-2.webp",
+            "/images/products/khirshapat-3.webp",
           ],
           rating: 4.9,
           reviews: 135,
@@ -135,7 +135,7 @@ export async function GET() {
           images: [
             "/images/products/gopalbhog-1.webp",
             "/images/products/gopalbhog-2.webp",
-            "/images/products/gopalbhog-3.jpg",
+            "/images/products/gopalbhog-3.webp",
           ],
           rating: 4.4,
           reviews: 89,
@@ -158,9 +158,9 @@ export async function GET() {
           price: 470,
           originalPrice: 560,
           images: [
-            "/images/products/mohanbhog-1.jpg",
-            "/images/products/mohanbhog-2.jpg",
-            "/images/products/mohanbhog-3.jpg",
+            "/images/products/mohanbhog-1.webp",
+            "/images/products/mohanbhog-2.webp",
+            "/images/products/mohanbhog-3.webp",
           ],
           rating: 4.6,
           reviews: 67,
@@ -183,9 +183,9 @@ export async function GET() {
           price: 430,
           originalPrice: 500,
           images: [
-            "/images/products/surjapuri-1.jpg",
-            "/images/products/surjapuri-2.jpg",
-            "/images/products/surjapuri-3.jpg",
+            "/images/products/surjapuri-1.webp",
+            "/images/products/surjapuri-2.webp",
+            "/images/products/surjapuri-3.webp",
           ],
           rating: 4.3,
           reviews: 75,
@@ -208,9 +208,9 @@ export async function GET() {
           price: 390,
           originalPrice: 470,
           images: [
-            "/images/products/kalibhog-1.jpg",
-            "/images/products/kalibhog-2.png",
-            "/images/products/kalibhog-3.jpg",
+            "/images/products/kalibhog-1.webp",
+            "/images/products/kalibhog-2.webp",
+            "/images/products/kalibhog-3.webp",
           ],
           rating: 4.2,
           reviews: 60,
@@ -233,8 +233,8 @@ export async function GET() {
           price: 410,
           originalPrice: 490,
           images: [
-            "/images/products/bombai-1.avif",
-            "/images/products/bombai-2.jpg",
+            "/images/products/bombai-1.webp",
+            "/images/products/bombai-2.webp",
             "/images/products/bombai-3.webp",
           ],
           rating: 4.1,
@@ -258,9 +258,9 @@ export async function GET() {
           price: 395,
           originalPrice: 475,
           images: [
-            "/images/products/laxmanbhog-1.jpg",
-            "/images/products/laxmanbhog-2.png",
-            "/images/products/laxmanbhog-3.png",
+            "/images/products/laxmanbhog-1.webp",
+            "/images/products/laxmanbhog-2.webp",
+            "/images/products/laxmanbhog-3.webp",
           ],
           rating: 4.3,
           reviews: 65,
@@ -284,7 +284,7 @@ export async function GET() {
           originalPrice: 530,
           images: [
             "/images/products/neelumbori-1.webp",
-            "/images/products/neelumbori-2.jpg",
+            "/images/products/neelumbori-2.webp",
             "/images/products/neelumbori-3.webp",
           ],
           rating: 4.0,
@@ -303,11 +303,11 @@ export async function GET() {
         },
       ];
   
-    // Get top-rated products (rating >= 4.5) or implement your own popularity logic
+    // Get top-rated products (rating >= 4.5)
     const popularProducts = products
       .filter(product => product.rating >= 4.5)
       .sort((a, b) => b.rating - a.rating)
-      .slice(0, 4); // Get top 4
+      .slice(0, 4);
   
     return new Response(JSON.stringify(popularProducts), {
       headers: { 'Content-Type': 'application/json' },
