@@ -1,6 +1,6 @@
 export default function ServiceFeatures() {
   return (
-    <section className="py-20 bg-[#FAF5E9]">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Feature Card */}
@@ -26,7 +26,7 @@ export default function ServiceFeatures() {
           ].map((feature, index) => (
             <div
               key={index}
-              className="bg-white p-8 rounded-2xl shadow-sm border border-[#f2e8d8] hover:border-[#C09A44] transition-all duration-200 hover:shadow-md"
+              className="bg-[#FAF5E9] p-8 rounded-2xl shadow-sm border border-[#f2e8d8] hover:border-[#C09A44] transition-all duration-200 hover:shadow-md"
             >
               <div className="flex items-start gap-3 mb-4">
                 <div className="text-4xl">{feature.icon}</div>

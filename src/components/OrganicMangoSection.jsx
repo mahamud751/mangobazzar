@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function OrganicMangoSection() {
   return (
-    <section className="py-16 bg-white">
+    <section className="pt-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center lg:flex-row gap-12">
           {/* Image Grid - Left Side */}
