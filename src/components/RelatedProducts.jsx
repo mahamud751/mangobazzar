@@ -75,7 +75,7 @@ const RelatedProducts = ({ currentProductId, currentProductVariety }) => {
       <h3 className="text-2xl font-bold text-[#491D0B] mb-6">You May Also Like</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {relatedProducts.map(product => (
-          <div key={product.id} className="h-full"> {/* Important wrapper */}
+          <div key={product.id} className="h-full">
             <ProductCard
               id={product.id}
               name={product.name}

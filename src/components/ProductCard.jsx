@@ -98,7 +98,7 @@ export default function ProductCard({
               <button
                 onClick={() => setAmount(prev => Math.max(1, prev - 0.5))}
                 disabled={amount <= 1}
-                className={`px-2 py-2 text-[#C09A44] transition-colors ${
+                className={`px-2 py-2 text-[#C09A44] transition-colors cursor-pointer ${
                   amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
                 }`}
               >
@@ -109,7 +109,7 @@ export default function ProductCard({
               </span>
               <button
                 onClick={() => setAmount(prev => prev + 0.5)}
-                className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors"
+                className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer"
               >
                 <Plus size={16} />
               </button>
@@ -119,7 +119,7 @@ export default function ProductCard({
             <button
               onClick={handleAddToCart}
               disabled={stock === 0}
-              className={`flex-1 py-2 bg-[#C09A44] text-white rounded-md hover:bg-[#B08C3E] transition flex items-center justify-center gap-1 text-sm whitespace-nowrap ${
+              className={`flex-1 py-2 bg-[#C09A44] text-white rounded-md hover:bg-[#B08C3E] transition flex items-center justify-center gap-1 text-sm whitespace-nowrap cursor-pointer ${
                 stock === 0 ? 'opacity-50 cursor-not-allowed' : ''
               }`}
             >

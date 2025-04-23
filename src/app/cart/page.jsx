@@ -10,22 +10,18 @@ export default function CartPage() {
   const parsePrice = (priceString) => {
     if (typeof priceString === 'number') return priceString;
     if (!priceString) return 0;
-    
-    const numericString = priceString.toString()
-      .replace(/[^\d.]/g, '');
-    
+    const numericString = priceString.toString().replace(/[^\d.]/g, '');
     return parseFloat(numericString) || 0;
   };
 
   const handleAmountChange = (itemId, newAmount) => {
-    // Round to nearest 0.5kg (500g increments) with minimum 1kg
     const roundedAmount = Math.max(1, Math.round(newAmount * 2) / 2);
     updateQuantity(itemId, roundedAmount);
   };
 
   const total = cartItems.reduce((acc, item) => {
     const price = parsePrice(item.discountedPrice || item.originalPrice);
-    const amount = parseFloat(item.qty) || 1; // Default to minimum 1kg
+    const amount = parseFloat(item.quantity) || 1;
     return acc + price * amount;
   }, 0);
 
@@ -55,7 +51,7 @@ export default function CartPage() {
           <div className="lg:col-span-2 space-y-4">
             {cartItems.map((item) => {
               const price = parsePrice(item.discountedPrice || item.originalPrice);
-              const amount = parseFloat(item.qty) || 1; // Default to minimum 1kg
+              const amount = parseFloat(item.quantity) || 1;
               const subtotal = price * amount;
               const originalPrice = parsePrice(item.originalPrice);
               const hasDiscount = item.discountedPrice && originalPrice > price;
@@ -85,7 +81,7 @@ export default function CartPage() {
                       </div>
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="text-gray-400 hover:text-red-500 transition-colors"
+                        className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
                         title="Remove item"
                       >
                         <Trash2 size={18} />
@@ -104,7 +100,7 @@ export default function CartPage() {
                       </span>
                     </div>
 
-                    {/* Amount Controls - 500g increments with 1kg minimum */}
+                    {/* Amount Controls */}
                     <div className="mt-auto flex items-center justify-between">
                       <div className="flex flex-col w-full sm:w-auto">
                         <label className="text-sm font-medium text-[#491D0B] mb-1">Amount (kg)</label>
@@ -112,7 +108,7 @@ export default function CartPage() {
                           <button
                             onClick={() => handleAmountChange(item.id, amount - 0.5)}
                             disabled={amount <= 1}
-                            className={`px-3 py-2 text-[#C09A44] transition-colors ${
+                            className={`px-3 py-2 text-[#C09A44] transition-colors cursor-pointer ${
                               amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
                             }`}
                           >
@@ -123,7 +119,7 @@ export default function CartPage() {
                           </span>
                           <button
                             onClick={() => handleAmountChange(item.id, amount + 0.5)}
-                            className="px-3 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors"
+                            className="px-3 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer"
                           >
                             <Plus size={16} />
                           </button>

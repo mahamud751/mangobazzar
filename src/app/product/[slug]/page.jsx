@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { toast } from 'react-hot-toast'
-import { ShoppingCart, ChevronLeft, Star, Truck, Shield } from 'lucide-react'
+import { ShoppingCart, Star, Truck, Shield, Plus, Minus } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import RelatedProducts from '@/components/RelatedProducts'
+import { useCart } from '@/context/CartContext'
 
 export default function ProductDetails() {
   const [product, setProduct] = useState(null)
@@ -19,6 +19,7 @@ export default function ProductDetails() {
 
   const { slug } = useParams()
   const router = useRouter()
+  const { addToCart } = useCart()
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -55,10 +56,16 @@ export default function ProductDetails() {
   const handleAddToCart = () => {
     if (!product) return
 
-    toast.success(`${amountKg}kg ${product.name} added to cart!`, {
-      position: 'bottom-right',
-      style: { backgroundColor: '#C09A44', color: '#fff' },
-      icon: <ShoppingCart size={18} />,
+    const imageUrl = selectedImage || product.images[0]
+
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: imageUrl,
+      quantity: amountKg,
+      stock: product.stock,
+      slug: product.slug
     })
   }
 
@@ -199,27 +206,27 @@ export default function ProductDetails() {
           <div className="mb-6">
             <div className="flex items-center space-x-4 mb-4">
               <span className="font-medium">Quantity (kg):</span>
-              <div className="flex items-center border rounded-lg overflow-hidden">
+              <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden">
                 <button
                   onClick={() => handleAmountChange(amountKg - 0.5)}
                   disabled={amountKg <= 1}
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 disabled:opacity-50"
+                  className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer disabled:opacity-50"
                 >
-                  −
+                  <Minus size={16} />
                 </button>
                 <span className="px-4 py-2">{amountKg}</span>
                 <button
                   onClick={() => handleAmountChange(amountKg + 0.5)}
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200"
+                  className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer"
                 >
-                  +
+                  <Plus size={16} />
                 </button>
               </div>
             </div>
             <button
               onClick={handleAddToCart}
               disabled={product.stock <= 0}
-              className="w-full bg-[#C09A44] hover:bg-[#B08C3E] text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+              className="w-full bg-[#C09A44] hover:bg-[#B08C3E] text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors disabled:opacity-50"
             >
               <ShoppingCart size={18} /> Add to Cart
             </button>

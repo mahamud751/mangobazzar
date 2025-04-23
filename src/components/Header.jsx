@@ -67,7 +67,7 @@ export default function Header() {
             </Link>
           ))}
 
-          {/* Enhanced Cart Dropdown */}
+          {/* Cart Dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setCartHover(true)}
@@ -123,7 +123,7 @@ export default function Header() {
                                         e.stopPropagation();
                                         removeFromCart(item.id);
                                       }}
-                                      className="text-gray-400 hover:text-red-500 transition-colors"
+                                      className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
                                     >
                                       <Trash2 size={16} />
                                     </button>
