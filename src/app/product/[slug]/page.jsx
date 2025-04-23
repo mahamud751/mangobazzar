@@ -250,19 +250,19 @@ export default function ProductDetails() {
         <div className="flex space-x-6">
           <button
             onClick={() => setActiveTab('description')}
-            className={`text-lg font-medium ${activeTab === 'description' ? 'text-[#C09A44]' : 'text-gray-600'}`}
+            className={`text-lg font-medium cursor-pointer ${activeTab === 'description' ? 'text-[#C09A44]' : 'text-gray-600'}`}
           >
             Description
           </button>
           <button
             onClick={() => setActiveTab('reviews')}
-            className={`text-lg font-medium ${activeTab === 'reviews' ? 'text-[#C09A44]' : 'text-gray-600'}`}
+            className={`text-lg font-medium cursor-pointer ${activeTab === 'reviews' ? 'text-[#C09A44]' : 'text-gray-600'}`}
           >
             Reviews
           </button>
           <button
             onClick={() => setActiveTab('shipping')}
-            className={`text-lg font-medium ${activeTab === 'shipping' ? 'text-[#C09A44]' : 'text-gray-600'}`}
+            className={`text-lg font-medium cursor-pointer ${activeTab === 'shipping' ? 'text-[#C09A44]' : 'text-gray-600'}`}
           >
             Shipping
           </button>

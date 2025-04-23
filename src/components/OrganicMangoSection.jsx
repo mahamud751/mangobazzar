@@ -9,7 +9,7 @@ export default function OrganicMangoSection() {
           <div className="lg:w-1/2 grid grid-cols-2 grid-rows-6 gap-4 h-[600px]">
             <div className="relative col-span-1 row-span-3 rounded-lg overflow-hidden">
               <Image
-                src="/organic-mango-section-01.webp"
+                src="https://i.ibb.co/KjXpn0Pb/organic-mango-section-01.webp"
                 alt="organic mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -17,7 +17,7 @@ export default function OrganicMangoSection() {
             </div>
             <div className="relative col-span-1 row-span-2 rounded-lg overflow-hidden">
               <Image
-                src="/organic-mango-section-02.webp"
+                src="https://i.ibb.co/k7r5mf6/organic-mango-section-02.webp"
                 alt="Fazli Mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -25,7 +25,7 @@ export default function OrganicMangoSection() {
             </div>
             <div className="relative col-span-1 row-span-3 rounded-lg overflow-hidden">
               <Image
-                src="/organic-mango-section-03.webp"
+                src="https://i.ibb.co/wFZWqQmL/organic-mango-section-03.webp"
                 alt="Gauromoti Mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -33,7 +33,7 @@ export default function OrganicMangoSection() {
             </div>
             <div className="relative col-span-1 row-span-2 rounded-lg overflow-hidden">
               <Image
-                src="/organic-mango-section-04.webp"
+                src="https://i.ibb.co/8gVgG1yR/organic-mango-section-04.webp"
                 alt="Gopalbhog Mango"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"

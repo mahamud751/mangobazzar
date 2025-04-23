@@ -12,21 +12,21 @@ export default function ReviewSlider() {
       text: "The variety, quality, and quantity from MangoBazar is amazing. I ordered several types of mangoes including the Khiraapat and each one was delicious. If you're looking for the best mangoes from Chapainawabganj, MangoBazar is the place to go!",
       author: "Abdus Sobhan",
       role: "Govt Service Holder",
-      avatar: "/avatar.png",
+      avatar: "https://i.ibb.co/W4gHGZ4K/avatar.webp",
     },
     {
       id: 2,
       text: "MangoBazar is my go-to mango supplier. Their Gopalbhog and Fazli mangoes are unbeatable. Great quality, fast delivery, and very professional service. Perfect for anyone who loves premium mangoes!",
       author: "Umme Kulsum",
       role: "Banker",
-      avatar: "/avatar2.png",
+      avatar: "https://i.ibb.co/Nd2nDrX2/avatar2.webp",
     },
     {
       id: 3,
       text: "Absolutely the best mangoes I've ever had! MangoBazar delivered fresh, premium Chapainawabganj mangoes right to my doorstep. The quality and flavor were exceptional. Highly recommend them!",
       author: "Delwar Hossain",
       role: "Software Engineer",
-      avatar: "/avatar.png",
+      avatar: "https://i.ibb.co/W4gHGZ4K/avatar.webp",
     },
   ];
 

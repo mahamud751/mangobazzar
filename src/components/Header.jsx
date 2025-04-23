@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Menu, X, ShoppingCart, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/context/CartContext';
@@ -11,7 +10,6 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartHover, setCartHover] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  const router = useRouter();
   const { cartItems, removeFromCart } = useCart();
 
   const mobileMenuVariants = {

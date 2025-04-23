@@ -85,7 +85,7 @@ export default function JourneySection() {
           >
             <div className="relative h-full w-full rounded-lg overflow-hidden">
               <Image
-                src="/journey.webp"
+                src="https://i.ibb.co/TxxN3fGd/journey.webp"
                 alt="Mango Bazar Journey"
                 fill
                 className="object-cover"
