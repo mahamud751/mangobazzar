@@ -27,10 +27,10 @@ export default function Header() {
   const parsePrice = (priceString) => {
     if (typeof priceString === 'number') return priceString;
     if (!priceString) return 0;
-    
+
     const numericString = priceString.toString()
       .replace(/[^\d.]/g, '');
-    
+
     return parseFloat(numericString) || 0;
   };
 
@@ -92,7 +92,7 @@ export default function Header() {
                 >
                   <div className="p-4">
                     <h4 className="text-lg font-bold text-[#491D0B] mb-3">Your Cart</h4>
-                    
+
                     {cartItems.length === 0 ? (
                       <p className="text-gray-500 text-center py-4">Your cart is empty</p>
                     ) : (
@@ -211,18 +211,26 @@ export default function Header() {
                 { href: '/blog', label: 'Blog' },
                 { href: '/contact', label: 'Contact' },
               ].map((item) => (
-                <button
+                <Link
                   key={item.href}
-                  onClick={() => handleNavigate(item.href)}
+                  href={item.href}
+                  onClick={() => {
+                    setMenuVisible(false);
+                    setMobileMenuOpen(false);
+                  }}
                   className="text-2xl text-[#491D0B] hover:text-[#C09A44] font-semibold transition-colors duration-200"
                 >
                   {item.label}
-                </button>
+                </Link>
               ))}
 
               {/* Cart for Mobile */}
-              <button
-                onClick={() => handleNavigate('/cart')}
+              <Link
+                href="/cart"
+                onClick={() => {
+                  setMenuVisible(false);
+                  setMobileMenuOpen(false);
+                }}
                 className="relative text-[#491D0B] hover:text-[#C09A44] transition-colors"
               >
                 <ShoppingCart size={28} />
@@ -231,7 +239,7 @@ export default function Header() {
                     {cartItems.length}
                   </span>
                 )}
-              </button>
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>

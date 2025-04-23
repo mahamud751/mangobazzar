@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
 import { CheckCircle2, ChevronLeft, Loader2 } from 'lucide-react';
+import OrderConfirmation from '@/components/OrderConfirmation';
 
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
@@ -55,31 +56,7 @@ export default function CheckoutPage() {
   };
 
   if (orderSuccess) {
-    return (
-      <div className="container mx-auto px-4 py-20 max-w-4xl text-center">
-        <div className="bg-white rounded-xl shadow-sm p-8 border border-green-100">
-          <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-6" />
-          <h1 className="text-3xl font-bold text-[#491D0B] mb-4">Order Confirmed!</h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Thank you for your purchase. Your order has been received and we'll contact you shortly for delivery.
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link
-              href="/shop"
-              className="px-6 py-3 bg-[#C09A44] text-white rounded-lg hover:bg-[#ab883c] transition"
-            >
-              Continue Shopping
-            </Link>
-            <Link
-              href="/orders"
-              className="px-6 py-3 border border-[#491D0B] text-[#491D0B] rounded-lg hover:bg-gray-50 transition"
-            >
-              View Orders
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+    return <OrderConfirmation orderDetails={{ ...formData, total }} />;
   }
 
   return (
@@ -283,7 +260,7 @@ export default function CheckoutPage() {
           <button
             onClick={handleSubmit}
             disabled={isSubmitting || cartItems.length === 0}
-            className={`w-full mt-6 py-3 rounded-lg font-medium flex items-center justify-center ${
+            className={`w-full mt-6 py-3 rounded-lg font-medium flex items-center justify-center cursor-pointer ${
               isSubmitting || cartItems.length === 0
                 ? 'bg-gray-300 cursor-not-allowed'
                 : 'bg-[#C09A44] hover:bg-[#ab883c] text-white'

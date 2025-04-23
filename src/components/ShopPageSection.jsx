@@ -108,7 +108,7 @@ const ShopPageSection = () => {
         </div>
 
         {/* Sort & Count */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        <div className="flex flex-col md:flex-row justify-between md:items-center mb-10 gap-4">
           <div className="text-[#491D0B] font-medium">
             Showing {paginatedProducts.length} of {sortedProducts.length} products
           </div>
