@@ -96,7 +96,7 @@ export default function ProductCard({
             {/* Quantity Selector */}
             <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden bg-white flex-shrink-0">
               <button
-                onClick={() => setAmount(prev => Math.max(1, prev - 0.5))}
+                onClick={() => setAmount(prev => Math.max(1, prev - 1))}
                 disabled={amount <= 1}
                 className={`px-2 py-2 text-[#C09A44] transition-colors cursor-pointer ${
                   amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
@@ -105,11 +105,14 @@ export default function ProductCard({
                 <Minus size={16} />
               </button>
               <span className="px-2 py-2 text-center w-12 font-medium text-[#491D0B] text-sm">
-                {amount % 1 === 0 ? amount : amount.toFixed(1)}
+                {amount}
               </span>
               <button
-                onClick={() => setAmount(prev => prev + 0.5)}
-                className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer"
+                onClick={() => setAmount(prev => prev + 1)}
+                disabled={stock !== undefined && amount >= stock}
+                className={`px-2 py-2 text-[#C09A44] transition-colors cursor-pointer ${
+                  stock !== undefined && amount >= stock ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
+                }`}
               >
                 <Plus size={16} />
               </button>
