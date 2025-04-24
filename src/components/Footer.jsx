@@ -1,3 +1,4 @@
+import { Instagram, Linkedin, Facebook, Youtube } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import BackToTopButton from './BackToTopButton';
@@ -33,7 +34,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-[#C09A44]">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              {[
+              {[ 
                 { href: '/about', label: 'About Us' },
                 { href: '/gifting', label: 'Gifting' },
                 { href: '/shop', label: 'Buy Mangoes' },
@@ -53,7 +54,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-[#C09A44]">Useful Links</h3>
             <ul className="space-y-2 text-sm">
-              {[
+              {[ 
                 { href: '/dubai', label: 'Dubai' },
                 { href: '/singapore', label: 'Singapore' },
                 { href: '/shipping', label: 'Shipping Policy' },
@@ -73,23 +74,30 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4 text-[#C09A44]">Connect & Follow</h3>
             <div className="flex items-center space-x-4">
-              {[
-                { href: '#', src: '/instagram-icon.svg', alt: 'Instagram' },
-                { href: '#', src: '/linkedin-icon.svg', alt: 'LinkedIn' },
-                { href: '#', src: '/facebook-icon.svg', alt: 'Facebook', size: 16 },
-                { href: '#', src: '/youtube-icon.svg', alt: 'YouTube' },
-              ].map((social, idx) => (
-                <Link
-                  key={idx}
-                  href={social.href}
-                  className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
-                >
-                  <Image src={social.src}
-                    width={social.size || 24}
-                    height={social.size || 24}
-                    alt={social.alt} />
-                </Link>
-              ))}
+              <Link
+                href="#"
+                className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
+              >
+                <Instagram size={24} className="text-[#5c2b14]" />
+              </Link>
+              <Link
+                href="#"
+                className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
+              >
+                <Linkedin size={24} className="text-[#5c2b14]" />
+              </Link>
+              <Link
+                href="#"
+                className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
+              >
+                <Facebook size={24} className="text-[#5c2b14]" />
+              </Link>
+              <Link
+                href="#"
+                className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
+              >
+                <Youtube size={24} className="text-[#5c2b14]" />
+              </Link>
             </div>
           </div>
         </div>

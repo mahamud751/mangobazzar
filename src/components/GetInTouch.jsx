@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { MapPin, Mail, Phone } from 'lucide-react';
 import React from 'react';
 
 const GetInTouch = () => {
@@ -44,13 +44,7 @@ const GetInTouch = () => {
                                 {/* Address Section */}
                                 <div>
                                     <div className="flex items-start gap-3 mb-2">
-                                        <Image
-                                            src="/location-icon.svg"
-                                            width={20}
-                                            height={20}
-                                            alt="Location icon"
-                                            className="mt-1"
-                                        />
+                                        <MapPin size={20} className="mt-1 text-[#491D0B]" />
                                         <h2 className="text-xl font-medium text-[#491D0B]">Address</h2>
                                     </div>
                                     <p className="text-[#491D0B] leading-relaxed ml-8">
@@ -63,13 +57,7 @@ const GetInTouch = () => {
                                 {/* Email Section */}
                                 <div>
                                     <div className="flex items-start gap-3 mb-2">
-                                        <Image
-                                            src="/mail-icon.svg"
-                                            width={20}
-                                            height={20}
-                                            alt="Email icon"
-                                            className="mt-1"
-                                        />
+                                        <Mail size={20} className="mt-1 text-[#491D0B]" />
                                         <h2 className="text-xl font-medium text-[#491D0B]">Email Address</h2>
                                     </div>
                                     <p className="text-[#491D0B] ml-8">
@@ -82,13 +70,7 @@ const GetInTouch = () => {
                                 {/* Contact Number Section */}
                                 <div>
                                     <div className="flex items-start gap-3 mb-2">
-                                        <Image
-                                            src="/contact-icon.svg"
-                                            width={20}
-                                            height={20}
-                                            alt="Contact icon"
-                                            className="mt-1"
-                                        />
+                                        <Phone size={20} className="mt-1 text-[#491D0B]" />
                                         <h2 className="text-xl font-medium text-[#491D0B]">Contact Number</h2>
                                     </div>
                                     <p className="text-[#491D0B] ml-8">
