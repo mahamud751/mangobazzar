@@ -76,25 +76,25 @@ export default function Footer() {
             <div className="flex items-center space-x-4">
               <Link
                 href="#"
-                className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
+                className="hover:scale-110 hover:text-[#C09A44] transition-all"
               >
                 <Instagram size={24} className="text-[#5c2b14]" />
               </Link>
               <Link
                 href="#"
-                className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
+                className="hover:scale-110 hover:text-[#C09A44] transition-all"
               >
                 <Linkedin size={24} className="text-[#5c2b14]" />
               </Link>
               <Link
                 href="#"
-                className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
+                className="hover:scale-110 hover:text-[#C09A44] transition-all"
               >
                 <Facebook size={24} className="text-[#5c2b14]" />
               </Link>
               <Link
                 href="#"
-                className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
+                className="hover:scale-110 hover:text-[#C09A44] transition-all"
               >
                 <Youtube size={24} className="text-[#5c2b14]" />
               </Link>
