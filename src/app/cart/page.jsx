@@ -15,8 +15,13 @@ export default function CartPage() {
   };
 
   const handleAmountChange = (itemId, newAmount) => {
-    const roundedAmount = Math.max(1, Math.round(newAmount * 2) / 2);
+    const roundedAmount = Math.max(1, Math.round(newAmount)); // Remove 0.5kg increments
     updateQuantity(itemId, roundedAmount);
+  };
+
+  const handleInputChange = (itemId, e) => {
+    const value = parseInt(e.target.value) || 1;
+    handleAmountChange(itemId, value);
   };
 
   const total = cartItems.reduce((acc, item) => {
@@ -106,7 +111,7 @@ export default function CartPage() {
                         <label className="text-sm font-medium text-[#491D0B] mb-1">Amount (kg)</label>
                         <div className="flex items-center border border-[#C09A44] rounded-lg overflow-hidden bg-white">
                           <button
-                            onClick={() => handleAmountChange(item.id, amount - 0.5)}
+                            onClick={() => handleAmountChange(item.id, amount - 1)}
                             disabled={amount <= 1}
                             className={`px-3 py-2 text-[#C09A44] transition-colors cursor-pointer ${
                               amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
@@ -114,11 +119,15 @@ export default function CartPage() {
                           >
                             <Minus size={16} />
                           </button>
-                          <span className="px-4 py-2 text-center w-16 font-medium text-[#491D0B]">
-                            {amount % 1 === 0 ? amount.toFixed(0) : amount.toFixed(1)}
-                          </span>
+                          <input
+                            type="number"
+                            min="1"
+                            value={amount}
+                            onChange={(e) => handleInputChange(item.id, e)}
+                            className="w-16 px-2 py-2 text-center border-l border-r border-[#C09A44] focus:outline-none focus:ring-1 focus:ring-[#C09A44]"
+                          />
                           <button
-                            onClick={() => handleAmountChange(item.id, amount + 0.5)}
+                            onClick={() => handleAmountChange(item.id, amount + 1)}
                             className="px-3 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer"
                           >
                             <Plus size={16} />

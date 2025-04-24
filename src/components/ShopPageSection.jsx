@@ -145,7 +145,6 @@ const ShopPageSection = () => {
               rating={product.rating}
               discount={product.discount}
               isNew={product.isNew}
-              stock={product.stock}
             />
           ))}
         </div>

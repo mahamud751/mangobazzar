@@ -49,8 +49,14 @@ export default function ProductDetails() {
   }, [slug])
 
   const handleAmountChange = (newAmount) => {
-    const roundedAmount = Math.max(1, Math.round(newAmount * 2) / 2)
-    setAmountKg(roundedAmount)
+    // Ensure amount is at least 1 and a whole number
+    const validatedAmount = Math.max(1, Math.round(newAmount))
+    setAmountKg(validatedAmount)
+  }
+
+  const handleInputChange = (e) => {
+    const value = parseInt(e.target.value) || 1
+    handleAmountChange(value)
   }
 
   const handleAddToCart = () => {
@@ -64,7 +70,6 @@ export default function ProductDetails() {
       price: product.price,
       image: imageUrl,
       quantity: amountKg,
-      stock: product.stock,
       slug: product.slug
     })
   }
@@ -177,13 +182,6 @@ export default function ProductDetails() {
                 </>
               )}
             </div>
-            <div className="mt-2 text-sm">
-              {product.stock > 0 ? (
-                <span className="text-green-600">In Stock ({product.stock} kg available)</span>
-              ) : (
-                <span className="text-red-600">Out of Stock</span>
-              )}
-            </div>
           </div>
 
           <div className="mb-6">
@@ -208,15 +206,21 @@ export default function ProductDetails() {
               <span className="font-medium">Quantity (kg):</span>
               <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden">
                 <button
-                  onClick={() => handleAmountChange(amountKg - 0.5)}
+                  onClick={() => handleAmountChange(amountKg - 1)}
                   disabled={amountKg <= 1}
                   className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer disabled:opacity-50"
                 >
                   <Minus size={16} />
                 </button>
-                <span className="px-4 py-2">{amountKg}</span>
+                <input
+                  type="number"
+                  min="1"
+                  value={amountKg}
+                  onChange={handleInputChange}
+                  className="w-16 px-2 py-2 text-center border-l border-r border-[#C09A44] focus:outline-none focus:ring-1 focus:ring-[#C09A44]"
+                />
                 <button
-                  onClick={() => handleAmountChange(amountKg + 0.5)}
+                  onClick={() => handleAmountChange(amountKg + 1)}
                   className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer"
                 >
                   <Plus size={16} />
@@ -225,8 +229,7 @@ export default function ProductDetails() {
             </div>
             <button
               onClick={handleAddToCart}
-              disabled={product.stock <= 0}
-              className="w-full bg-[#C09A44] hover:bg-[#B08C3E] text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors disabled:opacity-50"
+              className="w-full bg-[#C09A44] hover:bg-[#B08C3E] text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors"
             >
               <ShoppingCart size={18} /> Add to Cart
             </button>

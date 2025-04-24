@@ -34,7 +34,7 @@ export default function Banner() {
           <div className="lg:w-1/2 flex justify-center w-full">
             <div className="relative w-full h-72 md:h-[420px] max-w-[320px] sm:max-w-[400px] md:max-w-lg rounded-3xl overflow-hidden shadow-lg border border-[#f1e6cc]">
               <Image
-                src="https://i.ibb.co/nM8yGVfF/banner-mango.webp"
+                src="https://i.ibb.co/CpV46dvY/banner-mango.webp"
                 alt="Fresh Mangoes from Chapai Nawabganj"
                 fill
                 className="object-cover"
