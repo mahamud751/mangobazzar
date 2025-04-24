@@ -43,8 +43,15 @@ export default function Header() {
     <header className="bg-white shadow-md py-4 fixed top-0 left-0 w-full z-50 border-b border-gray-100 h-[80px]">
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="text-3xl font-bold text-[#491D0B]">
-          Mango <span className="text-[#C09A44]">Bazar</span>
+        {/* Logo */}
+        <Link href="/" className="flex items-center w-[180px] h-[60px] relative flex-shrink-0">
+          <Image
+            src="https://i.ibb.co/RT3pvYMb/logo.png"
+            alt="Mango Bazar"
+            fill
+            className="object-contain hover:opacity-90 transition-opacity"
+            priority
+          />
         </Link>
 
         {/* Desktop Nav */}

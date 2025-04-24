@@ -11,11 +11,20 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand Column */}
-          <div className="md:col-span-2 max-w-sm">
-            <h2 className="text-3xl font-bold text-[#491D0B]">
-              Mango <span className="text-[#C09A44]">Bazar</span>
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-justify text-[#5c2b14]">
+          <div className="md:col-span-2">
+            <Link
+              href="/"
+              className="relative w-[180px] h-[60px] sm:w-[160px] sm:h-[50px] block"
+            >
+              <Image
+                src="https://i.ibb.co/RT3pvYMb/logo.png"
+                alt="Mango Bazar"
+                fill
+                className="object-contain hover:opacity-90 transition-opacity duration-300"
+                priority
+              />
+            </Link>
+            <p className="mt-4 text-sm leading-relaxed text-justify text-[#5c2b14] max-w-xs">
               A legacy of excellence in organic mangoes. Buy premium 100% organic mangoes & products in Bangladesh online.
             </p>
           </div>
@@ -76,7 +85,7 @@ export default function Footer() {
                   className="hover:scale-110 hover:drop-shadow-[0_2px_4px_rgba(192,154,68,0.4)] transition-transform"
                 >
                   <Image src={social.src}
-                    width={social.size || 24}  
+                    width={social.size || 24}
                     height={social.size || 24}
                     alt={social.alt} />
                 </Link>
@@ -91,7 +100,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <BackToTopButton/>
+      <BackToTopButton />
     </footer>
   );
 }
