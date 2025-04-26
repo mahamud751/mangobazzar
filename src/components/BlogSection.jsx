@@ -18,9 +18,9 @@ export default function BlogSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {topPosts.map((post) => (
+          {topPosts.map((post, i) => (
             <BlogCardItem
-              key={post.slug}
+              key={i}
               title={post.title}
               excerpt={post.excerpt}
               date={post.date}
