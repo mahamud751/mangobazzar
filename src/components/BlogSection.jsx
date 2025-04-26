@@ -1,7 +1,7 @@
 import BlogCardItem from './BlogCardItem';
 
 export default async function BlogSection() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/blog`, {
+  const res = await fetch(`${process.env.SITE_URL}/api/blog`, {
     cache: 'no-store',
   });
 

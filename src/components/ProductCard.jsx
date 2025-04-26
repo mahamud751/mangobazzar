@@ -3,7 +3,7 @@ import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function ProductCard({
   id,
@@ -20,8 +20,18 @@ export default function ProductCard({
   isNew,
   stock
 }) {
-  const { addToCart } = useCart();
+  const { addToCart, cartItems } = useCart();
   const [amount, setAmount] = useState(1);
+
+  // Sync quantity with cart
+  useEffect(() => {
+    const cartItem = cartItems.find(item => item.id === id);
+    if (cartItem) {
+      setAmount(cartItem.quantity);
+    } else {
+      setAmount(1); // Reset to 1 if not in cart
+    }
+  }, [cartItems, id]);
 
   const handleAddToCart = () => {
     const product = {
@@ -90,7 +100,7 @@ export default function ProductCard({
           )}
         </div>
 
-        {/* Quantity and Add to Cart - FIXED LAYOUT */}
+        {/* Quantity and Add to Cart */}
         <div className="mt-auto">
           <div className="flex items-center gap-2 w-full">
             {/* Quantity Selector */}

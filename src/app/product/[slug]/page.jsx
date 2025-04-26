@@ -1,68 +1,58 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import { ShoppingCart, Star, Truck, Shield, Plus, Minus } from 'lucide-react'
-import Link from 'next/link'
-import Image from 'next/image'
-import RelatedProducts from '@/components/RelatedProducts'
-import { useCart } from '@/context/CartContext'
+'use client';
+import { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { ShoppingCart, Star, Truck, Shield, Plus, Minus } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import RelatedProducts from '@/components/RelatedProducts';
+import { useCart } from '@/context/CartContext';
 
 export default function ProductDetails() {
-  const [product, setProduct] = useState(null)
-  const [selectedImage, setSelectedImage] = useState('')
-  const [amountKg, setAmountKg] = useState(1)
-  const [activeTab, setActiveTab] = useState('description')
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [isZoomOpen, setIsZoomOpen] = useState(false)
+  const [product, setProduct] = useState(null);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [amountKg, setAmountKg] = useState(1);
+  const [activeTab, setActiveTab] = useState('description');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
 
-  const { slug } = useParams()
-  const router = useRouter()
-  const { addToCart } = useCart()
+  const { slug } = useParams();
+  const router = useRouter();
+  const { addToCart, cartItems } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        setIsLoading(true)
-        const response = await fetch(`/api/products/${slug}`)
-
-        if (!response.ok) {
-          throw new Error('Product not found')
-        }
-
-        const data = await response.json()
-        setProduct(data)
-        setSelectedImage(data.images[0])
-        setError(null)
+        setIsLoading(true);
+        const response = await fetch(`/api/products/${slug}`);
+        if (!response.ok) throw new Error('Product not found');
+        const data = await response.json();
+        setProduct(data);
+        setSelectedImage(data.images[0]);
       } catch (err) {
-        setError(err.message)
-        console.error('Error fetching product:', err)
+        setError(err.message);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    if (slug) {
-      fetchProduct()
-    }
-  }, [slug])
+    if (slug) fetchProduct();
+  }, [slug]);
 
   const handleAmountChange = (newAmount) => {
-    // Ensure amount is at least 1 and a whole number
-    const validatedAmount = Math.max(1, Math.round(newAmount))
-    setAmountKg(validatedAmount)
-  }
+    const validatedAmount = Math.max(1, Math.round(newAmount));
+    setAmountKg(validatedAmount);
+  };
 
   const handleInputChange = (e) => {
-    const value = parseInt(e.target.value) || 1
-    handleAmountChange(value)
-  }
+    const value = parseInt(e.target.value) || 1;
+    handleAmountChange(value);
+  };
 
   const handleAddToCart = () => {
-    if (!product) return
+    if (!product) return;
 
-    const imageUrl = selectedImage || product.images[0]
+    const imageUrl = selectedImage || product.images[0];
 
     addToCart({
       id: product.id,
@@ -71,37 +61,35 @@ export default function ProductDetails() {
       price: product.price,
       originalPrice: product.originalPrice,
       discountedPrice: product.discountedPrice,
-      imageUrl: imageUrl,  
+      imageUrl: imageUrl,
       slug: product.slug,
       quantity: amountKg
-    })
-  }
+    });
+  };
 
   if (isLoading) {
     return (
       <div className="container mx-auto p-4 flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C09A44]"></div>
       </div>
-    )
+    );
   }
 
   if (error) {
     return (
       <div className="container mx-auto p-4 text-center">
         <p className="text-red-500 mb-4">{error}</p>
-        <button
-          onClick={() => router.push('/')}
+        <button 
+          onClick={() => router.push('/')} 
           className="bg-[#C09A44] text-white py-2 px-4 rounded"
         >
           Back to Home
         </button>
       </div>
-    )
+    );
   }
 
-  if (!product) {
-    return null
-  }
+  if (!product) return null;
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
@@ -146,7 +134,9 @@ export default function ProductDetails() {
             {product.images.map((image, index) => (
               <div
                 key={index}
-                className={`relative w-24 h-24 min-w-[96px] rounded-md cursor-pointer border ${selectedImage === image ? 'ring-2 ring-[#C09A44]' : 'border-gray-200'}`}
+                className={`relative w-24 h-24 min-w-[96px] rounded-md cursor-pointer border ${
+                  selectedImage === image ? 'ring-2 ring-[#C09A44]' : 'border-gray-200'
+                }`}
                 onClick={() => setSelectedImage(image)}
               >
                 <Image
@@ -181,7 +171,9 @@ export default function ProductDetails() {
               {product.originalPrice && (
                 <>
                   <span className="text-lg text-gray-500 line-through ml-2">৳{product.originalPrice}</span>
-                  <span className="ml-2 bg-[#C09A44] text-white text-sm px-2 py-1 rounded">{product.discount}</span>
+                  <span className="ml-2 bg-[#C09A44] text-white text-sm px-2 py-1 rounded">
+                    {product.discount}
+                  </span>
                 </>
               )}
             </div>
@@ -204,6 +196,7 @@ export default function ProductDetails() {
             </ul>
           </div>
 
+          {/* Quantity and Add to Cart */}
           <div className="mb-6">
             <div className="flex items-center space-x-4 mb-4">
               <span className="font-medium">Quantity (kg):</span>
@@ -256,19 +249,25 @@ export default function ProductDetails() {
         <div className="flex space-x-6">
           <button
             onClick={() => setActiveTab('description')}
-            className={`text-lg font-medium cursor-pointer ${activeTab === 'description' ? 'text-[#C09A44]' : 'text-gray-600'}`}
+            className={`text-lg font-medium cursor-pointer ${
+              activeTab === 'description' ? 'text-[#C09A44]' : 'text-gray-600'
+            }`}
           >
             Description
           </button>
           <button
             onClick={() => setActiveTab('reviews')}
-            className={`text-lg font-medium cursor-pointer ${activeTab === 'reviews' ? 'text-[#C09A44]' : 'text-gray-600'}`}
+            className={`text-lg font-medium cursor-pointer ${
+              activeTab === 'reviews' ? 'text-[#C09A44]' : 'text-gray-600'
+            }`}
           >
             Reviews
           </button>
           <button
             onClick={() => setActiveTab('shipping')}
-            className={`text-lg font-medium cursor-pointer ${activeTab === 'shipping' ? 'text-[#C09A44]' : 'text-gray-600'}`}
+            className={`text-lg font-medium cursor-pointer ${
+              activeTab === 'shipping' ? 'text-[#C09A44]' : 'text-gray-600'
+            }`}
           >
             Shipping
           </button>
@@ -337,5 +336,5 @@ export default function ProductDetails() {
         </div>
       )}
     </div>
-  )
+  );
 }
