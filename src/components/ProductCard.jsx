@@ -3,7 +3,7 @@ import { useCart } from '@/context/CartContext';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function ProductCard({
   id,
@@ -12,7 +12,7 @@ export default function ProductCard({
   price,
   originalPrice,
   discountedPrice,
-  actionText = 'ADD',
+  actionText = "ADD",
   imageUrl,
   slug,
   rating,
@@ -20,13 +20,8 @@ export default function ProductCard({
   isNew,
   stock
 }) {
-  const { addToCart, productQuantities, setProductQuantity } = useCart();
-  const initialQuantity = productQuantities?.[id] || 1;
-  const [amount, setAmount] = useState(initialQuantity);
-
-  useEffect(() => {
-    setProductQuantity(id, amount);
-  }, [amount, id, setProductQuantity]);
+  const { addToCart } = useCart();
+  const [amount, setAmount] = useState(1);
 
   const handleAddToCart = () => {
     const product = {
@@ -45,6 +40,7 @@ export default function ProductCard({
 
   return (
     <div className="bg-[#fff9eb] rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-[#C09A44] hover:shadow-xl transition-all duration-200 flex flex-col h-full">
+      {/* Product Image */}
       <Link href={`/product/${slug}`} className="block relative aspect-square">
         <Image
           src={imageUrl}
@@ -65,7 +61,9 @@ export default function ProductCard({
         )}
       </Link>
 
+      {/* Product Details */}
       <div className="p-4 flex flex-col flex-grow">
+        {/* Product Info */}
         <Link href={`/product/${slug}`} className="block mb-3">
           <h3 className="font-semibold text-lg text-[#491D0B] line-clamp-2">{name}</h3>
           {variety && (
@@ -73,6 +71,7 @@ export default function ProductCard({
           )}
         </Link>
 
+        {/* Price Section */}
         <div className="mb-3">
           <div className="flex items-center gap-2">
             <span className="text-lg font-bold text-[#C09A44]">
@@ -91,8 +90,10 @@ export default function ProductCard({
           )}
         </div>
 
+        {/* Quantity and Add to Cart - FIXED LAYOUT */}
         <div className="mt-auto">
           <div className="flex items-center gap-2 w-full">
+            {/* Quantity Selector */}
             <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden bg-white flex-shrink-0">
               <button
                 onClick={() => setAmount(prev => Math.max(1, prev - 1))}
@@ -117,6 +118,7 @@ export default function ProductCard({
               </button>
             </div>
 
+            {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
               disabled={stock === 0}

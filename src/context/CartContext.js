@@ -12,34 +12,16 @@ export const CartProvider = ({ children }) => {
     return [];
   });
 
-  const [productQuantities, setProductQuantities] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedQuantities = localStorage.getItem('productQuantities');
-      return savedQuantities ? JSON.parse(savedQuantities) : {};
-    }
-    return {};
-  });
-
-  // Sync cart items with localStorage
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (cartItems.length > 0) {
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      } else {
-        localStorage.removeItem('cartItems');
-      }
+    if (cartItems.length > 0) {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    } else {
+      localStorage.removeItem('cartItems');
     }
   }, [cartItems]);
 
-  // Sync productQuantities with localStorage
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('productQuantities', JSON.stringify(productQuantities));
-    }
-  }, [productQuantities]);
-
   const addToCart = (item) => {
-    const quantityToAdd = item.quantity || 1;
+    const quantityToAdd = item.quantity || 1; // default to 1 if not passed
 
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.id === item.id);
@@ -56,12 +38,9 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-    setProductQuantities((prev) => {
-      const newQuantities = { ...prev };
-      delete newQuantities[itemId];
-      return newQuantities;
-    });
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== itemId)
+    );
   };
 
   const updateQuantity = (itemId, quantity) => {
@@ -70,24 +49,10 @@ export const CartProvider = ({ children }) => {
         item.id === itemId ? { ...item, quantity } : item
       )
     );
-    setProductQuantities((prev) => ({ ...prev, [itemId]: quantity }));
-  };
-
-  const setProductQuantity = (productId, quantity) => {
-    setProductQuantities((prev) => ({ ...prev, [productId]: quantity }));
   };
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        productQuantities,
-        setProductQuantity
-      }}
-    >
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity }}>
       {children}
     </CartContext.Provider>
   );

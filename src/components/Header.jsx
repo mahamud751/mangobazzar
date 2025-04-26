@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, ShoppingCart, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/context/CartContext';
@@ -10,7 +10,12 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartHover, setCartHover] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [isClient, setIsClient] = useState(false); // Track if it's client-side
   const { cartItems, removeFromCart } = useCart();
+
+  useEffect(() => {
+    setIsClient(true); // Set after initial render to ensure client-side rendering
+  }, []);
 
   const mobileMenuVariants = {
     hidden: { opacity: 0, x: '100%' },
@@ -39,10 +44,12 @@ export default function Header() {
     0
   );
 
+  // Don't render until mounted (client-side)
+  if (!isClient) return null;
+
   return (
     <header className="bg-white shadow-md py-4 fixed top-0 left-0 w-full z-50 border-b border-gray-100 h-[80px]">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        {/* Logo */}
         {/* Logo */}
         <Link href="/" className="flex items-center w-[180px] h-[60px] relative flex-shrink-0">
           <Image
@@ -56,7 +63,7 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-6 relative">
-          {[
+          {[ 
             { href: '/', label: 'Home' },
             { href: '/about', label: 'About' },
             { href: '/shop', label: 'Shop' },
@@ -211,7 +218,7 @@ export default function Header() {
                 <X size={32} />
               </button>
 
-              {[
+              {[ 
                 { href: '/', label: 'Home' },
                 { href: '/about', label: 'About' },
                 { href: '/shop', label: 'Shop' },
