@@ -1,6 +1,6 @@
 'use client';
 import { useCart } from '@/context/CartContext';
-import { ShoppingCart, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, Eye } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -12,7 +12,7 @@ export default function ProductCard({
   price,
   originalPrice,
   discountedPrice,
-  actionText = "ADD",
+  actionText = "VIEW DETAILS",
   imageUrl,
   slug,
   rating,
@@ -20,24 +20,6 @@ export default function ProductCard({
   isNew,
   stock
 }) {
-  const { addToCart } = useCart();
-  const [amount, setAmount] = useState(1);
-
-  const handleAddToCart = () => {
-    const product = {
-      id,
-      name,
-      variety,
-      price,
-      originalPrice,
-      discountedPrice,
-      imageUrl,
-      slug,
-      quantity: amount
-    };
-    addToCart(product);
-  };
-
   return (
     <div className="bg-[#fff9eb] rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-[#C09A44] hover:shadow-xl transition-all duration-200 flex flex-col h-full">
       {/* Product Image */}
@@ -90,46 +72,15 @@ export default function ProductCard({
           )}
         </div>
 
-        {/* Quantity and Add to Cart - FIXED LAYOUT */}
+        {/* View Details Button - FIXED LAYOUT */}
         <div className="mt-auto">
-          <div className="flex items-center gap-2 w-full">
-            {/* Quantity Selector */}
-            <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden bg-white flex-shrink-0">
-              <button
-                onClick={() => setAmount(prev => Math.max(1, prev - 1))}
-                disabled={amount <= 1}
-                className={`px-2 py-2 text-[#C09A44] transition-colors cursor-pointer ${
-                  amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
-                }`}
-              >
-                <Minus size={16} />
-              </button>
-              <span className="px-2 py-2 text-center w-12 font-medium text-[#491D0B] text-sm">
-                {amount}
-              </span>
-              <button
-                onClick={() => setAmount(prev => prev + 1)}
-                disabled={stock !== undefined && amount >= stock}
-                className={`px-2 py-2 text-[#C09A44] transition-colors cursor-pointer ${
-                  stock !== undefined && amount >= stock ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
-                }`}
-              >
-                <Plus size={16} />
-              </button>
-            </div>
-
-            {/* Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              disabled={stock === 0}
-              className={`flex-1 py-2 bg-[#C09A44] text-white rounded-md hover:bg-[#B08C3E] transition flex items-center justify-center gap-1 text-sm whitespace-nowrap cursor-pointer ${
-                stock === 0 ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <ShoppingCart size={16} />
-              <span>{actionText}</span>
-            </button>
-          </div>
+          <Link 
+            href={`/product/${slug}`}
+            className="w-full py-2 bg-[#C09A44] text-white rounded-md hover:bg-[#B08C3E] transition flex items-center justify-center gap-1 text-sm whitespace-nowrap cursor-pointer"
+          >
+            <Eye size={16} />
+            <span>{actionText}</span>
+          </Link>
         </div>
       </div>
     </div>

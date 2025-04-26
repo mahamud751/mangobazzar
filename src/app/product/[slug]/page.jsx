@@ -67,10 +67,13 @@ export default function ProductDetails() {
     addToCart({
       id: product.id,
       name: product.name,
+      variety: product.variety,
       price: product.price,
-      image: imageUrl,
-      quantity: amountKg,
-      slug: product.slug
+      originalPrice: product.originalPrice,
+      discountedPrice: product.discountedPrice,
+      imageUrl: imageUrl,  
+      slug: product.slug,
+      quantity: amountKg
     })
   }
 

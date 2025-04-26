@@ -21,7 +21,7 @@ export default function CheckoutPage() {
 
   // Calculate totals
   const subtotal = cartItems.reduce(
-    (acc, item) => acc + parsePrice(item.discountedPrice || item.originalPrice) * (item.qty || 1),
+    (acc, item) => acc + parsePrice(item.discountedPrice || item.originalPrice) * (item.quantity || 1),
     0
   );
   const shipping = 0; // Free shipping for now
@@ -232,9 +232,9 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-gray-600">x{item.qty || 1}</span>
+                    <span className="text-gray-600">x{item.quantity || 1}</span>
                     <p className="font-medium text-[#491D0B]">
-                      ৳{(price * (item.qty || 1)).toFixed(2)}
+                      ৳{(price * (item.quantity || 1)).toFixed(2)}
                     </p>
                   </div>
                 </div>
