@@ -26,15 +26,6 @@
     "imageUrl": "https://i.ibb.co/VkxvrCk/mango-recipes.webp",
     "slug": "mango-recipes-summer"
   },
-  "organic-vs-conventional-mangoes": {
-    "title": "Organic vs. Conventional Mangoes: What's the Difference?",
-    "excerpt": "Explore the key differences between organic and conventional mango farming and how it affects taste and health.",
-    "content": "Organic mangoes are cultivated without synthetic chemicals, making them better for your health and the environment. Conventional mangoes, though more widely available, often contain pesticide residues. The choice often comes down to what matters most to the consumer...",
-    "date": "2023-06-12",
-    "author": "Tania Islam",
-    "imageUrl": "https://i.ibb.co/7xjjfvr5/organic-vs-conventional.webp",
-    "slug": "organic-vs-conventional-mangoes"
-  },
   "how-to-store-mangoes": {
     "title": "How to Store Mangoes to Keep Them Fresh Longer",
     "excerpt": "Learn simple tips to store your mangoes properly and extend their shelf life at home.",
@@ -88,10 +79,14 @@
     "author": "Dr. Selina Haque",
     "imageUrl": "https://i.ibb.co/JFzbPD1c/nutritional-facts.webp",
     "slug": "nutritional-facts-about-mangoes"
+  },
+  "organic-vs-conventional-mangoes": {
+    "title": "Organic vs. Conventional Mangoes: What's the Difference?",
+    "excerpt": "Explore the key differences between organic and conventional mango farming and how it affects taste and health.",
+    "content": "Organic mangoes are cultivated without synthetic chemicals, making them better for your health and the environment. Conventional mangoes, though more widely available, often contain pesticide residues. The choice often comes down to what matters most to the consumer...",
+    "date": "2023-06-12",
+    "author": "Tania Islam",
+    "imageUrl": "https://i.ibb.co/7xjjfvr5/organic-vs-conventional.webp",
+    "slug": "organic-vs-conventional-mangoes"
   }
 }
-
-
-
-
-

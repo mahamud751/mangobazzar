@@ -104,7 +104,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-[#e9e4da] text-center text-sm text-[#5c2b14]">
-          <p>Copyright © 2025. All rights reserved by <span className="font-semibold">Mango Bazar</span>.</p>
+          <p>Copyright © 2025. All rights reserved by <span className="font-semibold">Chapai Mango Bazar</span>.</p>
         </div>
       </div>
 

@@ -69,7 +69,7 @@ export default function JourneySection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-[#C09A44] mb-2">
-            The Mango Bazar Journey
+            The Chapai Mango Bazar Journey
           </h1>
           <p className="text-3xl md:text-4xl font-bold text-[#491D0B]">
             From Our Orchard to Your Hands, Naturally
@@ -86,7 +86,7 @@ export default function JourneySection() {
             <div className="relative h-full w-full rounded-lg overflow-hidden">
               <Image
                 src="https://i.ibb.co/TxxN3fGd/journey.webp"
-                alt="Mango Bazar Journey"
+                alt="Chapai Mango Bazar Journey"
                 fill
                 className="object-cover"
                 priority

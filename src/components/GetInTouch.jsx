@@ -75,7 +75,7 @@ const GetInTouch = () => {
                                     </div>
                                     <p className="text-[#491D0B] ml-8">
                                         <a href="tel:01712345678" className="block hover:underline">
-                                            01712345678
+                                            01789999751
                                         </a>
                                     </p>
                                 </div>

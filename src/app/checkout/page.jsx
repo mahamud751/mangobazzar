@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
 import { CheckCircle2, ChevronLeft, Loader2 } from 'lucide-react';
@@ -10,6 +10,14 @@ export default function CheckoutPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [touchedFields, setTouchedFields] = useState({
+    name: false,
+    email: false,
+    phone: false,
+    address: false,
+    city: false
+  });
 
   // Parse price utility
   const parsePrice = (priceString) => {
@@ -34,22 +42,47 @@ export default function CheckoutPage() {
     phone: '',
     address: '',
     city: '',
-    paymentMethod: 'cash', // Default to cash on delivery
+    paymentMethod: 'cash',
   });
+
+  // Check form validity whenever form data changes
+  useEffect(() => {
+    const isValid = (
+      formData.name.trim() !== '' &&
+      formData.email.trim() !== '' &&
+      formData.phone.trim() !== '' &&
+      formData.address.trim() !== '' &&
+      formData.city.trim() !== ''
+    );
+    setIsFormValid(isValid);
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouchedFields(prev => ({ ...prev, [name]: true }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Mark all fields as touched when trying to submit
+    setTouchedFields({
+      name: true,
+      email: true,
+      phone: true,
+      address: true,
+      city: true
+    });
+
+    if (!isFormValid) return;
+    
     setIsSubmitting(true);
-
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
-
-    // On success
     setOrderSuccess(true);
     clearCart();
     setIsSubmitting(false);
@@ -89,8 +122,14 @@ export default function CheckoutPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition"
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition ${
+                    touchedFields.name && formData.name.trim() === '' ? 'border-red-300' : 'border-gray-300'
+                  }`}
                 />
+                {touchedFields.name && formData.name.trim() === '' && (
+                  <p className="mt-1 text-sm text-red-500">Please enter your full name</p>
+                )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -105,8 +144,14 @@ export default function CheckoutPage() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition"
+                    onBlur={handleBlur}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition ${
+                      touchedFields.email && formData.email.trim() === '' ? 'border-red-300' : 'border-gray-300'
+                    }`}
                   />
+                  {touchedFields.email && formData.email.trim() === '' && (
+                    <p className="mt-1 text-sm text-red-500">Please enter your email</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
@@ -119,8 +164,14 @@ export default function CheckoutPage() {
                     required
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition"
+                    onBlur={handleBlur}
+                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition ${
+                      touchedFields.phone && formData.phone.trim() === '' ? 'border-red-300' : 'border-gray-300'
+                    }`}
                   />
+                  {touchedFields.phone && formData.phone.trim() === '' && (
+                    <p className="mt-1 text-sm text-red-500">Please enter your phone number</p>
+                  )}
                 </div>
               </div>
 
@@ -135,8 +186,14 @@ export default function CheckoutPage() {
                   required
                   value={formData.address}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition"
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition ${
+                    touchedFields.address && formData.address.trim() === '' ? 'border-red-300' : 'border-gray-300'
+                  }`}
                 />
+                {touchedFields.address && formData.address.trim() === '' && (
+                  <p className="mt-1 text-sm text-red-500">Please enter your delivery address</p>
+                )}
               </div>
 
               <div>
@@ -150,8 +207,14 @@ export default function CheckoutPage() {
                   required
                   value={formData.city}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition"
+                  onBlur={handleBlur}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#C09A44] focus:border-[#C09A44] outline-none transition ${
+                    touchedFields.city && formData.city.trim() === '' ? 'border-red-300' : 'border-gray-300'
+                  }`}
                 />
+                {touchedFields.city && formData.city.trim() === '' && (
+                  <p className="mt-1 text-sm text-red-500">Please enter your city</p>
+                )}
               </div>
 
               <div className="pt-4">
@@ -259,9 +322,9 @@ export default function CheckoutPage() {
 
           <button
             onClick={handleSubmit}
-            disabled={isSubmitting || cartItems.length === 0}
+            disabled={isSubmitting || cartItems.length === 0 || !isFormValid}
             className={`w-full mt-6 py-3 rounded-lg font-medium flex items-center justify-center cursor-pointer ${
-              isSubmitting || cartItems.length === 0
+              isSubmitting || cartItems.length === 0 || !isFormValid
                 ? 'bg-gray-300 cursor-not-allowed'
                 : 'bg-[#C09A44] hover:bg-[#ab883c] text-white'
             } transition`}

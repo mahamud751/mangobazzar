@@ -23,7 +23,7 @@ export default function OrderConfirmation() {
       <div className="bg-amber-50 rounded-lg p-6 max-w-md mx-auto mb-8">
         <div className="flex items-center justify-center space-x-2 mb-3">
           <Phone size={20} className="text-[#C09A44]" />
-          <span className="text-lg font-medium text-[#491D0B]">Call us at: 01781-819765</span>
+          <span className="text-lg font-medium text-[#491D0B]">Call us at: 01789999751</span>
         </div>
         <p className="text-sm text-gray-600">
           Our team is available from 9AM to 6PM every day
