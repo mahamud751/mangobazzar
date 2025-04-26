@@ -21,6 +21,18 @@ export default function ProductDetails() {
   const { addToCart, cartItems } = useCart();
 
   useEffect(() => {
+    if (product) {
+      const cartItem = cartItems.find((item) => item.id === product.id);
+      if (cartItem) {
+        setAmountKg(cartItem.quantity);
+      }
+    }
+  }, [product, cartItems]);
+
+  useEffect(() => {
+  }, [amountKg]);
+
+  useEffect(() => {
     const fetchProduct = async () => {
       try {
         setIsLoading(true);
@@ -45,16 +57,21 @@ export default function ProductDetails() {
   };
 
   const handleInputChange = (e) => {
-    const value = parseInt(e.target.value) || 1;
-    handleAmountChange(value);
+    const value = e.target.value;
+    console.log('Input value:', value);
+    if (value === '' || isNaN(value)) {
+      setAmountKg(1);
+      return;
+    }
+    const parsedValue = parseInt(value);
+    handleAmountChange(parsedValue);
   };
 
   const handleAddToCart = () => {
     if (!product) return;
 
     const imageUrl = selectedImage || product.images[0];
-
-    addToCart({
+    const cartProduct = {
       id: product.id,
       name: product.name,
       variety: product.variety,
@@ -64,8 +81,13 @@ export default function ProductDetails() {
       imageUrl: imageUrl,
       slug: product.slug,
       quantity: amountKg
-    });
+    };
+    console.log('ProductDetails adding:', cartProduct);
+    addToCart(cartProduct);
   };
+
+  const cartItem = cartItems.find((item) => item.id === product?.id);
+  const currentQuantity = cartItem ? cartItem.quantity : 0;
 
   if (isLoading) {
     return (
@@ -93,7 +115,6 @@ export default function ProductDetails() {
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
-      {/* Breadcrumb */}
       <div className="flex items-center text-sm text-[#491D0B] mb-6 space-x-1">
         <Link href="/" className="hover:text-[#C09A44] flex items-center">
           Home
@@ -106,11 +127,8 @@ export default function ProductDetails() {
         <span className="text-[#C09A44] font-medium">{product.name}</span>
       </div>
 
-      {/* Product Details */}
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Product Images */}
         <div className="w-full lg:w-1/2">
-          {/* Main Image */}
           <div
             className="group relative w-full h-[350px] bg-gray-100 rounded-lg overflow-hidden border border-gray-200 cursor-zoom-in"
             onClick={() => setIsZoomOpen(true)}
@@ -128,8 +146,6 @@ export default function ProductDetails() {
               </span>
             )}
           </div>
-
-          {/* Thumbnail Images */}
           <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
             {product.images.map((image, index) => (
               <div
@@ -150,12 +166,10 @@ export default function ProductDetails() {
           </div>
         </div>
 
-        {/* Product Info */}
         <div className="w-full lg:w-1/2">
           <div className="mb-4">
             <span className="text-[#C09A44] font-medium">{product.variety}</span>
             <h1 className="text-3xl font-bold text-[#491D0B] mt-1">{product.name}</h1>
-
             <div className="flex items-center mt-2">
               <div className="flex items-center bg-amber-50 px-2 py-1 rounded">
                 <Star size={16} className="text-amber-500 fill-amber-500" />
@@ -196,13 +210,15 @@ export default function ProductDetails() {
             </ul>
           </div>
 
-          {/* Quantity and Add to Cart */}
           <div className="mb-6">
             <div className="flex items-center space-x-4 mb-4">
               <span className="font-medium">Quantity (kg):</span>
               <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden">
                 <button
-                  onClick={() => handleAmountChange(amountKg - 1)}
+                  onClick={() => {
+                    console.log('ProductDetails decrementing:', amountKg);
+                    handleAmountChange(amountKg - 1);
+                  }}
                   disabled={amountKg <= 1}
                   className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer disabled:opacity-50"
                 >
@@ -216,12 +232,17 @@ export default function ProductDetails() {
                   className="w-16 px-2 py-2 text-center border-l border-r border-[#C09A44] focus:outline-none focus:ring-1 focus:ring-[#C09A44]"
                 />
                 <button
-                  onClick={() => handleAmountChange(amountKg + 1)}
+                  onClick={() => {
+                    handleAmountChange(amountKg + 1);
+                  }}
                   className="px-2 py-2 text-[#C09A44] hover:bg-[#F5E8C4] transition-colors cursor-pointer"
                 >
                   <Plus size={16} />
                 </button>
               </div>
+              {currentQuantity > 0 && (
+                <span className="text-sm text-gray-600">({currentQuantity} in cart)</span>
+              )}
             </div>
             <button
               onClick={handleAddToCart}
@@ -244,7 +265,6 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      {/* Tabs */}
       <div className="mt-8">
         <div className="flex space-x-6">
           <button
@@ -319,7 +339,6 @@ export default function ProductDetails() {
 
       <RelatedProducts />
 
-      {/* Zoom Modal */}
       {isZoomOpen && (
         <div
           className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4"

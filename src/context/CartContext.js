@@ -13,6 +13,7 @@ export const CartProvider = ({ children }) => {
   });
 
   useEffect(() => {
+    console.log('Cart updated:', cartItems);
     if (cartItems.length > 0) {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
     } else {
@@ -21,18 +22,18 @@ export const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const addToCart = (item) => {
-    const quantityToAdd = item.quantity || 1; // default to 1 if not passed
-
+    console.log('Adding to cart:', item);
+    const quantityToSet = item.quantity || 1;
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.id === item.id);
       if (existingItem) {
         return prevItems.map((i) =>
           i.id === item.id
-            ? { ...i, quantity: i.quantity + quantityToAdd }
+            ? { ...i, quantity: quantityToSet }
             : i
         );
       } else {
-        return [...prevItems, { ...item, quantity: quantityToAdd }];
+        return [...prevItems, { ...item, quantity: quantityToSet }];
       }
     });
   };

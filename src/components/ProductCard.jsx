@@ -17,19 +17,15 @@ export default function ProductCard({
   slug,
   rating,
   discount,
-  isNew,
-  stock
+  isNew
 }) {
   const { addToCart, cartItems } = useCart();
   const [amount, setAmount] = useState(1);
 
-  // Sync quantity with cart
   useEffect(() => {
-    const cartItem = cartItems.find(item => item.id === id);
+    const cartItem = cartItems.find((item) => item.id === id);
     if (cartItem) {
       setAmount(cartItem.quantity);
-    } else {
-      setAmount(1); // Reset to 1 if not in cart
     }
   }, [cartItems, id]);
 
@@ -48,9 +44,10 @@ export default function ProductCard({
     addToCart(product);
   };
 
+  const cartItem = cartItems.find((item) => item.id === id);
+
   return (
     <div className="bg-[#fff9eb] rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-[#C09A44] hover:shadow-xl transition-all duration-200 flex flex-col h-full">
-      {/* Product Image */}
       <Link href={`/product/${slug}`} className="block relative aspect-square">
         <Image
           src={imageUrl}
@@ -71,9 +68,7 @@ export default function ProductCard({
         )}
       </Link>
 
-      {/* Product Details */}
       <div className="p-4 flex flex-col flex-grow">
-        {/* Product Info */}
         <Link href={`/product/${slug}`} className="block mb-3">
           <h3 className="font-semibold text-lg text-[#491D0B] line-clamp-2">{name}</h3>
           {variety && (
@@ -81,7 +76,6 @@ export default function ProductCard({
           )}
         </Link>
 
-        {/* Price Section */}
         <div className="mb-3">
           <div className="flex items-center gap-2">
             <span className="text-lg font-bold text-[#C09A44]">
@@ -93,20 +87,15 @@ export default function ProductCard({
               </span>
             )}
           </div>
-          {stock !== undefined && (
-            <p className="text-xs text-gray-500 mt-1">
-              {stock > 0 ? `${stock} kg available` : 'Out of stock'}
-            </p>
-          )}
         </div>
 
-        {/* Quantity and Add to Cart */}
         <div className="mt-auto">
           <div className="flex items-center gap-2 w-full">
-            {/* Quantity Selector */}
             <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden bg-white flex-shrink-0">
               <button
-                onClick={() => setAmount(prev => Math.max(1, prev - 1))}
+                onClick={() => {
+                  setAmount(prev => Math.max(1, prev - 1));
+                }}
                 disabled={amount <= 1}
                 className={`px-2 py-2 text-[#C09A44] transition-colors cursor-pointer ${
                   amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
@@ -118,23 +107,18 @@ export default function ProductCard({
                 {amount}
               </span>
               <button
-                onClick={() => setAmount(prev => prev + 1)}
-                disabled={stock !== undefined && amount >= stock}
-                className={`px-2 py-2 text-[#C09A44] transition-colors cursor-pointer ${
-                  stock !== undefined && amount >= stock ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
-                }`}
+                onClick={() => {
+                  console.log('ProductCard incrementing:', amount);
+                  setAmount(prev => prev + 1);
+                }}
+                className="px-2 py-2 text-[#C09A44] transition-colors cursor-pointer hover:bg-[#F5E8C4]"
               >
                 <Plus size={16} />
               </button>
             </div>
-
-            {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
-              disabled={stock === 0}
-              className={`flex-1 py-2 bg-[#C09A44] text-white rounded-md hover:bg-[#B08C3E] transition flex items-center justify-center gap-1 text-sm whitespace-nowrap cursor-pointer ${
-                stock === 0 ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
+              className="flex-1 py-2 bg-[#C09A44] text-white rounded-md hover:bg-[#B08C3E] transition flex items-center justify-center gap-1 text-sm whitespace-nowrap cursor-pointer"
             >
               <ShoppingCart size={16} />
               <span>{actionText}</span>
