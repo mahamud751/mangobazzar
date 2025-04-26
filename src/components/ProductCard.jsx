@@ -1,9 +1,10 @@
-'use client';
-import { useCart } from '@/context/CartContext';
-import { ShoppingCart, Plus, Minus } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
+"use client";
+import { useCart } from "@/context/CartContext";
+import { cleanName } from "@/lib/ulits";
+import { ShoppingCart, Plus, Minus } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function ProductCard({
   id,
@@ -17,8 +18,9 @@ export default function ProductCard({
   slug,
   rating,
   discount,
-  isNew
+  isNew,
 }) {
+  const cleanedName = cleanName(name);
   const { addToCart, cartItems } = useCart();
   const [amount, setAmount] = useState(1);
 
@@ -39,7 +41,7 @@ export default function ProductCard({
       discountedPrice,
       imageUrl,
       slug,
-      quantity: amount
+      quantity: amount,
     };
     addToCart(product);
   };
@@ -48,7 +50,13 @@ export default function ProductCard({
 
   return (
     <div className="bg-[#fff9eb] rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:border-[#C09A44] hover:shadow-xl transition-all duration-200 flex flex-col h-full">
-      <Link href={`/product/${slug}`} className="block relative aspect-square">
+      <Link
+        href={{
+          pathname: `/product/${encodeURIComponent(cleanedName)}`,
+          query: { id: id },
+        }}
+        className="block relative aspect-square"
+      >
         <Image
           src={imageUrl}
           alt={name}
@@ -69,8 +77,16 @@ export default function ProductCard({
       </Link>
 
       <div className="p-4 flex flex-col flex-grow">
-        <Link href={`/product/${slug}`} className="block mb-3">
-          <h3 className="font-semibold text-lg text-[#491D0B] line-clamp-2">{name}</h3>
+        <Link
+          href={{
+            pathname: `/product/${encodeURIComponent(cleanedName)}`,
+            query: { id: id },
+          }}
+          className="block mb-3"
+        >
+          <h3 className="font-semibold text-lg text-[#491D0B] line-clamp-2">
+            {name}
+          </h3>
           {variety && (
             <p className="text-sm text-[#491D0B] opacity-75 mt-1">{variety}</p>
           )}
@@ -83,7 +99,9 @@ export default function ProductCard({
             </span>
             {originalPrice && (
               <span className="text-sm line-through text-gray-500">
-                {typeof originalPrice === 'number' ? `৳${originalPrice}` : originalPrice}
+                {typeof originalPrice === "number"
+                  ? `৳${originalPrice}`
+                  : originalPrice}
               </span>
             )}
           </div>
@@ -94,11 +112,13 @@ export default function ProductCard({
             <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden bg-white flex-shrink-0">
               <button
                 onClick={() => {
-                  setAmount(prev => Math.max(1, prev - 1));
+                  setAmount((prev) => Math.max(1, prev - 1));
                 }}
                 disabled={amount <= 1}
                 className={`px-2 py-2 text-[#C09A44] transition-colors cursor-pointer ${
-                  amount <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5E8C4]'
+                  amount <= 1
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-[#F5E8C4]"
                 }`}
               >
                 <Minus size={16} />
@@ -108,8 +128,8 @@ export default function ProductCard({
               </span>
               <button
                 onClick={() => {
-                  console.log('ProductCard incrementing:', amount);
-                  setAmount(prev => prev + 1);
+                  console.log("ProductCard incrementing:", amount);
+                  setAmount((prev) => prev + 1);
                 }}
                 className="px-2 py-2 text-[#C09A44] transition-colors cursor-pointer hover:bg-[#F5E8C4]"
               >

@@ -1,23 +1,25 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { ShoppingCart, Star, Truck, Shield, Plus, Minus } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
-import RelatedProducts from '@/components/RelatedProducts';
-import { useCart } from '@/context/CartContext';
+"use client";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
+import { ShoppingCart, Star, Truck, Shield, Plus, Minus } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import RelatedProducts from "@/components/RelatedProducts";
+import { useCart } from "@/context/CartContext";
+import { mockProducts } from "@/app/data/mockProducts";
 
 export default function ProductDetails() {
-  const [product, setProduct] = useState(null);
-  const [selectedImage, setSelectedImage] = useState('');
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  const product = mockProducts.find((p) => p.id === id);
+
+  const [selectedImage, setSelectedImage] = useState(product?.images[0]);
   const [amountKg, setAmountKg] = useState(1);
-  const [activeTab, setActiveTab] = useState('description');
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState("description");
+
   const [isZoomOpen, setIsZoomOpen] = useState(false);
 
-  const { slug } = useParams();
-  const router = useRouter();
   const { addToCart, cartItems } = useCart();
 
   useEffect(() => {
@@ -29,27 +31,7 @@ export default function ProductDetails() {
     }
   }, [product, cartItems]);
 
-  useEffect(() => {
-  }, [amountKg]);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/products/${slug}`);
-        if (!response.ok) throw new Error('Product not found');
-        const data = await response.json();
-        setProduct(data);
-        setSelectedImage(data.images[0]);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (slug) fetchProduct();
-  }, [slug]);
+  useEffect(() => {}, [amountKg]);
 
   const handleAmountChange = (newAmount) => {
     const validatedAmount = Math.max(1, Math.round(newAmount));
@@ -58,8 +40,8 @@ export default function ProductDetails() {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    console.log('Input value:', value);
-    if (value === '' || isNaN(value)) {
+    console.log("Input value:", value);
+    if (value === "" || isNaN(value)) {
       setAmountKg(1);
       return;
     }
@@ -70,7 +52,7 @@ export default function ProductDetails() {
   const handleAddToCart = () => {
     if (!product) return;
 
-    const imageUrl = selectedImage || product.images[0];
+    const imageUrl = selectedImage;
     const cartProduct = {
       id: product.id,
       name: product.name,
@@ -80,38 +62,22 @@ export default function ProductDetails() {
       discountedPrice: product.discountedPrice,
       imageUrl: imageUrl,
       slug: product.slug,
-      quantity: amountKg
+      quantity: amountKg,
     };
-    console.log('ProductDetails adding:', cartProduct);
+    console.log("ProductDetails adding:", cartProduct);
     addToCart(cartProduct);
   };
 
   const cartItem = cartItems.find((item) => item.id === product?.id);
   const currentQuantity = cartItem ? cartItem.quantity : 0;
 
-  if (isLoading) {
+  if (!product) {
     return (
       <div className="container mx-auto p-4 flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C09A44]"></div>
       </div>
     );
   }
-
-  if (error) {
-    return (
-      <div className="container mx-auto p-4 text-center">
-        <p className="text-red-500 mb-4">{error}</p>
-        <button 
-          onClick={() => router.push('/')} 
-          className="bg-[#C09A44] text-white py-2 px-4 rounded"
-        >
-          Back to Home
-        </button>
-      </div>
-    );
-  }
-
-  if (!product) return null;
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
@@ -147,11 +113,13 @@ export default function ProductDetails() {
             )}
           </div>
           <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
-            {product.images.map((image, index) => (
+            {product?.images.map((image, index) => (
               <div
                 key={index}
                 className={`relative w-24 h-24 min-w-[96px] rounded-md cursor-pointer border ${
-                  selectedImage === image ? 'ring-2 ring-[#C09A44]' : 'border-gray-200'
+                  selectedImage === image
+                    ? "ring-2 ring-[#C09A44]"
+                    : "border-gray-200"
                 }`}
                 onClick={() => setSelectedImage(image)}
               >
@@ -168,23 +136,35 @@ export default function ProductDetails() {
 
         <div className="w-full lg:w-1/2">
           <div className="mb-4">
-            <span className="text-[#C09A44] font-medium">{product.variety}</span>
-            <h1 className="text-3xl font-bold text-[#491D0B] mt-1">{product.name}</h1>
+            <span className="text-[#C09A44] font-medium">
+              {product.variety}
+            </span>
+            <h1 className="text-3xl font-bold text-[#491D0B] mt-1">
+              {product.name}
+            </h1>
             <div className="flex items-center mt-2">
               <div className="flex items-center bg-amber-50 px-2 py-1 rounded">
                 <Star size={16} className="text-amber-500 fill-amber-500" />
-                <span className="text-amber-700 font-medium ml-1">{product.rating}</span>
-                <span className="text-gray-500 text-sm ml-1">({product.reviews})</span>
+                <span className="text-amber-700 font-medium ml-1">
+                  {product.rating}
+                </span>
+                <span className="text-gray-500 text-sm ml-1">
+                  ({product.reviews})
+                </span>
               </div>
             </div>
           </div>
 
           <div className="my-6 p-4 bg-amber-50 rounded-lg">
             <div className="flex items-center">
-              <span className="text-3xl font-bold text-[#C09A44]">৳{product.price}</span>
+              <span className="text-3xl font-bold text-[#C09A44]">
+                ৳{product.price}
+              </span>
               {product.originalPrice && (
                 <>
-                  <span className="text-lg text-gray-500 line-through ml-2">৳{product.originalPrice}</span>
+                  <span className="text-lg text-gray-500 line-through ml-2">
+                    ৳{product.originalPrice}
+                  </span>
                   <span className="ml-2 bg-[#C09A44] text-white text-sm px-2 py-1 rounded">
                     {product.discount}
                   </span>
@@ -216,7 +196,7 @@ export default function ProductDetails() {
               <div className="flex items-center border border-[#C09A44] rounded-md overflow-hidden">
                 <button
                   onClick={() => {
-                    console.log('ProductDetails decrementing:', amountKg);
+                    console.log("ProductDetails decrementing:", amountKg);
                     handleAmountChange(amountKg - 1);
                   }}
                   disabled={amountKg <= 1}
@@ -241,7 +221,9 @@ export default function ProductDetails() {
                 </button>
               </div>
               {currentQuantity > 0 && (
-                <span className="text-sm text-gray-600">({currentQuantity} in cart)</span>
+                <span className="text-sm text-gray-600">
+                  ({currentQuantity} in cart)
+                </span>
               )}
             </div>
             <button
@@ -268,25 +250,25 @@ export default function ProductDetails() {
       <div className="mt-8">
         <div className="flex space-x-6">
           <button
-            onClick={() => setActiveTab('description')}
+            onClick={() => setActiveTab("description")}
             className={`text-lg font-medium cursor-pointer ${
-              activeTab === 'description' ? 'text-[#C09A44]' : 'text-gray-600'
+              activeTab === "description" ? "text-[#C09A44]" : "text-gray-600"
             }`}
           >
             Description
           </button>
           <button
-            onClick={() => setActiveTab('reviews')}
+            onClick={() => setActiveTab("reviews")}
             className={`text-lg font-medium cursor-pointer ${
-              activeTab === 'reviews' ? 'text-[#C09A44]' : 'text-gray-600'
+              activeTab === "reviews" ? "text-[#C09A44]" : "text-gray-600"
             }`}
           >
             Reviews
           </button>
           <button
-            onClick={() => setActiveTab('shipping')}
+            onClick={() => setActiveTab("shipping")}
             className={`text-lg font-medium cursor-pointer ${
-              activeTab === 'shipping' ? 'text-[#C09A44]' : 'text-gray-600'
+              activeTab === "shipping" ? "text-[#C09A44]" : "text-gray-600"
             }`}
           >
             Shipping
@@ -294,7 +276,7 @@ export default function ProductDetails() {
         </div>
 
         <div className="mt-6 p-6 bg-gray-50 rounded-lg">
-          {activeTab === 'description' && (
+          {activeTab === "description" && (
             <div>
               <h3 className="font-bold text-lg mb-4">Product Details</h3>
               <p className="text-gray-700 mb-4">{product.description}</p>
@@ -308,28 +290,40 @@ export default function ProductDetails() {
               </ul>
             </div>
           )}
-          {activeTab === 'reviews' && (
+          {activeTab === "reviews" && (
             <div>
               <h3 className="font-bold text-lg mb-4">Customer Reviews</h3>
               <div className="flex items-center mb-4">
                 <Star size={20} className="text-amber-500 fill-amber-500" />
-                <span className="text-amber-700 font-medium ml-1 text-xl">{product.rating}</span>
-                <span className="text-gray-500 ml-1">({product.reviews} reviews)</span>
+                <span className="text-amber-700 font-medium ml-1 text-xl">
+                  {product.rating}
+                </span>
+                <span className="text-gray-500 ml-1">
+                  ({product.reviews} reviews)
+                </span>
               </div>
               <p>No customer reviews yet. Be the first to review!</p>
             </div>
           )}
-          {activeTab === 'shipping' && (
+          {activeTab === "shipping" && (
             <div>
               <h3 className="font-bold text-lg mb-4">Shipping & Returns</h3>
               <div className="space-y-4">
                 <div>
                   <h4 className="font-medium mb-2">Shipping Information</h4>
-                  <p>Free standard shipping on orders over ৳500. Delivery within 2-3 business days in Dhaka, 3-5 days elsewhere in Bangladesh.</p>
+                  <p>
+                    Free standard shipping on orders over ৳500. Delivery within
+                    2-3 business days in Dhaka, 3-5 days elsewhere in
+                    Bangladesh.
+                  </p>
                 </div>
                 <div>
                   <h4 className="font-medium mb-2">Return Policy</h4>
-                  <p>We offer a 7-day return policy for damaged or defective products. Please contact us immediately if you receive damaged goods.</p>
+                  <p>
+                    We offer a 7-day return policy for damaged or defective
+                    products. Please contact us immediately if you receive
+                    damaged goods.
+                  </p>
                 </div>
               </div>
             </div>

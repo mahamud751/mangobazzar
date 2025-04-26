@@ -1,82 +1,32 @@
-'use client';
-import { useState, useEffect } from 'react';
-import BlogCardItem from './BlogCardItem';
+"use client";
+import { useState } from "react";
+import BlogCardItem from "./BlogCardItem";
+import { blogPosts } from "@/app/data/blogPosts";
 
 const BlogPageSection = () => {
-  const [blogPosts, setBlogPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 4;
 
-  useEffect(() => {
-    const fetchBlogPosts = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/blog');
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch blog posts');
-        }
-
-        const data = await response.json();
-        setBlogPosts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogPosts();
-  }, []);
-
-  // Pagination logic
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(blogPosts.length / postsPerPage);
 
-  if (loading) {
-    return (
-      <div className="bg-[#FFF9F0] py-12">
-        <div className="container mx-auto px-4 text-center">
-          <p>Loading blog posts...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="bg-[#FFF9F0] py-12">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-red-500">Error: {error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="mt-4 bg-[#C09A44] text-white px-4 py-2 rounded"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-[#FFF9F0] py-12">
       <div className="container mx-auto px-4">
-        {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-[#491D0B] mb-4">Mango Bazar Blog</h1>
+          <h1 className="text-4xl font-bold text-[#491D0B] mb-4">
+            Mango Bazar Blog
+          </h1>
           <p className="text-xl text-[#491D0B] max-w-2xl mx-auto">
-            Discover the latest news, recipes, and insights about our premium organic mangoes.
+            Discover the latest news, recipes, and insights about our premium
+            organic mangoes.
           </p>
         </div>
 
-        {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {currentPosts.map(post => (
+          {currentPosts.map((post) => (
             <BlogCardItem
               key={post.id}
               title={post.title}
@@ -84,7 +34,7 @@ const BlogPageSection = () => {
               date={post.date}
               author={post.author}
               imageUrl={post.imageUrl}
-              slug={post.slug}
+              id={post.id} // Use id instead of slug
             />
           ))}
         </div>
@@ -93,26 +43,32 @@ const BlogPageSection = () => {
         {totalPages > 1 && (
           <div className="flex justify-center mt-12">
             <nav className="flex items-center space-x-2">
-              <button 
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
                 className="px-4 py-2 border border-[#C09A44] text-[#C09A44] rounded hover:bg-[#C09A44] hover:text-white transition disabled:opacity-50"
               >
                 Previous
               </button>
-              
+
               {Array.from({ length: totalPages }, (_, i) => (
                 <button
                   key={i + 1}
                   onClick={() => setCurrentPage(i + 1)}
-                  className={`px-4 py-2 rounded ${currentPage === i + 1 ? 'bg-[#C09A44] text-white' : 'border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'}`}
+                  className={`px-4 py-2 rounded ${
+                    currentPage === i + 1
+                      ? "bg-[#C09A44] text-white"
+                      : "border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white"
+                  }`}
                 >
                   {i + 1}
                 </button>
               ))}
-              
-              <button 
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+
+              <button
+                onClick={() =>
+                  setCurrentPage((p) => Math.min(totalPages, p + 1))
+                }
                 disabled={currentPage === totalPages}
                 className="px-4 py-2 border border-[#C09A44] text-[#C09A44] rounded hover:bg-[#C09A44] hover:text-white transition disabled:opacity-50"
               >

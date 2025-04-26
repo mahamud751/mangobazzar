@@ -1,57 +1,29 @@
 "use client";
-import { useState, useEffect, useMemo, useRef } from 'react';
-import ProductCard from '@/components/ProductCard';
+import { useState, useMemo, useRef } from "react";
+import ProductCard from "@/components/ProductCard";
+import { mockProducts } from "@/app/data/mockProducts";
 
 const formatPrice = (price) => `৳${price}`;
 
 const ShopPageSection = () => {
-  const [sortOption, setSortOption] = useState('');
+  const [sortOption, setSortOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
   const itemsPerPage = 8;
   const productGridRef = useRef(null);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const response = await fetch('/api/products', {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        setProducts(data);
-      } catch (err) {
-        console.error('Failed to fetch products:', err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const products = mockProducts;
 
   const sortedProducts = useMemo(() => {
     let sorted = [...products];
-    if (sortOption === 'Price: Low to High') {
+    if (sortOption === "Price: Low to High") {
       sorted.sort((a, b) => a.price - b.price);
-    } else if (sortOption === 'Price: High to Low') {
+    } else if (sortOption === "Price: High to Low") {
       sorted.sort((a, b) => b.price - a.price);
-    } else if (sortOption === 'Customer Rating') {
+    } else if (sortOption === "Customer Rating") {
       sorted.sort((a, b) => b.rating - a.rating);
-    } else if (sortOption === 'Newest Arrivals') {
-      sorted.sort((a, b) => (b.isNew - a.isNew) || (b.id - a.id));
+    } else if (sortOption === "Newest Arrivals") {
+      sorted.sort((a, b) => b.isNew - a.isNew || b.id - a.id);
     }
     return sorted;
   }, [sortOption, products]);
@@ -70,28 +42,16 @@ const ShopPageSection = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
     if (productGridRef.current) {
-      productGridRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      productGridRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
-
-  if (loading) {
+  if (!products) {
     return (
       <div className="container mx-auto p-4 flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C09A44]"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto p-4 text-center">
-        <p className="text-red-500 mb-4">Error loading products: {error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="bg-[#C09A44] text-white py-2 px-4 rounded"
-        >
-          Retry
-        </button>
       </div>
     );
   }
@@ -101,20 +61,26 @@ const ShopPageSection = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#491D0B] mb-3">Mango Bazar Shop</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-[#491D0B] mb-3">
+            Mango Bazar Shop
+          </h1>
           <p className="text-lg md:text-xl text-[#491D0B] max-w-3xl mx-auto">
-            Premium organic mangoes from Chapai Nawabganj, delivered fresh to your doorstep
+            Premium organic mangoes from Chapai Nawabganj, delivered fresh to
+            your doorstep
           </p>
         </div>
 
         {/* Sort & Count */}
         <div className="flex flex-col md:flex-row justify-between md:items-center mb-10 gap-4">
           <div className="text-[#491D0B] font-medium">
-            Showing {paginatedProducts.length} of {sortedProducts.length} products
+            Showing {paginatedProducts.length} of {sortedProducts.length}{" "}
+            products
           </div>
 
           <div className="w-full md:w-auto">
-            <label htmlFor="sort" className="sr-only">Sort</label>
+            <label htmlFor="sort" className="sr-only">
+              Sort
+            </label>
             <select
               id="sort"
               value={sortOption}
@@ -131,8 +97,11 @@ const ShopPageSection = () => {
         </div>
 
         {/* Product Grid */}
-        <div ref={productGridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-          {paginatedProducts.map(product => (
+        <div
+          ref={productGridRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
+        >
+          {paginatedProducts.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
@@ -156,10 +125,11 @@ const ShopPageSection = () => {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 border rounded transition ${currentPage === 1
-                    ? 'text-gray-400 border-gray-300 cursor-not-allowed'
-                    : 'border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
-                  }`}
+                className={`px-4 py-2 border rounded transition ${
+                  currentPage === 1
+                    ? "text-gray-400 border-gray-300 cursor-not-allowed"
+                    : "border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white"
+                }`}
               >
                 Previous
               </button>
@@ -168,10 +138,11 @@ const ShopPageSection = () => {
                 <button
                   key={i + 1}
                   onClick={() => handlePageChange(i + 1)}
-                  className={`px-4 py-2 rounded transition ${currentPage === i + 1
-                      ? 'bg-[#C09A44] text-white'
-                      : 'border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
-                    }`}
+                  className={`px-4 py-2 rounded transition ${
+                    currentPage === i + 1
+                      ? "bg-[#C09A44] text-white"
+                      : "border border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white"
+                  }`}
                 >
                   {i + 1}
                 </button>
@@ -180,10 +151,11 @@ const ShopPageSection = () => {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 border rounded transition ${currentPage === totalPages
-                    ? 'text-gray-400 border-gray-300 cursor-not-allowed'
-                    : 'border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white'
-                  }`}
+                className={`px-4 py-2 border rounded transition ${
+                  currentPage === totalPages
+                    ? "text-gray-400 border-gray-300 cursor-not-allowed"
+                    : "border-[#C09A44] text-[#C09A44] hover:bg-[#C09A44] hover:text-white"
+                }`}
               >
                 Next
               </button>

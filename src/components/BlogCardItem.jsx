@@ -1,12 +1,20 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
+import { cleanName } from "@/lib/ulits";
 
-const BlogCardItem = ({ title, excerpt, date, author, imageUrl, slug }) => {
+const BlogCardItem = ({ title, excerpt, date, author, imageUrl, id }) => {
+  const cleanedName = cleanName(title);
   return (
-    <Link href={`/blog/${slug}`} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer h-full">
+    <Link
+      href={{
+        pathname: `/blog/${encodeURIComponent(cleanedName)}`,
+        query: { id: id },
+      }}
+      className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer h-full"
+    >
       {/* Image */}
       <div className="relative h-56 w-full">
-        <Image 
+        <Image
           src={imageUrl}
           alt={title}
           fill
@@ -19,7 +27,9 @@ const BlogCardItem = ({ title, excerpt, date, author, imageUrl, slug }) => {
       <div className="p-6">
         <div className="flex justify-between items-center mb-4">
           <span className="text-sm text-[#C09A44] font-semibold">{date}</span>
-          <span className="text-sm text-[#491D0B] font-semibold">By {author}</span>
+          <span className="text-sm text-[#491D0B] font-semibold">
+            By {author}
+          </span>
         </div>
         <h3 className="text-2xl font-semibold text-[#491D0B] mb-3">{title}</h3>
         <p className="text-[#491D0B] mb-4 line-clamp-3">{excerpt}</p>
