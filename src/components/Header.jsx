@@ -10,11 +10,11 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartHover, setCartHover] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  const [isClient, setIsClient] = useState(false); // Track if it's client-side
+  const [isClient, setIsClient] = useState(false);
   const { cartItems, removeFromCart } = useCart();
 
   useEffect(() => {
-    setIsClient(true); // Set after initial render to ensure client-side rendering
+    setIsClient(true);
   }, []);
 
   const mobileMenuVariants = {
@@ -29,22 +29,18 @@ export default function Header() {
     exit: { opacity: 0, y: -10 },
   };
 
-  const parsePrice = (priceString) => {
-    if (typeof priceString === 'number') return priceString;
-    if (!priceString) return 0;
-
-    const numericString = priceString.toString()
-      .replace(/[^\d.]/g, '');
-
+  const parsePrice = (price) => {
+    if (typeof price === 'number') return price;
+    if (!price) return 0;
+    const numericString = price.toString().replace(/[^\d.]/g, '');
     return parseFloat(numericString) || 0;
   };
 
   const total = cartItems.reduce(
-    (acc, item) => acc + parsePrice(item.discountedPrice || item.originalPrice) * (item.quantity || 1),
+    (acc, item) => acc + parsePrice(item.price) * (item.quantity || 1),
     0
   );
 
-  // Don't render until mounted (client-side)
   if (!isClient) return null;
 
   return (
@@ -63,7 +59,7 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-6 relative">
-          {[ 
+          {[
             { href: '/', label: 'Home' },
             { href: '/about', label: 'About' },
             { href: '/shop', label: 'Shop' },
@@ -113,7 +109,7 @@ export default function Header() {
                       <>
                         <div className="max-h-64 overflow-y-auto space-y-4 pr-2">
                           {cartItems.map((item) => {
-                            const price = parsePrice(item.discountedPrice || item.originalPrice);
+                            const price = parsePrice(item.price);
                             const originalPrice = parsePrice(item.originalPrice);
                             const hasDiscount = item.discountedPrice && originalPrice > price;
 
@@ -189,16 +185,26 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-[#491D0B]"
-          onClick={() => {
-            setMobileMenuOpen(true);
-            setMenuVisible(true);
-          }}
-        >
-          <Menu size={28} />
-        </button>
+        {/* Mobile Cart and Menu */}
+        <div className="md:hidden flex items-center space-x-4">
+          <Link href="/cart" className="relative text-[#491D0B] hover:text-[#C09A44] transition-colors">
+            <ShoppingCart size={28} />
+            {cartItems.length > 0 && (
+              <span className="absolute -top-2 -right-3 bg-[#C09A44] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                {cartItems.length}
+              </span>
+            )}
+          </Link>
+          <button
+            className="text-[#491D0B]"
+            onClick={() => {
+              setMobileMenuOpen(true);
+              setMenuVisible(true);
+            }}
+          >
+            <Menu size={28} />
+          </button>
+        </div>
 
         {/* Mobile Menu Overlay with Animation */}
         <AnimatePresence>
@@ -213,12 +219,15 @@ export default function Header() {
             >
               <button
                 className="absolute top-6 right-6 text-[#491D0B]"
-                onClick={() => setMenuVisible(false)}
+                onClick={() => {
+                  setMenuVisible(false);
+                  setMobileMenuOpen(false);
+                }}
               >
                 <X size={32} />
               </button>
 
-              {[ 
+              {[
                 { href: '/', label: 'Home' },
                 { href: '/about', label: 'About' },
                 { href: '/shop', label: 'Shop' },
@@ -237,23 +246,6 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
-
-              {/* Cart for Mobile */}
-              <Link
-                href="/cart"
-                onClick={() => {
-                  setMenuVisible(false);
-                  setMobileMenuOpen(false);
-                }}
-                className="relative text-[#491D0B] hover:text-[#C09A44] transition-colors"
-              >
-                <ShoppingCart size={28} />
-                {cartItems.length > 0 && (
-                  <span className="absolute -top-2 -right-3 bg-[#C09A44] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                    {cartItems.length}
-                  </span>
-                )}
-              </Link>
             </motion.div>
           )}
         </AnimatePresence>

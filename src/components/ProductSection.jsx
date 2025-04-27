@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { mockProducts } from "@/app/data/mockProducts";
 import ProductCard from "./ProductCard";
 
@@ -26,8 +26,9 @@ export default function ProductSection() {
               id={product.id}
               name={product.name}
               variety={product.variety}
-              originalPrice={`৳${product.originalPrice}`}
-              discountedPrice={`৳${product.price}`}
+              price={product.price} 
+              originalPrice={product.originalPrice} 
+              discountedPrice={product.price < product.originalPrice ? product.price : null} 
               imageUrl={product.images?.[0] || "/default-mango.png"}
               slug={product.slug}
               rating={product.rating}

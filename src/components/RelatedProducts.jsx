@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
 import { mockProducts } from "@/app/data/mockProducts";
@@ -74,8 +74,6 @@ const RelatedProducts = ({ currentProductId, currentProductVariety }) => {
 
   if (relatedProducts.length === 0) return null;
 
-  const formatPrice = (price) => `৳${price}`;
-
   return (
     <section className="my-16">
       <h3 className="text-2xl font-bold text-[#491D0B] mb-6">
@@ -87,11 +85,13 @@ const RelatedProducts = ({ currentProductId, currentProductVariety }) => {
             <ProductCard
               id={product.id}
               name={product.name}
-              price={`৳${product.price}`}
-              originalPrice={`৳${product.originalPrice}`}
+              price={product.price} 
+              originalPrice={product.originalPrice} 
+              discountedPrice={product.price < product.originalPrice ? product.price : null} 
               imageUrl={product.images[0]}
               slug={product.slug}
               rating={product.rating}
+              variety={product.variety} 
             />
           </div>
         ))}

@@ -1,9 +1,7 @@
-"use client";
+'use client';
 import { useState, useMemo, useRef } from "react";
 import ProductCard from "@/components/ProductCard";
 import { mockProducts } from "@/app/data/mockProducts";
-
-const formatPrice = (price) => `৳${price}`;
 
 const ShopPageSection = () => {
   const [sortOption, setSortOption] = useState("");
@@ -19,7 +17,7 @@ const ShopPageSection = () => {
     if (sortOption === "Price: Low to High") {
       sorted.sort((a, b) => a.price - b.price);
     } else if (sortOption === "Price: High to Low") {
-      sorted.sort((a, b) => b.price - a.price);
+      sorted.sort((a, b) => b.price - b.price);
     } else if (sortOption === "Customer Rating") {
       sorted.sort((a, b) => b.rating - a.rating);
     } else if (sortOption === "Newest Arrivals") {
@@ -108,8 +106,9 @@ const ShopPageSection = () => {
               id={product.id}
               name={product.name}
               variety={product.variety}
-              price={formatPrice(product.price)}
-              originalPrice={formatPrice(product.originalPrice)}
+              price={product.price} 
+              originalPrice={product.originalPrice}
+              discountedPrice={product.price < product.originalPrice ? product.price : null} 
               imageUrl={product.images[0]}
               slug={product.slug}
               rating={product.rating}

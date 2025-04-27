@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import ProductCard from "./ProductCard";
 import { mockProducts } from "@/app/data/mockProducts";
@@ -58,8 +58,9 @@ export default function PopularProduct() {
               id={product.id}
               name={product.name}
               variety={product.variety}
-              originalPrice={`৳${product.originalPrice}`}
-              discountedPrice={`৳${product.price}`}
+              price={product.price} // Numeric final price
+              originalPrice={product.originalPrice} // Numeric original price
+              discountedPrice={product.price < product.originalPrice ? product.price : null} // Derived discounted price
               imageUrl={product.images?.[0] || "/default-mango.png"}
               slug={product.slug}
               rating={product.rating}

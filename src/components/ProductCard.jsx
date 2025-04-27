@@ -1,10 +1,10 @@
-"use client";
-import { useCart } from "@/context/CartContext";
-import { cleanName } from "@/lib/utils";
-import { ShoppingCart, Plus, Minus } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+'use client';
+import { useState, useEffect, useCallback } from 'react';
+import { ShoppingCart, Plus, Minus } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
+import { cleanName } from '@/lib/utils';
 
 export default function ProductCard({
   id,
@@ -51,6 +51,8 @@ export default function ProductCard({
     }
   }, [addToCart, id, name, variety, price, originalPrice, discountedPrice, imageUrl, slug, amount, isAdding]);
 
+  const hasDiscount = discountedPrice && originalPrice > price;
+
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200 flex flex-col h-full group">
       <div className="relative aspect-square bg-gray-50">
@@ -69,7 +71,6 @@ export default function ProductCard({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </Link>
-        
       </div>
 
       <div className="p-3 flex flex-col flex-grow">
@@ -92,13 +93,11 @@ export default function ProductCard({
           <div className="mb-3">
             <div className="flex items-baseline gap-2">
               <span className="text-base font-bold text-gray-900">
-                {discountedPrice || `৳${price}`}
+                ৳{hasDiscount ? discountedPrice : price}
               </span>
-              {originalPrice && (
+              {hasDiscount && (
                 <span className="text-xs line-through text-gray-400">
-                  {typeof originalPrice === "number"
-                    ? `৳${originalPrice}`
-                    : originalPrice}
+                  ৳{originalPrice}
                 </span>
               )}
             </div>

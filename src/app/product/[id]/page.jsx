@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { ShoppingCart, Star, Truck, Shield, Plus, Minus } from "lucide-react";
@@ -17,7 +17,6 @@ export default function ProductDetails() {
   const [selectedImage, setSelectedImage] = useState(product?.images[0]);
   const [amountKg, setAmountKg] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
-
   const [isZoomOpen, setIsZoomOpen] = useState(false);
 
   const { addToCart, cartItems } = useCart();
@@ -40,7 +39,6 @@ export default function ProductDetails() {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    console.log("Input value:", value);
     if (value === "" || isNaN(value)) {
       setAmountKg(1);
       return;
@@ -57,14 +55,13 @@ export default function ProductDetails() {
       id: product.id,
       name: product.name,
       variety: product.variety,
-      price: product.price,
+      price: product.price, // Final effective price
       originalPrice: product.originalPrice,
-      discountedPrice: product.discountedPrice,
+      discountedPrice: product.price < product.originalPrice ? product.price : null, // Set if discounted
       imageUrl: imageUrl,
       slug: product.slug,
       quantity: amountKg,
     };
-    console.log("ProductDetails adding:", cartProduct);
     addToCart(cartProduct);
   };
 
@@ -155,12 +152,10 @@ export default function ProductDetails() {
               <span className="text-3xl font-bold text-[#C09A44]">
                 ৳{product.price}
               </span>
-              {product.originalPrice && (
-                <>
-                  <span className="text-lg text-gray-500 line-through ml-2">
-                    ৳{product.originalPrice}
-                  </span>
-                </>
+              {product.originalPrice > product.price && (
+                <span className="text-lg text-gray-500 line-through ml-2">
+                  ৳{product.originalPrice}
+                </span>
               )}
             </div>
           </div>
