@@ -48,6 +48,7 @@ const ShopPageSection = () => {
       });
     }
   };
+
   if (!products) {
     return (
       <div className="container mx-auto p-4 flex justify-center items-center h-64">
@@ -112,8 +113,6 @@ const ShopPageSection = () => {
               imageUrl={product.images[0]}
               slug={product.slug}
               rating={product.rating}
-              discount={product.discount}
-              isNew={product.isNew}
             />
           ))}
         </div>

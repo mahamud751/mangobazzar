@@ -92,8 +92,6 @@ const RelatedProducts = ({ currentProductId, currentProductVariety }) => {
               imageUrl={product.images[0]}
               slug={product.slug}
               rating={product.rating}
-              discount={product.discount}
-              isNew={product.isNew}
             />
           </div>
         ))}

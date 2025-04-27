@@ -31,8 +31,6 @@ export default function ProductSection() {
               imageUrl={product.images?.[0] || "/default-mango.png"}
               slug={product.slug}
               rating={product.rating}
-              discount={product.discount}
-              isNew={product.isNew}
             />
           ))}
         </div>

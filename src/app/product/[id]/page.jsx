@@ -106,11 +106,6 @@ export default function ProductDetails() {
               className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-105"
               priority
             />
-            {product.isNew && (
-              <span className="absolute top-3 left-3 bg-green-600 text-white text-xs px-2 py-1 rounded-full">
-                NEW
-              </span>
-            )}
           </div>
           <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
             {product?.images.map((image, index) => (
@@ -164,9 +159,6 @@ export default function ProductDetails() {
                 <>
                   <span className="text-lg text-gray-500 line-through ml-2">
                     ৳{product.originalPrice}
-                  </span>
-                  <span className="ml-2 bg-[#C09A44] text-white text-sm px-2 py-1 rounded">
-                    {product.discount}
                   </span>
                 </>
               )}

@@ -58,13 +58,11 @@ export default function PopularProduct() {
               id={product.id}
               name={product.name}
               variety={product.variety}
-              price={`৳${product.price}`}
               originalPrice={`৳${product.originalPrice}`}
+              discountedPrice={`৳${product.price}`}
               imageUrl={product.images?.[0] || "/default-mango.png"}
               slug={product.slug}
               rating={product.rating}
-              discount={product.discount}
-              isNew={product.isNew}
             />
           ))}
         </div>

@@ -13,8 +13,6 @@ export const mockProducts = [
     ],
     rating: 4.8,
     reviews: 124,
-    discount: "18% OFF",
-    isNew: true,
     stock: 15,
     benefits: [
       "100% Organic Certification",
@@ -39,8 +37,6 @@ export const mockProducts = [
     ],
     rating: 4.7,
     reviews: 110,
-    discount: "17% OFF",
-    isNew: true,
     stock: 20,
     benefits: [
       "Naturally Ripened",
@@ -65,8 +61,6 @@ export const mockProducts = [
     ],
     rating: 4.6,
     reviews: 95,
-    discount: "17% OFF",
-    isNew: false,
     stock: 30,
     benefits: [
       "Long Shelf Life",
@@ -91,8 +85,6 @@ export const mockProducts = [
     ],
     rating: 4.5,
     reviews: 80,
-    discount: "18% OFF",
-    isNew: false,
     stock: 18,
     benefits: [
       "Best for Pickles",
@@ -117,8 +109,6 @@ export const mockProducts = [
     ],
     rating: 4.9,
     reviews: 135,
-    discount: "16% OFF",
-    isNew: true,
     stock: 22,
     benefits: [
       "Silky Smooth Texture",
@@ -143,8 +133,6 @@ export const mockProducts = [
     ],
     rating: 4.4,
     reviews: 89,
-    discount: "18% OFF",
-    isNew: false,
     stock: 16,
     benefits: [
       "Early Season Mango",
@@ -169,8 +157,6 @@ export const mockProducts = [
     ],
     rating: 4.6,
     reviews: 67,
-    discount: "17% OFF",
-    isNew: true,
     stock: 12,
     benefits: [
       "Unique Flavor",
@@ -195,8 +181,6 @@ export const mockProducts = [
     ],
     rating: 4.3,
     reviews: 75,
-    discount: "17% OFF",
-    isNew: false,
     stock: 14,
     benefits: [
       "Distinctive Skin Tone",
@@ -220,8 +204,6 @@ export const mockProducts = [
     ],
     rating: 4.2,
     reviews: 60,
-    discount: "18% OFF",
-    isNew: true,
     stock: 19,
     benefits: [
       "Small But Flavorful",
@@ -246,8 +228,6 @@ export const mockProducts = [
     ],
     rating: 4.1,
     reviews: 58,
-    discount: "17% OFF",
-    isNew: false,
     stock: 13,
     benefits: [
       "Firm Flesh",
@@ -272,8 +252,6 @@ export const mockProducts = [
     ],
     rating: 4.3,
     reviews: 65,
-    discount: "18% OFF",
-    isNew: false,
     stock: 20,
     benefits: ["Rich Legacy", "Soft Texture", "Highly Juicy", "Farm Fresh"],
     variety: "Laxmanbhog",
@@ -293,8 +271,6 @@ export const mockProducts = [
     ],
     rating: 4.0,
     reviews: 45,
-    discount: "17% OFF",
-    isNew: false,
     stock: 11,
     benefits: [
       "Rare Local Variety",

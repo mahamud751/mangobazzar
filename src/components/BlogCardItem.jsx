@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { cleanName } from "@/lib/ulits";
+import { cleanName } from "@/lib/utils";
 
 const BlogCardItem = ({ title, excerpt, date, author, imageUrl, id }) => {
   const cleanedName = cleanName(title);

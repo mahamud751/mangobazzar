@@ -1,5 +1,6 @@
 'use client';
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import { toast } from 'react-toastify';
 
 const CartContext = createContext();
 
@@ -13,7 +14,6 @@ export const CartProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    console.log('Cart updated:', cartItems);
     if (cartItems.length > 0) {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
     } else {
@@ -21,22 +21,50 @@ export const CartProvider = ({ children }) => {
     }
   }, [cartItems]);
 
-  const addToCart = (item) => {
-    console.log('Adding to cart:', item);
+  const addToCart = useCallback((item) => {
+    const callId = `addToCart-${Date.now()}-${Math.random()}`;
+    
     const quantityToSet = item.quantity || 1;
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.id === item.id);
+      const toastId = `cart-${item.id}-${quantityToSet}-${callId}`;
+      
+      if (toast.isActive(toastId)) {
+        console.log(`Toast skipped [${callId}]: toastId ${toastId} already active`);
+        return prevItems;
+      }
+
       if (existingItem) {
-        return prevItems.map((i) =>
-          i.id === item.id
-            ? { ...i, quantity: quantityToSet }
-            : i
+        const updatedItems = prevItems.map((i) =>
+          i.id === item.id ? { ...i, quantity: quantityToSet } : i
         );
+        toast.success(`${quantityToSet} x ${item.name} updated in cart!`, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light',
+          toastId,
+        });
+        return updatedItems;
       } else {
-        return [...prevItems, { ...item, quantity: quantityToSet }];
+        const newItems = [...prevItems, { ...item, quantity: quantityToSet }];
+        toast.success(`${quantityToSet} x ${item.name} added to cart!`, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light',
+          toastId,
+        });
+        return newItems;
       }
     });
-  };
+  }, []);
 
   const removeFromCart = (itemId) => {
     setCartItems((prevItems) =>
