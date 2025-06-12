@@ -356,7 +356,7 @@ export default function CheckoutPage() {
                     />
                     <span className="text-gray-700">Cash on Delivery</span>
                   </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
+                  {/* <label className="flex items-center space-x-3 cursor-pointer">
                     <input
                       type="radio"
                       name="paymentMethod"
@@ -377,7 +377,7 @@ export default function CheckoutPage() {
                       className="h-4 w-4 text-[#C09A44] focus:ring-[#C09A44] border-gray-300"
                     />
                     <span className="text-gray-700">Credit/Debit Card</span>
-                  </label>
+                  </label> */}
                 </div>
               </div>
             </div>
