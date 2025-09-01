@@ -58,13 +58,11 @@ export default function ProductSection() {
     hidden: {
       y: 50, // Reduced from 100
       opacity: 0,
-      rotateX: -15, // Reduced from -30
       scale: 0.9, // Increased from 0.8
     },
     visible: {
       y: 0,
       opacity: 1,
-      rotateX: 0,
       scale: 1,
       transition: {
         type: "spring",
@@ -79,13 +77,11 @@ export default function ProductSection() {
       y: 30, // Reduced from 50
       opacity: 0,
       scale: 0.95, // Increased from 0.8
-      rotateX: -10, // Reduced from -20
     },
     visible: {
       y: 0,
       opacity: 1,
       scale: 1,
-      rotateX: 0,
       transition: {
         type: "spring",
         stiffness: 150, // Increased from 120 for faster animation
@@ -281,8 +277,6 @@ export default function ProductSection() {
               variants={itemVariants}
               whileHover={{
                 y: -5, // Reduced hover effect
-                rotateY: 3, // Reduced rotation
-                rotateX: 3, // Reduced rotation
                 scale: 1.01, // Reduced scale
               }}
               transition={{

@@ -60,14 +60,10 @@ const Button3D = forwardRef(
         initial={{ scale: 1 }}
         whileHover={{
           scale: disabled ? 1 : 1.05,
-          rotateX: disabled ? 0 : 5,
-          rotateY: disabled ? 0 : 2,
           boxShadow: disabled ? "none" : `0 15px 35px ${currentVariant.shadow}`,
         }}
         whileTap={{
           scale: disabled ? 1 : 0.95,
-          rotateX: disabled ? 0 : -2,
-          rotateY: disabled ? 0 : -1,
         }}
         transition={{
           type: "spring",
@@ -106,9 +102,6 @@ const Button3D = forwardRef(
         {/* Button Content */}
         <motion.span
           className="relative z-10 flex items-center justify-center gap-2"
-          whileHover={{
-            rotateY: disabled ? 0 : 2,
-          }}
           transition={{ duration: 0.2 }}
         >
           {children}

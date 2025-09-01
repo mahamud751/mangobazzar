@@ -141,8 +141,8 @@ export function FullScreenLoading3D() {
       {/* Main Loading Content */}
       <motion.div
         className="relative z-10"
-        initial={{ scale: 0.5, rotateY: -180 }}
-        animate={{ scale: 1, rotateY: 0 }}
+        initial={{ scale: 0.5 }}
+        animate={{ scale: 1 }}
         transition={{
           type: "spring",
           stiffness: 300,

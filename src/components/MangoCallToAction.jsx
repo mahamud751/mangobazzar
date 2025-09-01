@@ -152,9 +152,11 @@ export default function MangoCallToAction() {
             >
               <motion.span
                 className="relative z-10 flex items-center gap-3"
-                animate={{
-                  rotateY: [0, 5, -5, 0],
-                }}
+                animate={
+                  {
+                    // Removed rotateY property that may cause compatibility issues
+                  }
+                }
                 transition={{
                   // Slowed down from 4s to 8s
                   duration: 8,
@@ -218,9 +220,11 @@ export default function MangoCallToAction() {
             >
               <motion.span
                 className="relative z-10 flex items-center gap-3"
-                animate={{
-                  rotateX: [0, 5, -5, 0],
-                }}
+                animate={
+                  {
+                    // Removed rotateX property that may cause compatibility issues
+                  }
+                }
                 transition={{
                   // Slowed down from 5s to 10s
                   duration: 10,
@@ -332,7 +336,7 @@ export default function MangoCallToAction() {
               <motion.div
                 className="text-3xl"
                 animate={{
-                  rotateY: [0, 10, -10, 0],
+                  // Removed rotateY property that may cause compatibility issues
                   scale: [1, 1.1, 1],
                 }}
                 transition={{

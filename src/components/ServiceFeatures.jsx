@@ -247,8 +247,6 @@ export default function ServiceFeatures() {
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               whileHover={{
                 y: -5, // Reduced hover effect
-                rotateY: 3, // Reduced rotation
-                rotateX: 3, // Reduced rotation
                 scale: 1.01, // Reduced scale
               }}
               transition={{
@@ -302,14 +300,9 @@ export default function ServiceFeatures() {
                     <motion.div
                       className={`text-4xl p-3 rounded-xl bg-gradient-to-r ${feature.gradient} shadow-md`} // Reduced padding and shadow
                       whileHover={{
-                        rotateY: 8, // Reduced rotation
-                        rotateX: 5, // Reduced rotation
                         scale: 1.05, // Reduced scale
                       }}
-                      animate={{
-                        rotateY: [0, 3, -3, 0], // Reduced rotation
-                        rotateX: [0, 1, -1, 0], // Reduced rotation
-                      }}
+                      animate={{}}
                       transition={{
                         duration: 5, // Reduced from 6
                         repeat: Infinity,

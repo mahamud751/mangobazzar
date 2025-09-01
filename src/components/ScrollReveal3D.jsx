@@ -65,24 +65,17 @@ export default function ScrollReveal3D({
       scale,
       x: initialPosition.x,
       y: initialPosition.y,
-      rotateX: rotate.x,
-      rotateY: rotate.y,
-      rotateZ: rotate.z,
     },
     visible: {
       opacity: 1,
       scale: 1,
       x: 0,
       y: 0,
-      rotateX: 0,
-      rotateY: 0,
-      rotateZ: 0,
       transition: {
         type: "spring",
-        stiffness: 100,
-        damping: 15,
+        stiffness: 300,
+        damping: 25,
         delay: delay,
-        duration: 0.8,
       },
     },
   };
@@ -146,13 +139,11 @@ export function StaggeredReveal3D({
     hidden: {
       y: 50,
       opacity: 0,
-      rotateX: -20,
       scale: 0.9,
     },
     visible: {
       y: 0,
       opacity: 1,
-      rotateX: 0,
       scale: 1,
       transition: {
         type: "spring",

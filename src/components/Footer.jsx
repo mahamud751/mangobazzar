@@ -250,7 +250,6 @@ export default function Footer() {
                     className="p-2 rounded-lg backdrop-blur-sm border-2 border-gray-200 shadow-sm bg-white/70 hover:bg-white transition-all duration-300"
                     whileHover={{
                       scale: 1.1,
-                      rotateY: 15,
                       boxShadow: `0 8px 25px ${social.color}40`,
                     }}
                     style={{

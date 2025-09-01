@@ -74,13 +74,9 @@ export default function ProductCard({
   const cardVariants = {
     initial: {
       scale: 1,
-      rotateY: 0,
-      z: 0,
     },
     hover: {
       scale: 1.05,
-      rotateY: 5,
-      z: 50,
       transition: {
         type: "spring",
         stiffness: 300,
@@ -92,11 +88,9 @@ export default function ProductCard({
   const imageVariants = {
     initial: {
       scale: 1,
-      rotateZ: 0,
     },
     hover: {
       scale: 1.1,
-      rotateZ: 2,
       transition: {
         type: "spring",
         stiffness: 300,
