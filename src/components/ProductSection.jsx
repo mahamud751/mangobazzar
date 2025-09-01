@@ -11,13 +11,23 @@ export default function ProductSection() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Trigger visibility immediately for faster load
+    setIsVisible(true);
+
+    // Fallback for intersection observer
+    const timer = setTimeout(() => {
+      if (!isVisible) {
+        setIsVisible(true);
+      }
+    }, 100);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: "50px" } // Trigger earlier with rootMargin
     );
 
     const section = document.getElementById("products-section");
@@ -29,26 +39,27 @@ export default function ProductSection() {
       if (section) {
         observer.unobserve(section);
       }
+      clearTimeout(timer);
     };
-  }, []);
+  }, [isVisible]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.8,
-        staggerChildren: 0.2,
+        duration: 0.5, // Reduced from 0.8 to 0.5
+        staggerChildren: 0.1, // Reduced from 0.2 to 0.1
       },
     },
   };
 
   const itemVariants = {
     hidden: {
-      y: 100,
+      y: 50, // Reduced from 100
       opacity: 0,
-      rotateX: -30,
-      scale: 0.8,
+      rotateX: -15, // Reduced from -30
+      scale: 0.9, // Increased from 0.8
     },
     visible: {
       y: 0,
@@ -57,18 +68,18 @@ export default function ProductSection() {
       scale: 1,
       transition: {
         type: "spring",
-        stiffness: 100,
-        damping: 12,
+        stiffness: 200, // Increased from 100 for faster animation
+        damping: 15,
       },
     },
   };
 
   const titleVariants = {
     hidden: {
-      y: 50,
+      y: 30, // Reduced from 50
       opacity: 0,
-      scale: 0.8,
-      rotateX: -20,
+      scale: 0.95, // Increased from 0.8
+      rotateX: -10, // Reduced from -20
     },
     visible: {
       y: 0,
@@ -77,9 +88,9 @@ export default function ProductSection() {
       rotateX: 0,
       transition: {
         type: "spring",
-        stiffness: 120,
+        stiffness: 150, // Increased from 120 for faster animation
         damping: 15,
-        duration: 0.8,
+        duration: 0.5, // Reduced from 0.8
       },
     },
   };
@@ -87,63 +98,68 @@ export default function ProductSection() {
   return (
     <section
       id="products-section"
-      className="relative py-20 overflow-hidden"
+      className="relative py-16 overflow-hidden" // Reduced padding
       style={{
         background:
           "linear-gradient(135deg, #FAF5E9 0%, #fffbea 50%, #F5EFD6 100%)",
       }}
     >
-      {/* Floating Background Elements */}
+      {/* Floating Background Elements - Reduced for performance */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute opacity-5"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              fontSize: `${Math.random() * 40 + 20}px`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              rotate: [0, 360],
-              scale: [1, 1.3, 1],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 15,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            🥭
-          </motion.div>
-        ))}
+        {[...Array(8)].map(
+          (
+            _,
+            i // Reduced from 15 to 8
+          ) => (
+            <motion.div
+              key={i}
+              className="absolute opacity-3" // Increased opacity visibility
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                fontSize: `${Math.random() * 30 + 15}px`, // Reduced size
+              }}
+              animate={{
+                y: [0, -20, 0], // Reduced animation range
+                rotate: [0, 180], // Simplified rotation
+                scale: [1, 1.1, 1], // Reduced scale
+              }}
+              transition={{
+                duration: Math.random() * 10 + 8, // Reduced duration
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              🥭
+            </motion.div>
+          )
+        )}
       </div>
 
-      {/* Geometric Background Shapes */}
+      {/* Geometric Background Shapes - Simplified */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-10 right-10 w-32 h-32 rounded-full opacity-10"
+          className="absolute top-8 right-8 w-24 h-24 rounded-full opacity-5" // Reduced size and opacity
           style={{ background: "linear-gradient(45deg, #C09A44, #491D0B)" }}
           animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
+            rotate: [0, 180], // Simplified rotation
+            scale: [1, 1.1, 1], // Reduced scale
           }}
           transition={{
-            duration: 20,
+            duration: 15,
             repeat: Infinity,
             ease: "linear",
           }}
         />
         <motion.div
-          className="absolute bottom-20 left-10 w-24 h-24 rounded-full opacity-10"
+          className="absolute bottom-16 left-8 w-20 h-20 rounded-full opacity-5" // Reduced size and opacity
           style={{ background: "linear-gradient(45deg, #491D0B, #C09A44)" }}
           animate={{
-            rotate: [360, 0],
-            scale: [1, 1.3, 1],
+            rotate: [180, 0], // Simplified rotation
+            scale: [1, 1.1, 1], // Reduced scale
           }}
           transition={{
-            duration: 15,
+            duration: 12,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -157,9 +173,11 @@ export default function ProductSection() {
         animate={isVisible ? "visible" : "hidden"}
       >
         {/* Header Section */}
-        <motion.div className="text-center mb-16" variants={titleVariants}>
+        <motion.div className="text-center mb-12" variants={titleVariants}>
+          {" "}
+          {/* Reduced margin */}
           <motion.h2
-            className="text-4xl md:text-6xl font-extrabold mb-6 text-3d"
+            className="text-3xl md:text-5xl font-extrabold mb-4 text-3d" // Reduced font size and margin
             style={{
               background: "linear-gradient(45deg, #C09A44, #491D0B, #C09A44)",
               backgroundSize: "200% 200%",
@@ -180,8 +198,8 @@ export default function ProductSection() {
             <motion.span
               className="inline-block"
               animate={{
-                rotate: [0, 20, -20, 0],
-                scale: [1, 1.2, 1],
+                rotate: [0, 10, -10, 0], // Reduced rotation
+                scale: [1, 1.1, 1], // Reduced scale
               }}
               transition={{
                 duration: 2,
@@ -192,46 +210,44 @@ export default function ProductSection() {
               🥭
             </motion.span>
           </motion.h2>
-
           <motion.p
-            className="text-lg md:text-xl text-[#491D0B] max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-base md:text-lg text-[#491D0B] max-w-2xl mx-auto leading-relaxed" // Reduced font size
+            initial={{ opacity: 0, y: 15 }} // Reduced animation
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ delay: 0.2, duration: 0.5 }} // Reduced delay and duration
           >
             Discover our handpicked,{" "}
             <strong className="text-[#C09A44]">farm-fresh mangoes</strong> –
             harvested with love and delivered with care. Book yours before the
             season ends!
           </motion.p>
-
-          {/* Decorative Elements */}
+          {/* Decorative Elements - Simplified */}
           <motion.div
-            className="flex justify-center items-center gap-4 mt-6"
-            initial={{ opacity: 0, scale: 0 }}
+            className="flex justify-center items-center gap-3 mt-4" // Reduced gap and margin
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
+            transition={{ delay: 0.4, duration: 0.4 }} // Reduced delay and duration
           >
             <motion.div
-              className="w-16 h-1 bg-gradient-to-r from-transparent via-[#C09A44] to-transparent"
+              className="w-12 h-0.5 bg-gradient-to-r from-transparent via-[#C09A44] to-transparent" // Reduced size
               animate={{
-                scaleX: [1, 1.5, 1],
+                scaleX: [1, 1.2, 1],
                 opacity: [0.5, 1, 0.5],
               }}
               transition={{
-                duration: 3,
+                duration: 2,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
             />
             <motion.div
-              className="text-2xl"
+              className="text-xl" // Reduced font size
               animate={{
-                rotate: [0, 360],
-                scale: [1, 1.2, 1],
+                rotate: [0, 180], // Simplified rotation
+                scale: [1, 1.1, 1], // Reduced scale
               }}
               transition={{
-                duration: 4,
+                duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
@@ -239,16 +255,16 @@ export default function ProductSection() {
               ⭐
             </motion.div>
             <motion.div
-              className="w-16 h-1 bg-gradient-to-r from-transparent via-[#C09A44] to-transparent"
+              className="w-12 h-0.5 bg-gradient-to-r from-transparent via-[#C09A44] to-transparent" // Reduced size
               animate={{
-                scaleX: [1, 1.5, 1],
+                scaleX: [1, 1.2, 1],
                 opacity: [0.5, 1, 0.5],
               }}
               transition={{
-                duration: 3,
+                duration: 2,
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: 1.5,
+                delay: 1,
               }}
             />
           </motion.div>
@@ -256,7 +272,7 @@ export default function ProductSection() {
 
         {/* Products Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" // Reduced gap and margin
           variants={containerVariants}
         >
           {products.map((product, index) => (
@@ -264,10 +280,10 @@ export default function ProductSection() {
               key={product.id}
               variants={itemVariants}
               whileHover={{
-                y: -10,
-                rotateY: 5,
-                rotateX: 5,
-                scale: 1.02,
+                y: -5, // Reduced hover effect
+                rotateY: 3, // Reduced rotation
+                rotateX: 3, // Reduced rotation
+                scale: 1.01, // Reduced scale
               }}
               transition={{
                 type: "spring",
@@ -295,28 +311,30 @@ export default function ProductSection() {
         {/* Call to Action */}
         <motion.div
           className="text-center"
-          initial={{ opacity: 0, y: 50, scale: 0.8 }}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }} // Reduced animation
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{
-            delay: 1.2,
+            delay: 0.6, // Reduced delay
             type: "spring",
-            stiffness: 100,
+            stiffness: 150, // Increased stiffness for faster animation
             damping: 15,
           }}
         >
           <Link href="/shop">
-            <Button3D size="large" className="shadow-2xl">
+            <Button3D size="medium" className="shadow-lg">
+              {" "}
+              {/* Reduced shadow */}
               <motion.span
-                className="flex items-center gap-3"
-                whileHover={{ scale: 1.05 }}
+                className="flex items-center gap-2" // Reduced gap
+                whileHover={{ scale: 1.03 }} // Reduced hover effect
               >
                 <span>Explore All Products</span>
                 <motion.span
                   animate={{
-                    x: [0, 5, 0],
+                    x: [0, 3, 0], // Reduced animation
                   }}
                   transition={{
-                    duration: 1.5,
+                    duration: 1.2, // Reduced duration
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
@@ -329,22 +347,22 @@ export default function ProductSection() {
         </motion.div>
       </motion.div>
 
-      {/* Bottom Wave Effect */}
+      {/* Bottom Wave Effect - Simplified */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-20 opacity-20"
+        className="absolute bottom-0 left-0 right-0 h-12 opacity-10" // Reduced height and opacity
         style={{
           background: "linear-gradient(45deg, #C09A44, #491D0B)",
-          clipPath: "polygon(0 100%, 100% 100%, 100% 0, 0 50%)",
+          clipPath: "polygon(0 100%, 100% 100%, 100% 0, 0 30%)", // Simplified wave
         }}
         animate={{
           clipPath: [
-            "polygon(0 100%, 100% 100%, 100% 0, 0 50%)",
-            "polygon(0 100%, 100% 100%, 100% 20%, 0 70%)",
-            "polygon(0 100%, 100% 100%, 100% 0, 0 50%)",
+            "polygon(0 100%, 100% 100%, 100% 0, 0 30%)",
+            "polygon(0 100%, 100% 100%, 100% 10%, 0 50%)",
+            "polygon(0 100%, 100% 100%, 100% 0, 0 30%)",
           ],
         }}
         transition={{
-          duration: 8,
+          duration: 6, // Reduced duration
           repeat: Infinity,
           ease: "easeInOut",
         }}

@@ -9,7 +9,10 @@ export default function Banner() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setIsLoaded(true);
+    // Reduce delay for faster initial load
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 50); // Reduced from default to 50ms for faster load
 
     const handleMouseMove = (e) => {
       setMousePosition({
@@ -19,7 +22,10 @@ export default function Banner() {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(timer);
+    };
   }, []);
 
   const containerVariants = {
@@ -27,33 +33,33 @@ export default function Banner() {
     visible: {
       opacity: 1,
       transition: {
-        duration: 1,
-        staggerChildren: 0.3,
+        duration: 0.5, // Reduced from 1 to 0.5 for faster animation
+        staggerChildren: 0.1, // Reduced from 0.3 to 0.1 for faster stagger
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 100, opacity: 0, rotateX: -30 },
+    hidden: { y: 50, opacity: 0, rotateX: -15 }, // Reduced animation intensity
     visible: {
       y: 0,
       opacity: 1,
       rotateX: 0,
       transition: {
-        duration: 0.8,
+        duration: 0.4, // Reduced from 0.8 to 0.4 for faster animation
         ease: "easeOut",
       },
     },
   };
 
   const imageVariants = {
-    hidden: { scale: 0.5, opacity: 0, rotateY: -180 },
+    hidden: { scale: 0.8, opacity: 0, rotateY: -90 }, // Reduced animation intensity
     visible: {
       scale: 1,
       opacity: 1,
       rotateY: 0,
       transition: {
-        duration: 1.2,
+        duration: 0.6, // Reduced from 1.2 to 0.6 for faster animation
         ease: "easeOut",
       },
     },
@@ -61,31 +67,36 @@ export default function Banner() {
 
   return (
     <div className="relative min-h-screen overflow-hidden animated-gradient">
-      {/* Floating Background Elements */}
+      {/* Floating Background Elements - Reduced number for better performance */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute opacity-10"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              fontSize: `${Math.random() * 60 + 40}px`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              rotate: [0, 360],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            🥭
-          </motion.div>
-        ))}
+        {[...Array(5)].map(
+          (
+            _,
+            i // Reduced from 8 to 5 elements
+          ) => (
+            <motion.div
+              key={i}
+              className="absolute opacity-10"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                fontSize: `${Math.random() * 40 + 20}px`, // Reduced size range
+              }}
+              animate={{
+                y: [0, -20, 0], // Reduced animation range
+                rotate: [0, 180], // Simplified rotation
+                scale: [1, 1.1, 1], // Reduced scale range
+              }}
+              transition={{
+                duration: Math.random() * 5 + 5, // Reduced duration for better performance
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              🥭
+            </motion.div>
+          )
+        )}
       </div>
 
       {/* Main Content */}
@@ -95,19 +106,22 @@ export default function Banner() {
         initial="hidden"
         animate={isLoaded ? "visible" : "hidden"}
       >
-        <div className="flex flex-col lg:flex-row items-center gap-12 min-h-[80vh]">
+        <div className="flex flex-col lg:flex-row items-center gap-8 min-h-[80vh]">
+          {" "}
+          {/* Reduced gap */}
           {/* Text content */}
           <motion.div
-            className="lg:w-1/2 space-y-8 text-center lg:text-left"
+            className="lg:w-1/2 space-y-6 text-center lg:text-left" // Reduced space-y
             variants={itemVariants}
             style={{
-              transform: `translate(${mousePosition.x * 0.5}px, ${
-                mousePosition.y * 0.5
+              transform: `translate(${mousePosition.x * 0.3}px, ${
+                // Reduced mouse effect intensity
+                mousePosition.y * 0.3
               }px)`,
             }}
           >
             <motion.h1
-              className="text-5xl md:text-7xl font-extrabold leading-tight text-3d text-glow"
+              className="text-4xl md:text-6xl font-extrabold leading-tight text-3d text-glow" // Reduced font size
               style={{
                 background: "linear-gradient(45deg, #C09A44, #491D0B, #C09A44)",
                 backgroundSize: "200% 200%",
@@ -128,8 +142,8 @@ export default function Banner() {
               <motion.span
                 className="inline-block"
                 animate={{
-                  rotateY: [0, 10, -10, 0],
-                  scale: [1, 1.05, 1],
+                  rotateY: [0, 5, -5, 0], // Reduced rotation
+                  scale: [1, 1.03, 1], // Reduced scale
                 }}
                 transition={{
                   duration: 2,
@@ -141,10 +155,12 @@ export default function Banner() {
               </motion.span>
             </motion.h1>
 
-            <motion.div className="space-y-4" variants={itemVariants}>
+            <motion.div className="space-y-3" variants={itemVariants}>
+              {" "}
+              {/* Reduced space-y */}
               <motion.h3
-                className="text-2xl font-semibold text-[#491D0B]"
-                whileHover={{ scale: 1.05, rotateX: 5 }}
+                className="text-xl font-semibold text-[#491D0B]" // Reduced font size
+                whileHover={{ scale: 1.02, rotateX: 2 }} // Reduced hover effect
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 100% Carbide free{" "}
@@ -153,7 +169,7 @@ export default function Banner() {
                   animate={{
                     textShadow: [
                       "0 0 5px rgba(192, 154, 68, 0.5)",
-                      "0 0 20px rgba(192, 154, 68, 0.8)",
+                      "0 0 15px rgba(192, 154, 68, 0.8)", // Reduced shadow intensity
                       "0 0 5px rgba(192, 154, 68, 0.5)",
                     ],
                   }}
@@ -163,7 +179,7 @@ export default function Banner() {
                 </motion.span>
               </motion.h3>
               <motion.p
-                className="text-[#6B4C3B] text-lg md:text-xl"
+                className="text-[#6B4C3B] text-base md:text-lg" // Reduced font size
                 variants={itemVariants}
               >
                 Naturally ripened with a rich taste and aroma straight from
@@ -173,28 +189,28 @@ export default function Banner() {
 
             <motion.div
               variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }} // Reduced hover effect
+              whileTap={{ scale: 0.98 }} // Reduced tap effect
             >
               <Link href="/shop" className="inline-block">
                 <motion.button
-                  className="relative overflow-hidden bg-gradient-to-r from-[#C09A44] to-[#b58a35] text-white text-xl font-bold py-4 px-10 rounded-full shadow-2xl cursor-pointer"
+                  className="relative overflow-hidden bg-gradient-to-r from-[#C09A44] to-[#b58a35] text-white text-lg font-bold py-3 px-8 rounded-full shadow-lg cursor-pointer" // Reduced padding and font size
                   whileHover={{
-                    boxShadow: "0 20px 40px rgba(192, 154, 68, 0.4)",
-                    y: -5,
+                    boxShadow: "0 10px 20px rgba(192, 154, 68, 0.4)", // Reduced shadow
+                    y: -3, // Reduced movement
                   }}
                   animate={{
                     boxShadow: [
-                      "0 10px 20px rgba(192, 154, 68, 0.3)",
-                      "0 15px 30px rgba(192, 154, 68, 0.5)",
-                      "0 10px 20px rgba(192, 154, 68, 0.3)",
+                      "0 5px 10px rgba(192, 154, 68, 0.3)", // Reduced shadow
+                      "0 10px 20px rgba(192, 154, 68, 0.5)", // Reduced shadow
+                      "0 5px 10px rgba(192, 154, 68, 0.3)", // Reduced shadow
                     ],
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
                   <motion.span
                     className="relative z-10"
-                    animate={{ rotateY: [0, 5, -5, 0] }}
+                    animate={{ rotateY: [0, 3, -3, 0] }} // Reduced rotation
                     transition={{ duration: 3, repeat: Infinity }}
                   >
                     Shop Now 🛒
@@ -203,28 +219,28 @@ export default function Banner() {
                     className="absolute inset-0 bg-gradient-to-r from-[#b58a35] to-[#C09A44]"
                     initial={{ x: "-100%" }}
                     whileHover={{ x: "0%" }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.2 }} // Reduced duration
                   />
                 </motion.button>
               </Link>
             </motion.div>
           </motion.div>
-
           {/* Image section */}
           <motion.div
             className="lg:w-1/2 flex justify-center w-full relative"
             variants={imageVariants}
             style={{
-              transform: `translate(${-mousePosition.x * 0.3}px, ${
-                -mousePosition.y * 0.3
+              transform: `translate(${-mousePosition.x * 0.2}px, ${
+                // Reduced mouse effect intensity
+                -mousePosition.y * 0.2
               }px)`,
             }}
           >
             <motion.div
-              className="relative w-full h-96 md:h-[500px] max-w-[400px] sm:max-w-[500px] md:max-w-2xl"
+              className="relative w-full h-80 md:h-[400px] max-w-[350px] sm:max-w-[400px] md:max-w-xl" // Reduced sizes
               animate={{
-                rotateY: [0, 5, -5, 0],
-                rotateX: [0, 2, -2, 0],
+                rotateY: [0, 3, -3, 0], // Reduced rotation
+                rotateX: [0, 1, -1, 0], // Reduced rotation
               }}
               transition={{
                 duration: 6,
@@ -232,18 +248,18 @@ export default function Banner() {
                 ease: "easeInOut",
               }}
             >
-              {/* Glow Effect Background */}
+              {/* Glow Effect Background - Simplified */}
               <motion.div
-                className="absolute inset-0 rounded-3xl morphing-shape"
+                className="absolute inset-0 rounded-2xl" // Reduced border radius
                 style={{
                   background:
-                    "linear-gradient(45deg, rgba(192, 154, 68, 0.3), rgba(73, 29, 11, 0.2))",
-                  filter: "blur(20px)",
-                  scale: 1.1,
+                    "linear-gradient(45deg, rgba(192, 154, 68, 0.2), rgba(73, 29, 11, 0.1))", // Reduced opacity
+                  filter: "blur(15px)", // Reduced blur
+                  scale: 1.05, // Reduced scale
                 }}
                 animate={{
-                  rotate: [0, 360],
-                  scale: [1.1, 1.2, 1.1],
+                  rotate: [0, 180], // Simplified rotation
+                  scale: [1.05, 1.1, 1.05], // Reduced scale range
                 }}
                 transition={{
                   duration: 10,
@@ -254,11 +270,11 @@ export default function Banner() {
 
               {/* Main Image Container */}
               <motion.div
-                className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl glass-effect hover-lift"
+                className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl glass-effect" // Reduced effects
                 whileHover={{
-                  scale: 1.05,
-                  rotateY: 15,
-                  rotateX: 10,
+                  scale: 1.02, // Reduced scale
+                  rotateY: 5, // Reduced rotation
+                  rotateX: 3, // Reduced rotation
                 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
@@ -270,12 +286,12 @@ export default function Banner() {
                   priority
                 />
 
-                {/* Shimmer Effect Overlay */}
+                {/* Shimmer Effect Overlay - Simplified */}
                 <motion.div
-                  className="absolute inset-0 opacity-0 hover:opacity-30"
+                  className="absolute inset-0 opacity-0 hover:opacity-20" // Reduced opacity
                   style={{
                     background:
-                      "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%)",
+                      "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%)", // Reduced opacity
                   }}
                   animate={{
                     x: ["-100%", "100%"],
@@ -288,49 +304,54 @@ export default function Banner() {
                 />
               </motion.div>
 
-              {/* Floating Mango Emojis around the image */}
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute text-4xl"
-                  style={{
-                    left: `${20 + i * 15}%`,
-                    top: `${10 + (i % 2) * 70}%`,
-                  }}
-                  animate={{
-                    y: [0, -20, 0],
-                    rotate: [0, 10, -10, 0],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: 3 + i * 0.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: i * 0.2,
-                  }}
-                >
-                  🥭
-                </motion.div>
-              ))}
+              {/* Floating Mango Emojis - Reduced number */}
+              {[...Array(4)].map(
+                (
+                  _,
+                  i // Reduced from 6 to 4 elements
+                ) => (
+                  <motion.div
+                    key={i}
+                    className="absolute text-3xl" // Reduced font size
+                    style={{
+                      left: `${25 + i * 20}%`, // Adjusted positioning
+                      top: `${15 + (i % 2) * 60}%`, // Adjusted positioning
+                    }}
+                    animate={{
+                      y: [0, -15, 0], // Reduced animation range
+                      rotate: [0, 5, -5, 0], // Reduced rotation
+                      scale: [1, 1.1, 1], // Reduced scale
+                    }}
+                    transition={{
+                      duration: 3 + i * 0.3, // Reduced delay
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.1, // Reduced delay
+                    }}
+                  >
+                    🥭
+                  </motion.div>
+                )
+              )}
             </motion.div>
           </motion.div>
         </div>
       </motion.div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - Simplified */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-6 left-1/2 transform -translate-x-1/2" // Reduced bottom spacing
+        animate={{ y: [0, 5, 0] }} // Reduced animation range
+        transition={{ duration: 1.5, repeat: Infinity }} // Reduced duration
       >
         <motion.div
-          className="w-6 h-10 border-2 border-[#C09A44] rounded-full flex justify-center"
-          whileHover={{ scale: 1.2 }}
+          className="w-5 h-8 border-2 border-[#C09A44] rounded-full flex justify-center" // Reduced size
+          whileHover={{ scale: 1.1 }} // Reduced hover effect
         >
           <motion.div
-            className="w-1 h-3 bg-[#C09A44] rounded-full mt-2"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-1 h-2 bg-[#C09A44] rounded-full mt-1" // Reduced size
+            animate={{ y: [0, 8, 0] }} // Reduced animation range
+            transition={{ duration: 1, repeat: Infinity }} // Reduced duration
           />
         </motion.div>
       </motion.div>

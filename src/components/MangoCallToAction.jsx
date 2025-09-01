@@ -19,7 +19,8 @@ export default function MangoCallToAction() {
       });
     };
 
-    const colorInterval = setInterval(colorCycle, 30);
+    // Slowed down from 30ms to 100ms
+    const colorInterval = setInterval(colorCycle, 100);
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
@@ -46,7 +47,8 @@ export default function MangoCallToAction() {
       }}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      // Slowed down from 1s to 2s
+      transition={{ duration: 2 }}
       viewport={{ once: true }}
     >
       {/* Floating Background Elements */}
@@ -67,7 +69,8 @@ export default function MangoCallToAction() {
               scale: [1, 1.4, 1],
             }}
             transition={{
-              duration: Math.random() * 25 + 20,
+              // Slowed down from 20-45s to 40-90s
+              duration: Math.random() * 20 + 40,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -95,13 +98,10 @@ export default function MangoCallToAction() {
           animate={{
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
           }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
           initial={{ scale: 0.8, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
+          // Slowed down from default to 2s
+          transition={{ duration: 2 }}
           viewport={{ once: true }}
         >
           Ready to Taste Paradise?
@@ -111,7 +111,8 @@ export default function MangoCallToAction() {
           className="text-xl text-[#491D0B] mb-12 max-w-2xl mx-auto leading-relaxed"
           initial={{ y: 50, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
+          // Slowed down from 0.8s to 1.5s
+          transition={{ delay: 0.3, duration: 1.5 }}
           viewport={{ once: true }}
         >
           Don't miss out on the season's freshest mangoes. Order now and
@@ -124,7 +125,8 @@ export default function MangoCallToAction() {
           className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           initial={{ y: 50, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
+          // Slowed down from 0.8s to 1.5s
+          transition={{ delay: 0.6, duration: 1.5 }}
           viewport={{ once: true }}
         >
           <Link href="/shop">
@@ -145,7 +147,8 @@ export default function MangoCallToAction() {
                   ${getColorFromPhase(colorPhase, 0)}, 
                   ${getColorFromPhase(colorPhase, 60)})`,
               }}
-              transition={{ type: "spring", stiffness: 300 }}
+              // Slowed down spring animation
+              transition={{ type: "spring", stiffness: 150 }}
             >
               <motion.span
                 className="relative z-10 flex items-center gap-3"
@@ -153,7 +156,8 @@ export default function MangoCallToAction() {
                   rotateY: [0, 5, -5, 0],
                 }}
                 transition={{
-                  duration: 4,
+                  // Slowed down from 4s to 8s
+                  duration: 8,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
@@ -162,7 +166,8 @@ export default function MangoCallToAction() {
                 <motion.span
                   animate={{ x: [0, 5, 0] }}
                   transition={{
-                    duration: 2,
+                    // Slowed down from 2s to 4s
+                    duration: 4,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
@@ -182,7 +187,8 @@ export default function MangoCallToAction() {
                   x: ["-100%", "100%"],
                 }}
                 transition={{
-                  duration: 1.5,
+                  // Slowed down from 1.5s to 3s
+                  duration: 3,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
@@ -207,7 +213,8 @@ export default function MangoCallToAction() {
                 borderColor: getColorFromPhase(colorPhase, 120),
                 color: getColorFromPhase(colorPhase, 120),
               }}
-              transition={{ type: "spring", stiffness: 300 }}
+              // Slowed down spring animation
+              transition={{ type: "spring", stiffness: 150 }}
             >
               <motion.span
                 className="relative z-10 flex items-center gap-3"
@@ -215,7 +222,8 @@ export default function MangoCallToAction() {
                   rotateX: [0, 5, -5, 0],
                 }}
                 transition={{
-                  duration: 5,
+                  // Slowed down from 5s to 10s
+                  duration: 10,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
@@ -231,7 +239,8 @@ export default function MangoCallToAction() {
           className="flex items-center justify-center mt-16 gap-6"
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
+          // Slowed down from 0.8s to 1.5s
+          transition={{ delay: 1, duration: 1.5 }}
           viewport={{ once: true }}
         >
           <motion.div
@@ -245,7 +254,8 @@ export default function MangoCallToAction() {
               scaleX: [0, 1, 0],
             }}
             transition={{
-              duration: 3,
+              // Slowed down from 3s to 6s
+              duration: 6,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -257,7 +267,8 @@ export default function MangoCallToAction() {
               scale: [1, 1.3, 1],
             }}
             transition={{
-              duration: 6,
+              // Slowed down from 6s to 12s
+              duration: 12,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -279,10 +290,12 @@ export default function MangoCallToAction() {
               scaleX: [0, 1, 0],
             }}
             transition={{
-              duration: 3,
+              // Slowed down from 3s to 6s
+              duration: 6,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: 1.5,
+              // Slowed down delay from 1.5s to 3s
+              delay: 3,
             }}
           />
         </motion.div>
@@ -292,7 +305,8 @@ export default function MangoCallToAction() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-4xl mx-auto"
           initial={{ y: 50, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8, staggerChildren: 0.2 }}
+          // Slowed down from 0.8s to 1.5s
+          transition={{ delay: 1.2, duration: 1.5, staggerChildren: 0.4 }}
           viewport={{ once: true }}
         >
           {[
@@ -312,7 +326,8 @@ export default function MangoCallToAction() {
                 scale: 1.05,
                 y: -5,
               }}
-              transition={{ type: "spring", stiffness: 300 }}
+              // Slowed down spring animation
+              transition={{ type: "spring", stiffness: 150 }}
             >
               <motion.div
                 className="text-3xl"
@@ -321,7 +336,8 @@ export default function MangoCallToAction() {
                   scale: [1, 1.1, 1],
                 }}
                 transition={{
-                  duration: 4 + index,
+                  // Slowed down from 4-6s to 8-12s
+                  duration: 8 + index * 2,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
@@ -339,7 +355,7 @@ export default function MangoCallToAction() {
                 whileHover={{
                   color: getColorFromPhase(colorPhase, item.color),
                 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.6 }}
               >
                 {item.text}
               </motion.p>
