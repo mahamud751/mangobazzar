@@ -19,12 +19,12 @@ export default function Banner() {
       className="relative min-h-screen overflow-hidden transition-all duration-1000"
       style={{ background: getBackgroundGradient() }}
     >
-      {/* Enhanced floating elements (more visually prominent) */}
+      {/* Enhanced floating elements using existing animations */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 left-5 w-20 h-20 rounded-full opacity-30 bg-amber-200 animate-float-slow"></div>
-        <div className="absolute top-3/4 right-10 w-16 h-16 rounded-full opacity-30 bg-amber-300 animate-float-medium animation-delay-1000"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-14 h-14 rounded-full opacity-30 bg-amber-400 animate-float-fast animation-delay-2000"></div>
-        <div className="absolute top-1/4 right-1/3 w-18 h-18 rounded-full opacity-30 bg-amber-500 animate-float-slow animation-delay-1500"></div>
+        <div className="absolute top-10 left-5 w-20 h-20 rounded-full opacity-30 bg-amber-200 float-animation"></div>
+        <div className="absolute top-3/4 right-10 w-16 h-16 rounded-full opacity-30 bg-amber-300 float-reverse-animation animation-delay-1000"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-14 h-14 rounded-full opacity-30 bg-amber-400 float-animation animation-delay-2000"></div>
+        <div className="absolute top-1/4 right-1/3 w-18 h-18 rounded-full opacity-30 bg-amber-500 float-reverse-animation animation-delay-1500"></div>
       </div>
 
       {/* Main Content */}
@@ -80,7 +80,7 @@ export default function Banner() {
           >
             <div className="relative w-full h-80 md:h-[450px] max-w-[400px] sm:max-w-[450px] md:max-w-xl">
               {/* Pulsing background behind the image */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-200/40 to-amber-400/40 blur-xl scale-105 animate-pulse-slow"></div>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-200/40 to-amber-400/40 blur-xl scale-105 animate-pulse"></div>
 
               {/* Main 3D Mango Image Container */}
               <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl border-4 border-white transform transition-transform hover:scale-105">
@@ -94,16 +94,16 @@ export default function Banner() {
               </div>
 
               {/* Floating mangoes around the main image with varying animations */}
-              <div className="absolute text-4xl -top-8 left-1/4 animate-float-medium z-20">
+              <div className="absolute text-4xl -top-8 left-1/4 float-animation z-20">
                 🥭
               </div>
-              <div className="absolute text-3xl top-1/4 -right-10 animate-float-slow z-20">
+              <div className="absolute text-3xl top-1/4 -right-10 float-reverse-animation z-20">
                 🥭
               </div>
-              <div className="absolute text-5xl -bottom-10 left-10 animate-float-fast z-20">
+              <div className="absolute text-5xl -bottom-10 left-10 float-animation z-20">
                 🥭
               </div>
-              <div className="absolute text-3xl bottom-1/2 -left-10 animate-float-medium z-20">
+              <div className="absolute text-3xl bottom-1/2 -left-10 float-reverse-animation z-20">
                 🥭
               </div>
             </div>
@@ -117,72 +117,6 @@ export default function Banner() {
           <div className="w-1 h-2 bg-[#491D0B] rounded-full mt-1"></div>
         </div>
       </div>
-
-      {/* Tailwind CSS keyframes for custom animations */}
-      <style jsx>{`
-        @keyframes float-slow {
-          0%,
-          100% {
-            transform: translateY(0) translateX(0) rotate(0deg);
-          }
-          25% {
-            transform: translateY(-10px) translateX(5px) rotate(2deg);
-          }
-          50% {
-            transform: translateY(5px) translateX(-5px) rotate(-2deg);
-          }
-          75% {
-            transform: translateY(-5px) translateX(5px) rotate(1deg);
-          }
-        }
-        @keyframes float-medium {
-          0%,
-          100% {
-            transform: translateY(0) translateX(0) rotate(0deg);
-          }
-          30% {
-            transform: translateY(-15px) translateX(8px) rotate(3deg);
-          }
-          60% {
-            transform: translateY(8px) translateX(-8px) rotate(-3deg);
-          }
-        }
-        @keyframes float-fast {
-          0%,
-          100% {
-            transform: translateY(0) translateX(0) rotate(0deg);
-          }
-          40% {
-            transform: translateY(-20px) translateX(10px) rotate(5deg);
-          }
-          80% {
-            transform: translateY(10px) translateX(-10px) rotate(-5deg);
-          }
-        }
-        @keyframes pulse-slow {
-          0%,
-          100% {
-            transform: scale(1.05);
-            opacity: 0.4;
-          }
-          50% {
-            transform: scale(1.1);
-            opacity: 0.6;
-          }
-        }
-        .animation-delay-500 {
-          animation-delay: 0.5s;
-        }
-        .animation-delay-1000 {
-          animation-delay: 1s;
-        }
-        .animation-delay-1500 {
-          animation-delay: 1.5s;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-      `}</style>
     </div>
   );
 }
