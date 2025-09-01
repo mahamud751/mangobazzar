@@ -1,5 +1,289 @@
 @import "tailwindcss";
 
+/* 3D Animation Styles */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotateX(5deg) rotateY(10deg);
+  }
+}
+
+@keyframes float-reverse {
+  0%,
+  100% {
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(20px) rotateX(-5deg) rotateY(-10deg);
+  }
+}
+
+@keyframes rotate3d {
+  0% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(360deg) rotateY(360deg)
+      rotateZ(360deg);
+  }
+}
+
+@keyframes bounceIn3D {
+  0% {
+    transform: perspective(1000px) scale3d(0.3, 0.3, 0.3) rotateX(20deg)
+      rotateY(20deg);
+    opacity: 0;
+  }
+  20% {
+    transform: perspective(1000px) scale3d(1.1, 1.1, 1.1) rotateX(-10deg)
+      rotateY(-10deg);
+  }
+  40% {
+    transform: perspective(1000px) scale3d(0.9, 0.9, 0.9) rotateX(5deg)
+      rotateY(5deg);
+  }
+  60% {
+    transform: perspective(1000px) scale3d(1.03, 1.03, 1.03) rotateX(-2deg)
+      rotateY(-2deg);
+    opacity: 1;
+  }
+  80% {
+    transform: perspective(1000px) scale3d(0.97, 0.97, 0.97) rotateX(1deg)
+      rotateY(1deg);
+  }
+  100% {
+    transform: perspective(1000px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn3D {
+  0% {
+    transform: perspective(1000px) translateX(-100px) rotateY(-30deg);
+    opacity: 0;
+  }
+  100% {
+    transform: perspective(1000px) translateX(0) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight3D {
+  0% {
+    transform: perspective(1000px) translateX(100px) rotateY(30deg);
+    opacity: 0;
+  }
+  100% {
+    transform: perspective(1000px) translateX(0) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse3D {
+  0% {
+    transform: perspective(1000px) scale3d(1, 1, 1);
+    box-shadow: 0 0 0 0 rgba(192, 154, 68, 0.7);
+  }
+  70% {
+    transform: perspective(1000px) scale3d(1.05, 1.05, 1.05);
+    box-shadow: 0 0 0 10px rgba(192, 154, 68, 0);
+  }
+  100% {
+    transform: perspective(1000px) scale3d(1, 1, 1);
+    box-shadow: 0 0 0 0 rgba(192, 154, 68, 0);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%,
+  100% {
+    transform: rotateZ(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes morphing {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+}
+
+/* Utility Classes for 3D Effects */
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+.float-reverse-animation {
+  animation: float-reverse 4s ease-in-out infinite;
+}
+
+.rotate-3d {
+  animation: rotate3d 20s linear infinite;
+}
+
+.bounce-in-3d {
+  animation: bounceIn3D 1s ease-out;
+}
+
+.slide-in-3d {
+  animation: slideIn3D 0.8s ease-out;
+}
+
+.slide-in-right-3d {
+  animation: slideInRight3D 0.8s ease-out;
+}
+
+.pulse-3d {
+  animation: pulse3D 2s infinite;
+}
+
+.wiggle-animation {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.shimmer-effect {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.morphing-shape {
+  animation: morphing 8s ease-in-out infinite;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glow-effect {
+  box-shadow: 0 0 20px rgba(192, 154, 68, 0.5), 0 0 40px rgba(192, 154, 68, 0.3),
+    0 0 60px rgba(192, 154, 68, 0.1);
+}
+
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: perspective(1000px) translateY(-10px) rotateX(10deg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.card-3d:hover {
+  transform: perspective(1000px) rotateY(10deg) rotateX(5deg);
+}
+
+/* Parallax Container */
+.parallax-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.parallax-element {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Gradient Animations */
+.animated-gradient {
+  background: linear-gradient(-45deg, #faf5e9, #c09a44, #491d0b, #fffbea);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Loading Spinner */
+.mango-spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(#c09a44, #491d0b, #c09a44);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Text Effects */
+.text-glow {
+  text-shadow: 0 0 10px rgba(192, 154, 68, 0.5),
+    0 0 20px rgba(192, 154, 68, 0.3), 0 0 30px rgba(192, 154, 68, 0.1);
+}
+
+.text-3d {
+  text-shadow: 1px 1px 0 #491d0b, 2px 2px 0 #491d0b, 3px 3px 0 #491d0b,
+    4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Scroll Reveal Animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.6s ease-out;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Toastify Custom Styles */
 .Toastify__toast-container {
   width: 320px;
@@ -10,8 +294,8 @@
 }
 
 .Toastify__toast {
-  background-color: #C09A44;
-  color: #FFF9F0;
+  background-color: #c09a44;
+  color: #fff9f0;
   font-family: var(--font-geist-sans);
   font-size: 14px;
   font-weight: 500;
@@ -23,7 +307,7 @@
 }
 
 .Toastify__toast--success {
-  border-left: 4px solid #491D0B;
+  border-left: 4px solid #491d0b;
 }
 
 .Toastify__toast-body {
@@ -42,11 +326,11 @@
 .Toastify__toast-icon {
   width: 24px;
   height: 24px;
-  color: #FFF9F0;
+  color: #fff9f0;
 }
 
 .Toastify__close-button {
-  color: #FFF9F0;
+  color: #fff9f0;
   opacity: 0.7;
   transition: opacity 0.2s ease;
 }
