@@ -35,7 +35,7 @@ export default function CheckoutPage() {
       acc +
       parsePrice(item.discountedPrice || item.price || item.originalPrice) *
         (item.quantity || 1),
-    0
+    0,
   );
   const shipping = 0; // Free shipping for now
   const total = subtotal + shipping;
@@ -114,7 +114,7 @@ export default function CheckoutPage() {
           imageUrl: item.imageUrl,
           quantity: item.quantity || 1,
           originalPrice: `৳${parsePrice(
-            item.originalPrice || item.price
+            item.originalPrice || item.price,
           ).toFixed(2)}`,
           discountedPrice: item.discountedPrice
             ? `৳${parsePrice(item.discountedPrice).toFixed(2)}`
@@ -125,16 +125,13 @@ export default function CheckoutPage() {
       };
 
       // Make POST request to the API
-      const response = await fetch(
-        "https://api.chapaimangobazar.com/api/order",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(orderData),
-        }
-      );
+      const response = await fetch("https://api.chapaimango.online/api/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -393,10 +390,10 @@ export default function CheckoutPage() {
           <div className="space-y-4 mb-6">
             {cartItems.map((item) => {
               const price = parsePrice(
-                item.discountedPrice || item.price || item.originalPrice
+                item.discountedPrice || item.price || item.originalPrice,
               );
               const originalPrice = parsePrice(
-                item.originalPrice || item.price
+                item.originalPrice || item.price,
               );
               const hasDiscount = item.discountedPrice && originalPrice > price;
 
