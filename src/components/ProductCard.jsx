@@ -274,17 +274,19 @@ export default function ProductCard({
           <div className="flex items-center gap-3 w-full">
             {/* Quantity Selector */}
             <motion.div
-              className="flex items-center border-2 border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm"
+              className="flex items-center border-2 border-[#eadfc8] rounded-xl overflow-hidden bg-gradient-to-b from-white to-[#fffaf0] shadow-sm"
               whileHover={{
                 borderColor: "#C09A44",
-                boxShadow: "0 4px 12px rgba(192, 154, 68, 0.2)",
+                boxShadow: "0 8px 20px rgba(192, 154, 68, 0.18)",
               }}
             >
               <motion.button
                 onClick={() => setAmount((prev) => Math.max(1, prev - 1))}
                 disabled={amount <= 1}
-                className={`px-3 py-2 transition-colors ${
-                  amount <= 1 ? "opacity-30" : "hover:bg-gray-50"
+                className={`px-2.5 py-2 transition-all duration-200 border-r border-[#f1e6cf] ${
+                  amount <= 1
+                    ? "opacity-35 cursor-not-allowed"
+                    : "cursor-pointer hover:bg-[#fff4df] text-[#7b5a2a]"
                 }`}
                 whileHover={{ backgroundColor: "#f9fafb" }}
                 whileTap={{ scale: 0.95 }}
@@ -292,7 +294,7 @@ export default function ProductCard({
                 <Minus size={14} strokeWidth={2.5} />
               </motion.button>
               <motion.span
-                className="px-3 py-2 text-center min-w-[40px] font-semibold text-gray-900 text-sm"
+                className="px-2.5 py-2 text-center min-w-[34px] font-bold text-[#4d3217] text-sm bg-white/60"
                 key={amount}
                 initial={{ scale: 1.2 }}
                 animate={{ scale: 1 }}
@@ -302,7 +304,7 @@ export default function ProductCard({
               </motion.span>
               <motion.button
                 onClick={() => setAmount((prev) => prev + 1)}
-                className="px-3 py-2 transition-colors hover:bg-gray-50"
+                className="px-2.5 py-2 transition-all duration-200 border-l border-[#f1e6cf] cursor-pointer hover:bg-[#fff4df] text-[#7b5a2a]"
                 whileHover={{ backgroundColor: "#f9fafb" }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -317,10 +319,16 @@ export default function ProductCard({
                 handleAddToCart();
               }}
               disabled={isAdding}
-              className="flex-1 py-3 bg-gradient-to-r from-[#C09A44] to-[#b58a35] text-white rounded-xl transition-all flex items-center justify-center gap-2 text-sm font-semibold shadow-lg relative overflow-hidden"
+              className={`flex-1 py-3 px-3 text-white rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-xs font-extrabold shadow-lg relative overflow-hidden border border-[#b98f3b] whitespace-nowrap ${
+                isAdding ? "cursor-wait" : "cursor-pointer"
+              }`}
+              style={{
+                background:
+                  "linear-gradient(90deg, #c9a24e 0%, #b98f3b 50%, #a97d2f 100%)",
+              }}
               whileHover={{
                 scale: 1.02,
-                boxShadow: "0 8px 25px rgba(192, 154, 68, 0.4)",
+                boxShadow: "0 10px 24px rgba(192, 154, 68, 0.38)",
               }}
               whileTap={{ scale: 0.98 }}
               animate={{
@@ -336,7 +344,7 @@ export default function ProductCard({
                 transition={{ duration: 0.3 }}
               />
               <motion.div
-                className="relative z-10 flex items-center gap-2"
+                className="relative z-10 flex items-center gap-1.5 whitespace-nowrap"
                 animate={{
                   rotate: isAdding ? [0, 10, -10, 0] : 0,
                 }}

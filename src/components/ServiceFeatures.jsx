@@ -64,7 +64,8 @@ export default function ServiceFeatures() {
             <h2
               className="text-3xl md:text-4xl font-extrabold mb-3"
               style={{
-                background: "linear-gradient(45deg, #C09A44, #491D0B, #C09A44)",
+                backgroundImage:
+                  "linear-gradient(45deg, #C09A44, #491D0B, #C09A44)",
                 backgroundSize: "200% 200%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -204,7 +205,8 @@ export default function ServiceFeatures() {
           <motion.h2
             className="text-3xl md:text-4xl font-extrabold mb-3 text-3d" // Reduced font size and margin
             style={{
-              background: "linear-gradient(45deg, #C09A44, #491D0B, #C09A44)",
+              backgroundImage:
+                "linear-gradient(45deg, #C09A44, #491D0B, #C09A44)",
               backgroundSize: "200% 200%",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",

@@ -141,15 +141,18 @@ export default function CheckoutPage() {
       // On success, clear cart and show confirmation
       clearCart();
       setOrderSuccess(true);
-      toast.success("Order placed successfully!", {
+      toast.success(
+        "Order placed successfully! We are collecting mango orders now. Delivery will start in the upcoming days, and seasonal dispatch may continue into next month.",
+        {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 7000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         theme: "light",
-      });
+        },
+      );
     } catch (error) {
       console.error("Error submitting order:", error);
       toast.error(`Failed to place order: ${error.message}`, {

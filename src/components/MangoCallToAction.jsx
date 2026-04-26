@@ -51,41 +51,12 @@ export default function MangoCallToAction() {
       transition={{ duration: 2 }}
       viewport={{ once: true }}
     >
-      {/* Floating Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute opacity-10"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              fontSize: `${Math.random() * 80 + 40}px`,
-              color: getColorFromPhase(colorPhase, i * 45),
-            }}
-            animate={{
-              y: [0, -40, 0],
-              rotate: [0, 360],
-              scale: [1, 1.4, 1],
-            }}
-            transition={{
-              // Slowed down from 20-45s to 40-90s
-              duration: Math.random() * 20 + 40,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            🥭
-          </motion.div>
-        ))}
-      </div>
-
       {/* Main Content */}
       <div className="container mx-auto px-4 relative z-10 text-center">
         <motion.h2
           className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight"
           style={{
-            background: `linear-gradient(45deg, 
+            backgroundImage: `linear-gradient(45deg, 
               ${getColorFromPhase(colorPhase, 0)}, 
               #491D0B, 
               ${getColorFromPhase(colorPhase, 180)})`,

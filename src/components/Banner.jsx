@@ -93,17 +93,17 @@ export default function Banner() {
                 />
               </div>
 
-              {/* Floating mangoes around the main image with varying animations */}
-              <div className="absolute text-4xl -top-8 left-1/4 float-animation z-20">
+              {/* Static mangoes around the main image */}
+              <div className="absolute text-4xl -top-8 left-1/4 z-20">
                 🥭
               </div>
-              <div className="absolute text-3xl top-1/4 -right-10 float-reverse-animation z-20">
+              <div className="absolute text-3xl top-1/4 -right-10 z-20">
                 🥭
               </div>
-              <div className="absolute text-5xl -bottom-10 left-10 float-animation z-20">
+              <div className="absolute text-5xl -bottom-10 left-10 z-20">
                 🥭
               </div>
-              <div className="absolute text-3xl bottom-1/2 -left-10 float-reverse-animation z-20">
+              <div className="absolute text-3xl bottom-1/2 -left-10 z-20">
                 🥭
               </div>
             </div>

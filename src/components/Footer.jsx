@@ -15,6 +15,19 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import BackToTopButton from "./BackToTopButton";
 
+const STATIC_BG_MANGOES = [
+  { left: "8%", top: "16%", size: "26px", colorOffset: 0 },
+  { left: "22%", top: "36%", size: "32px", colorOffset: 36 },
+  { left: "38%", top: "20%", size: "24px", colorOffset: 72 },
+  { left: "52%", top: "44%", size: "30px", colorOffset: 108 },
+  { left: "67%", top: "26%", size: "28px", colorOffset: 144 },
+  { left: "80%", top: "18%", size: "34px", colorOffset: 180 },
+  { left: "14%", top: "66%", size: "25px", colorOffset: 216 },
+  { left: "34%", top: "74%", size: "31px", colorOffset: 252 },
+  { left: "58%", top: "68%", size: "27px", colorOffset: 288 },
+  { left: "84%", top: "62%", size: "29px", colorOffset: 324 },
+];
+
 export default function Footer() {
   const [colorPhase, setColorPhase] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
@@ -77,29 +90,19 @@ export default function Footer() {
     >
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(10)].map((_, i) => (
-          <motion.div
-            key={i}
+        {STATIC_BG_MANGOES.map((mango, i) => (
+          <div
+            key={`${mango.left}-${mango.top}`}
             className="absolute opacity-5"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              fontSize: `${Math.random() * 30 + 20}px`,
-              color: getColor(i * 36),
-            }}
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 360],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 15,
-              repeat: Infinity,
-              ease: "easeInOut",
+              left: mango.left,
+              top: mango.top,
+              fontSize: mango.size,
+              color: getColor(mango.colorOffset),
             }}
           >
             🥭
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -242,7 +245,11 @@ export default function Footer() {
             <div className="flex gap-3 mb-4">
               {[
                 { Icon: Instagram, href: "#", color: "#E4405F" },
-                { Icon: Facebook, href: "#", color: "#1877F2" },
+                {
+                  Icon: Facebook,
+                  href: "https://www.facebook.com/profile.php?id=100043577427090",
+                  color: "#1877F2",
+                },
                 { Icon: Youtube, href: "#", color: "#FF0000" },
               ].map((social, i) => (
                 <Link key={i} href={social.href}>

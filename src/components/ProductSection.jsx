@@ -6,6 +6,17 @@ import { useEffect, useState } from "react";
 import Button3D from "./Button3D";
 import Link from "next/link";
 
+const STATIC_BG_MANGOES = [
+  { left: "8%", top: "14%", size: "20px", duration: 12 },
+  { left: "22%", top: "32%", size: "24px", duration: 14 },
+  { left: "36%", top: "18%", size: "18px", duration: 10 },
+  { left: "52%", top: "28%", size: "22px", duration: 13 },
+  { left: "66%", top: "16%", size: "19px", duration: 11 },
+  { left: "79%", top: "34%", size: "23px", duration: 15 },
+  { left: "27%", top: "68%", size: "21px", duration: 12 },
+  { left: "73%", top: "72%", size: "25px", duration: 14 },
+];
+
 export default function ProductSection() {
   const products = mockProducts.slice(0, 4);
   const [isVisible, setIsVisible] = useState(false);
@@ -102,34 +113,30 @@ export default function ProductSection() {
     >
       {/* Floating Background Elements - Reduced for performance */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map(
-          (
-            _,
-            i // Reduced from 15 to 8
-          ) => (
-            <motion.div
-              key={i}
-              className="absolute opacity-3" // Increased opacity visibility
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                fontSize: `${Math.random() * 30 + 15}px`, // Reduced size
-              }}
-              animate={{
-                y: [0, -20, 0], // Reduced animation range
-                rotate: [0, 180], // Simplified rotation
-                scale: [1, 1.1, 1], // Reduced scale
-              }}
-              transition={{
-                duration: Math.random() * 10 + 8, // Reduced duration
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              🥭
-            </motion.div>
-          )
-        )}
+        {STATIC_BG_MANGOES.map((mango, i) => (
+          <motion.div
+            key={`${mango.left}-${mango.top}`}
+            className="absolute opacity-3" // Increased opacity visibility
+            style={{
+              left: mango.left,
+              top: mango.top,
+              fontSize: mango.size,
+            }}
+            animate={{
+              y: [0, -20, 0], // Reduced animation range
+              rotate: [0, 180], // Simplified rotation
+              scale: [1, 1.1, 1], // Reduced scale
+            }}
+            transition={{
+              duration: mango.duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.2,
+            }}
+          >
+            🥭
+          </motion.div>
+        ))}
       </div>
 
       {/* Geometric Background Shapes - Simplified */}
@@ -175,7 +182,8 @@ export default function ProductSection() {
           <motion.h2
             className="text-3xl md:text-5xl font-extrabold mb-4 text-3d" // Reduced font size and margin
             style={{
-              background: "linear-gradient(45deg, #C09A44, #491D0B, #C09A44)",
+              backgroundImage:
+                "linear-gradient(45deg, #C09A44, #491D0B, #C09A44)",
               backgroundSize: "200% 200%",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",

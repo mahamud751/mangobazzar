@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { CheckCircle2, Phone } from "lucide-react";
 import Link from "next/link";
 
@@ -15,10 +14,12 @@ export default function OrderConfirmation() {
       <h1 className="text-3xl font-bold text-[#491D0B] mb-4">
         Thank You for Your Interest!
       </h1>
-      {/* <p className="text-lg text-gray-700 mb-6">
-        We're excited to serve you! Our mango ordering system will be available starting next month.
-        For pre-orders or any inquiries, please contact us directly.
-      </p> */}
+      <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed max-w-2xl mx-auto">
+        Your order has been received successfully. We are currently collecting
+        seasonal mango orders, and delivery will start in the upcoming days.
+        Due to seasonal availability, some deliveries may continue into next
+        month. Thank you for your patience and trust.
+      </p>
 
       {/* Contact Info */}
       <div className="bg-amber-50 rounded-lg p-6 max-w-md mx-auto mb-8">
