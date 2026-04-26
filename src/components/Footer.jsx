@@ -154,7 +154,7 @@ export default function Footer() {
             <div className="space-y-2">
               {[
                 { Icon: Mail, text: "info@mangobazzar.com" },
-                { Icon: Phone, text: "+880 1234 567890" },
+                { Icon: Phone, text: "+8801789999751" },
                 { Icon: MapPin, text: "Chapai Nawabganj, BD" },
               ].map((item, i) => (
                 <motion.div
@@ -278,13 +278,13 @@ export default function Footer() {
                 className="w-full py-2 rounded font-semibold text-sm"
                 style={{
                   background: `linear-gradient(45deg, ${getColor()}, ${getColor(
-                    60
+                    60,
                   )})`,
                 }}
                 whileHover={{ scale: 1.02 }}
                 animate={{
                   background: `linear-gradient(45deg, ${getColor()}, ${getColor(
-                    60
+                    60,
                   )})`,
                 }}
               >
@@ -325,7 +325,7 @@ export default function Footer() {
             className="text-[#6B4C3B] text-sm"
             whileHover={{ color: getColor() }}
           >
-            © 2025{" "}
+            © 2026{" "}
             <motion.span
               className="font-bold"
               animate={{ color: getColor(120) }}
