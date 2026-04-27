@@ -1,10 +1,10 @@
 "use client";
-import { mockProducts } from "@/app/data/mockProducts";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import Button3D from "./Button3D";
 import Link from "next/link";
+import { useProducts } from "@/hooks/useProducts";
 
 const STATIC_BG_MANGOES = [
   { left: "8%", top: "14%", size: "20px", duration: 12 },
@@ -18,7 +18,8 @@ const STATIC_BG_MANGOES = [
 ];
 
 export default function ProductSection() {
-  const products = mockProducts.slice(0, 4);
+  const { products: allProducts } = useProducts();
+  const products = allProducts.slice(0, 4);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -294,7 +295,7 @@ export default function ProductSection() {
               }}
             >
               <ProductCard
-                id={product.id}
+                id={product._id}
                 name={product.name}
                 variety={product.variety}
                 price={product.price}

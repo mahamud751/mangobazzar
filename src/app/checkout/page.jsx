@@ -6,6 +6,7 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import OrderConfirmation from "@/components/OrderConfirmation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { api } from "@/lib/api";
 
 export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
@@ -125,18 +126,7 @@ export default function CheckoutPage() {
       };
 
       // Make POST request to the API
-      const response = await fetch("https://api.chapaimango.online/api/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to submit order");
-      }
+      await api.createOrder(orderData);
 
       // On success, clear cart and show confirmation
       clearCart();

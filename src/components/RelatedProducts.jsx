@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
-import { mockProducts } from "@/app/data/mockProducts";
+import { api } from "@/lib/api";
 
 const RelatedProducts = ({ currentProductId, currentProductVariety }) => {
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -13,12 +13,12 @@ const RelatedProducts = ({ currentProductId, currentProductVariety }) => {
       try {
         setLoading(true);
 
-        const allProducts = mockProducts;
+        const allProducts = await api.getProducts();
 
         const filtered = allProducts.filter(
           (product) =>
             product.variety === currentProductVariety &&
-            product.id !== currentProductId
+            product._id !== currentProductId
         );
 
         const finalProducts =
@@ -27,7 +27,7 @@ const RelatedProducts = ({ currentProductId, currentProductVariety }) => {
             : [
                 ...filtered,
                 ...allProducts
-                  .filter((p) => p.id !== currentProductId)
+                  .filter((p) => p._id !== currentProductId)
                   .slice(0, 4 - filtered.length),
               ];
 
@@ -81,14 +81,14 @@ const RelatedProducts = ({ currentProductId, currentProductVariety }) => {
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {relatedProducts.map((product) => (
-          <div key={product.id} className="h-full">
+          <div key={product._id} className="h-full">
             <ProductCard
-              id={product.id}
+              id={product._id}
               name={product.name}
               price={product.price} 
               originalPrice={product.originalPrice} 
               discountedPrice={product.price < product.originalPrice ? product.price : null} 
-              imageUrl={product.images[0]}
+              imageUrl={product.images?.[0]}
               slug={product.slug}
               rating={product.rating}
               variety={product.variety} 

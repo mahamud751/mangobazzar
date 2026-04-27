@@ -1,10 +1,10 @@
 'use client';
 
 import ProductCard from "./ProductCard";
-import { mockProducts } from "@/app/data/mockProducts";
+import { useProducts } from "@/hooks/useProducts";
 
 export default function PopularProduct() {
-  const products = mockProducts;
+  const { products } = useProducts();
 
   const popularProducts = products
     .filter((product) => product.rating >= 4.5)
@@ -54,8 +54,8 @@ export default function PopularProduct() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {popularProducts.map((product) => (
             <ProductCard
-              key={product.id}
-              id={product.id}
+              key={product._id}
+              id={product._id}
               name={product.name}
               variety={product.variety}
               price={product.price} // Numeric final price

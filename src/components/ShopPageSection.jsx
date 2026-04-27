@@ -1,7 +1,7 @@
 'use client';
 import { useState, useMemo, useRef } from "react";
 import ProductCard from "@/components/ProductCard";
-import { mockProducts } from "@/app/data/mockProducts";
+import { useProducts } from "@/hooks/useProducts";
 
 const ShopPageSection = () => {
   const [sortOption, setSortOption] = useState("");
@@ -10,14 +10,14 @@ const ShopPageSection = () => {
   const itemsPerPage = 8;
   const productGridRef = useRef(null);
 
-  const products = mockProducts;
+  const { products, loading, error } = useProducts();
 
   const sortedProducts = useMemo(() => {
     let sorted = [...products];
     if (sortOption === "Price: Low to High") {
       sorted.sort((a, b) => a.price - b.price);
     } else if (sortOption === "Price: High to Low") {
-      sorted.sort((a, b) => b.price - b.price);
+      sorted.sort((a, b) => b.price - a.price);
     } else if (sortOption === "Customer Rating") {
       sorted.sort((a, b) => b.rating - a.rating);
     } else if (sortOption === "Newest Arrivals") {
@@ -47,12 +47,16 @@ const ShopPageSection = () => {
     }
   };
 
-  if (!products) {
+  if (loading) {
     return (
       <div className="container mx-auto p-4 flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#C09A44]"></div>
       </div>
     );
+  }
+
+  if (error) {
+    return <div className="container mx-auto p-4 text-red-500">Failed to load products: {error}</div>;
   }
 
   return (
@@ -102,14 +106,14 @@ const ShopPageSection = () => {
         >
           {paginatedProducts.map((product) => (
             <ProductCard
-              key={product.id}
-              id={product.id}
+              key={product._id}
+              id={product._id}
               name={product.name}
               variety={product.variety}
               price={product.price} 
               originalPrice={product.originalPrice}
               discountedPrice={product.price < product.originalPrice ? product.price : null} 
-              imageUrl={product.images[0]}
+              imageUrl={product.images?.[0]}
               slug={product.slug}
               rating={product.rating}
             />

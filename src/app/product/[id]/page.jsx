@@ -6,24 +6,38 @@ import Link from "next/link";
 import Image from "next/image";
 import RelatedProducts from "@/components/RelatedProducts";
 import { useCart } from "@/context/CartContext";
-import { mockProducts } from "@/app/data/mockProducts";
+import { api } from "@/lib/api";
 
 export default function ProductDetails() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  const [product, setProduct] = useState(null);
 
-  const product = mockProducts.find((p) => p.id === id);
-
-  const [selectedImage, setSelectedImage] = useState(product?.images[0]);
+  const [selectedImage, setSelectedImage] = useState("");
   const [amountKg, setAmountKg] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
   const [isZoomOpen, setIsZoomOpen] = useState(false);
+  useEffect(() => {
+    async function loadProduct() {
+      if (!id) return;
+      try {
+        const data = await api.getProductById(id);
+        setProduct(data);
+      } catch (err) {
+        console.error("Failed to load product", err);
+      }
+    }
+
+    loadProduct();
+  }, [id]);
+
 
   const { addToCart, cartItems } = useCart();
 
   useEffect(() => {
     if (product) {
-      const cartItem = cartItems.find((item) => item.id === product.id);
+      setSelectedImage(product.images?.[0] || "");
+      const cartItem = cartItems.find((item) => item.id === product._id);
       if (cartItem) {
         setAmountKg(cartItem.quantity);
       }
@@ -52,7 +66,7 @@ export default function ProductDetails() {
 
     const imageUrl = selectedImage;
     const cartProduct = {
-      id: product.id,
+      id: product._id,
       name: product.name,
       variety: product.variety,
       price: product.price, // Final effective price
@@ -65,7 +79,7 @@ export default function ProductDetails() {
     addToCart(cartProduct);
   };
 
-  const cartItem = cartItems.find((item) => item.id === product?.id);
+  const cartItem = cartItems.find((item) => item.id === product?._id);
   const currentQuantity = cartItem ? cartItem.quantity : 0;
 
   if (!product) {
@@ -105,7 +119,7 @@ export default function ProductDetails() {
             />
           </div>
           <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
-            {product?.images.map((image, index) => (
+            {product?.images?.map((image, index) => (
               <div
                 key={index}
                 className={`relative w-24 h-24 min-w-[96px] rounded-md cursor-pointer border ${
@@ -168,7 +182,7 @@ export default function ProductDetails() {
           <div className="mb-6">
             <h3 className="font-medium text-gray-900 mb-2">Key Benefits</h3>
             <ul className="space-y-2">
-              {product.benefits.map((benefit, i) => (
+              {(product.benefits || []).map((benefit, i) => (
                 <li key={i} className="flex items-start">
                   <span className="text-[#C09A44] mr-2">✓</span>
                   <span>{benefit}</span>
@@ -268,7 +282,7 @@ export default function ProductDetails() {
               <h3 className="font-bold text-lg mb-4">Product Details</h3>
               <p className="text-gray-700 mb-4">{product.description}</p>
               <ul className="space-y-2">
-                {product.benefits.map((benefit, i) => (
+                {(product.benefits || []).map((benefit, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-[#C09A44] mr-2">•</span>
                     <span>{benefit}</span>
@@ -318,7 +332,10 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      <RelatedProducts />
+      <RelatedProducts
+        currentProductId={product._id}
+        currentProductVariety={product.variety}
+      />
 
       {isZoomOpen && (
         <div
