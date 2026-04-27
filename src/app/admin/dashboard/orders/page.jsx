@@ -17,6 +17,7 @@ export default function OrdersAdminPage() {
   const [items, setItems] = useState([]);
   const [form, setForm] = useState(initialForm);
   const [editingId, setEditingId] = useState("");
+  const [editingCart, setEditingCart] = useState([]);
 
   const load = async () => {
     const orders = await api.getOrders();
@@ -31,7 +32,7 @@ export default function OrdersAdminPage() {
     e.preventDefault();
     const payload = {
       ...form,
-      cart: [],
+      cart: editingId ? editingCart : [],
       getState: [],
       grandPrice: String(form.grandPrice || "0"),
     };
@@ -43,6 +44,7 @@ export default function OrdersAdminPage() {
     await load();
     setForm(initialForm);
     setEditingId("");
+    setEditingCart([]);
   };
 
   const onDelete = async (id) => {
@@ -69,34 +71,58 @@ export default function OrdersAdminPage() {
           {editingId ? "Update" : "Create"}
         </button>
       </form>
-      <div className="space-y-2">
+      <div className="space-y-3">
         {items.map((item) => (
-          <div key={item._id} className="border rounded p-3 flex items-center justify-between">
-            <div>
-              <p className="font-medium">{item.name} - {item.city}</p>
-              <p className="text-xs text-gray-600">{item.email} | {item.phone} | {item.method} | Total: {item.grandPrice}</p>
-            </div>
-            <div className="space-x-2">
-              <button
-                className="px-2 py-1 border rounded"
-                onClick={() => {
-                  setEditingId(item._id);
-                  setForm({
-                    name: item.name || "",
-                    email: item.email || "",
-                    phone: item.phone || "",
-                    address: item.address || "",
-                    city: item.city || "",
-                    method: item.method || "cash",
-                    grandPrice: item.grandPrice || "",
-                  });
-                }}
-              >
-                Edit
-              </button>
-              <button className="px-2 py-1 border rounded text-red-600" onClick={() => onDelete(item._id)}>
-                Delete
-              </button>
+          <div key={item._id} className="border rounded p-3 md:p-4">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+              <div className="space-y-1">
+                <p className="font-semibold text-[#491D0B]">
+                  {item.name} - {item.city}
+                </p>
+                <p className="text-xs text-gray-600">
+                  {item.email} | {item.phone} | {item.method} | Total: {item.grandPrice}
+                </p>
+                <p className="text-sm text-gray-700">
+                  <span className="font-medium">Address:</span> {item.address}, {item.city}
+                </p>
+                <div className="text-sm text-gray-800">
+                  <p className="font-medium mb-1">Ordered Mango Items:</p>
+                  {item.cart?.length ? (
+                    <ul className="space-y-1">
+                      {item.cart.map((cartItem, index) => (
+                        <li key={`${cartItem.id || cartItem.name}-${index}`} className="text-xs md:text-sm">
+                          - {cartItem.name} {cartItem.variety ? `(${cartItem.variety})` : ""} x{cartItem.quantity || 1}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-xs text-gray-500">No item details available.</p>
+                  )}
+                </div>
+              </div>
+              <div className="space-x-2 shrink-0">
+                <button
+                  className="px-2 py-1 border rounded"
+                  onClick={() => {
+                    setEditingId(item._id);
+                    setEditingCart(item.cart || []);
+                    setForm({
+                      name: item.name || "",
+                      email: item.email || "",
+                      phone: item.phone || "",
+                      address: item.address || "",
+                      city: item.city || "",
+                      method: item.method || "cash",
+                      grandPrice: item.grandPrice || "",
+                    });
+                  }}
+                >
+                  Edit
+                </button>
+                <button className="px-2 py-1 border rounded text-red-600" onClick={() => onDelete(item._id)}>
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         ))}
